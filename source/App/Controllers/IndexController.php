@@ -14,7 +14,14 @@ class IndexController extends Controller
     public function index(): void
     {
         echo "Dashboard - Home<br>";
-        (new Base());
+        $user = new Base("users", ["first_name", "last_name", "username", "email", "password", "gender"]);
+        $user->first_name = "Ernandes";
+        $user->last_name = "Souza";
+        $user->username = "ernandes";
+        $user->email = "ernandes@mail.com";
+        $user->password = password_hash("ernandes", PASSWORD_DEFAULT);
+        $user->gender = "m";
+        var_dump($user, $user->data(), $user->add());
     }
 
     public function index2(): void
