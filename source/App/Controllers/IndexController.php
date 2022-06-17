@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use Components\Base\Base;
+
 class IndexController extends Controller
 {
     public function __construct($router)
@@ -12,6 +14,7 @@ class IndexController extends Controller
     public function index(): void
     {
         echo "Dashboard - Home<br>";
+        (new Base());
     }
 
     public function index2(): void
