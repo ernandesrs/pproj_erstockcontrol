@@ -1,16 +1,31 @@
 <?php
 
-use App\Controllers\Controller;
+namespace App\Controllers;
 
 class IndexController extends Controller
 {
-    public function __construct()
+    public function __construct($router)
     {
-        parent::__contruct();
+        parent::__contruct($router);
     }
 
     public function index(): void
     {
-        echo "Dashboard - Home";
+        echo "Dashboard - Home<br>";
+    }
+
+    public function index2(): void
+    {
+        echo "Dashboard - Home 2";
+    }
+
+    public function index3(): void
+    {
+        echo "Dashboard - Home 3";
+    }
+
+    public function error(): void
+    {
+        echo "Erro!";
     }
 }
