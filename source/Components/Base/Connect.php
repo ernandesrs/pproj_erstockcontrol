@@ -18,7 +18,7 @@ abstract class Connect
         $dsn = "mysql:dbname=" . CONF_DBASE_NAME . ";host=" . CONF_DBASE_HOST . (empty(CONF_DBASE_PORT) ? null : ";port=" . CONF_DBASE_PORT);
         $user = CONF_DBASE_USER;
         $pass = CONF_DBASE_PASS;
-        $opt = [];
+        $opt = CONF_DBASE_OPTIONS;
 
         try {
             return new PDO($dsn, $user, $pass, $opt);

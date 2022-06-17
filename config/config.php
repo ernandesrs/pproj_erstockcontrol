@@ -9,3 +9,4 @@ define("CONF_DBASE_HOST", $env["DBASE_HOST"]);
 define("CONF_DBASE_PORT", $env["DBASE_PORT"]);
 define("CONF_DBASE_USER", $env["DBASE_USER"]);
 define("CONF_DBASE_PASS", $env["DBASE_PASS"]);
+define("CONF_DBASE_OPTIONS", []);
