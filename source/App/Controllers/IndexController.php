@@ -15,12 +15,22 @@ class IndexController extends Controller
     {
         echo "Dashboard - Home<br>";
 
-        // $user = (new User());
-        // $user = (new User())->find("id=:id", "id=17")->get();
-
-        // var_dump($user, $user->delete(), $user);
-
-        die;
+        // for ($i = 0; $i < 20; $i++) {
+        //     $user = new User();
+        //     $user->first_name = "Nome " . ($i + 1);
+        //     $user->last_name = "Sobreome " . ($i + 1);
+        //     $user->username = "Username " . ($i + 1);
+        //     $user->email = "email" . ($i + 1) . "@mail.com";
+        //     $user->password = password_hash("senha", PASSWORD_DEFAULT);
+        //     $user->gender = ["m", "f"][rand(0, 1)];
+        //     var_dump($user->add());
+        // }
+        $user = (new User())->limit(10)->offset(1)->orderBy("id ASC")->groupBy("gender")->find()->get(true);
+        if ($user) {
+            foreach ($user as $usr) {
+                echo "ID: {$usr->id} - " . $usr->first_name . " - " . $usr->gender . "<br>";
+            }
+        }
     }
 
     public function index2(): void
