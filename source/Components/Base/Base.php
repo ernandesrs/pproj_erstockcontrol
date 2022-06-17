@@ -81,26 +81,6 @@ abstract class Base extends Connect
     }
 
     /**
-     * @return boolean
-     */
-    public function update(): bool
-    {
-        if (empty($this->data->id))
-            return false;
-
-        $this->query = "UPDATE {$this->table} SET " . implode(",", array_map(function ($i) {
-            return $i . "=:" . $i;
-        }, explode(",", $this->columns()))) . " WHERE id=:id";
-
-        $stmt = $this->bind($this->getConnection());
-
-        if (!$stmt)
-            return false;
-
-        return $stmt->execute();
-    }
-
-    /**
      * @param boolean $all
      * @return null|Array|Base
      */
@@ -119,6 +99,26 @@ abstract class Base extends Connect
         }
 
         return null;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function update(): bool
+    {
+        if (empty($this->data->id))
+            return false;
+
+        $this->query = "UPDATE {$this->table} SET " . implode(",", array_map(function ($i) {
+            return $i . "=:" . $i;
+        }, explode(",", $this->columns()))) . " WHERE id=:id";
+
+        $stmt = $this->bind($this->getConnection());
+
+        if (!$stmt)
+            return false;
+
+        return $stmt->execute();
     }
 
     /**
