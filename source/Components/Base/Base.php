@@ -102,11 +102,12 @@ abstract class Base extends Connect
     }
 
     /**
+     * Update by id
      * @return boolean
      */
     public function update(): bool
     {
-        if (empty($this->data->id))
+        if (empty($this->id))
             return false;
 
         $this->query = "UPDATE {$this->table} SET " . implode(",", array_map(function ($i) {
@@ -116,6 +117,23 @@ abstract class Base extends Connect
         $stmt = $this->bind($this->getConnection());
 
         if (!$stmt)
+            return false;
+
+        return $stmt->execute();
+    }
+
+    /**
+     * Delete by id 
+     * @return boolean
+     */
+    public function delete(): bool
+    {
+        if (empty($this->id))
+            return false;
+
+        $this->query = "DELETE FROM {$this->table} WHERE id=:id";
+        $stmt = $this->getConnection()->prepare($this->query);
+        if (!$stmt->bindValue(":id", $this->id, PDO::PARAM_INT))
             return false;
 
         return $stmt->execute();
@@ -149,7 +167,7 @@ abstract class Base extends Connect
             }
 
             if ($this->timestamps) {
-                if (!empty($this->data->id)) {
+                if (!empty($this->id)) {
                     $this->updated_at = date("Y-m-d H:i:s");
                 } else
                     $this->created_at = date("Y-m-d H:i:s");
@@ -186,13 +204,13 @@ abstract class Base extends Connect
      */
     private function columns(): string
     {
-        if (empty($this->data->id))
+        if (empty($this->id))
             $required = $this->required;
         else
             $required = array_keys((array) $this->data);
 
         if ($this->timestamps) {
-            if (empty($this->data->id))
+            if (empty($this->id))
                 array_push($required, "created_at");
         }
         return implode(",", $required);
@@ -204,7 +222,7 @@ abstract class Base extends Connect
     private function requiredCheck(): bool
     {
         foreach ($this->required as $required) {
-            if (empty($this->data->$required))
+            if (empty($this->$required))
                 $this->errors[] = $required;
         }
         return count($this->errors) == 0 ? true : false;
@@ -263,5 +281,14 @@ abstract class Base extends Connect
     public function __isset(string $key): bool
     {
         return isset($this->data->$key);
+    }
+
+    /**
+     * @param string $key
+     * @return;
+     */
+    public function __unset($key)
+    {
+        unset($this->data->$key);
     }
 }
