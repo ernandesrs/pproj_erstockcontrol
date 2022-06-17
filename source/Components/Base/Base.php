@@ -29,6 +29,9 @@ abstract class Base extends Connect
     /** @var Array */
     private $errors;
 
+    /** @var String */
+    private $errorMessage;
+
     /**
      * @param string $table
      * @param array $required
@@ -64,7 +67,33 @@ abstract class Base extends Connect
             return ":" . $i;
         }, explode(",", $this->columns()))) . ")";
 
+        $con = $this->getConnection();
+        $stmt = $this->bind($con);
+        if (!$stmt)
+            return false;
+
+        if (!$stmt->execute())
+            return false;
+
+        $this->id = $con->lastInsertId();
+
+        return true;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function update(): bool
+    {
+        if (empty($this->data->id))
+            return false;
+
+        $this->query = "UPDATE {$this->table} SET " . implode(",", array_map(function ($i) {
+            return $i . "=:" . $i;
+        }, explode(",", $this->columns()))) . " WHERE id=:id";
+
         $stmt = $this->bind($this->getConnection());
+
         if (!$stmt)
             return false;
 
@@ -114,13 +143,15 @@ abstract class Base extends Connect
             return null;
 
         if ($arr == null) {
-            if (!$this->requiredCheck())
+            if (!$this->requiredCheck()) {
+                $this->errorMessage = "Preencha todos os campos: " . implode(", ", $this->errors);
                 return null;
+            }
 
             if ($this->timestamps) {
-                if (!empty($this->data->id))
+                if (!empty($this->data->id)) {
                     $this->updated_at = date("Y-m-d H:i:s");
-                else
+                } else
                     $this->created_at = date("Y-m-d H:i:s");
             }
             $data = $this->data;
@@ -130,14 +161,14 @@ abstract class Base extends Connect
 
         foreach ($data as $key => $value) {
             switch ($value) {
-                case is_int($value):
+                case is_null($value):
+                    $type = PDO::PARAM_NULL;
+                    break;
+                case is_numeric($value):
                     $type = PDO::PARAM_INT;
                     break;
                 case is_bool($value):
                     $type = PDO::PARAM_BOOL;
-                    break;
-                case is_null($value):
-                    $type = PDO::PARAM_NULL;
                     break;
                 default:
                     $type = PDO::PARAM_STR;
@@ -155,12 +186,14 @@ abstract class Base extends Connect
      */
     private function columns(): string
     {
-        $required = $this->required;
+        if (empty($this->data->id))
+            $required = $this->required;
+        else
+            $required = array_keys((array) $this->data);
+
         if ($this->timestamps) {
             if (empty($this->data->id))
                 array_push($required, "created_at");
-            else
-                array_push($required, "updated_at");
         }
         return implode(",", $required);
     }
@@ -182,7 +215,7 @@ abstract class Base extends Connect
      */
     public function data(): stdClass
     {
-        return $this->data;
+        return $this->data ?? new stdClass;
     }
 
     /**
@@ -191,6 +224,14 @@ abstract class Base extends Connect
     public function errors(): array
     {
         return $this->errors;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function errorMessage(): ?string
+    {
+        return $this->errorMessage ?? null;
     }
 
     /**

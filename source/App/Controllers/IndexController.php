@@ -14,9 +14,20 @@ class IndexController extends Controller
     public function index(): void
     {
         echo "Dashboard - Home<br>";
-        $user = new User();
-        $user->find();
-        var_dump($user->get(true));
+        // $user = new User();
+        // $user->first_name = "032Kkk";
+        // $user->last_name = "Kkk";
+        // $user->username = "Kkk2";
+        // $user->email = "Kkk2@kk";
+        // $user->password = "Kkk";
+        // $user->gender = "f";
+        // var_dump($user->add(), $user);
+
+        $user = (new User())->find("username=:username", "username=Usuario Doido")->get();
+        // $user->update();
+        $user->username = "Usuario Doido";
+        $user->email = "kkk@mail.com";
+        var_dump($user->update());
         die;
     }
 
