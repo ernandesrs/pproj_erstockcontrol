@@ -44,11 +44,6 @@ abstract class Route
         }
 
         $route = $this->routes[$requestMethod][$url];
-        if (count(explode("@", $route["action"])) != 2) {
-            throw new Exception("Ao definir a rota, o parâmetro 'action' precisa seguir o padrão 'class@method'");
-            return false;
-        }
-
         if (empty($route["namespace"])) {
             throw new Exception("Namespace não definido");
             return false;
@@ -58,7 +53,7 @@ abstract class Route
         $method = explode("@", $route["action"])[1];
 
         if (!class_exists($class)) {
-            $this->errno = self::NOTFOUND;
+            $this->errno = self::NOTIMPLEMENTED;
             return false;
         }
 

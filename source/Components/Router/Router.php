@@ -2,6 +2,8 @@
 
 namespace Components\Router;
 
+use Exception;
+
 class Router extends Route
 {
     /**
@@ -55,6 +57,11 @@ class Router extends Route
      */
     protected function set(string $method, string $url, string $action, string $name): bool
     {
+        if (count(explode("@", $action)) != 2) {
+            throw new Exception("Ao definir a rota, o parâmetro 'action' precisa seguir o padrão 'class@method'");
+            return false;
+        }
+
         $this->routes[$method][$url] = [
             "namespace" => $this->namespace,
             "url" => $url,
