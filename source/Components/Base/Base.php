@@ -6,13 +6,19 @@ use PDO;
 use PDOStatement;
 use stdClass;
 
-class Base extends Connect
+abstract class Base extends Connect
 {
     /** @var String */
     private $table;
 
     /** @var Array */
     private $required;
+
+    /** @var String */
+    private $query;
+
+    /** @var  Array */
+    private $rulesValuesArr;
 
     /** @var bool */
     private $timestamps;
@@ -33,8 +39,20 @@ class Base extends Connect
         $this->table = $table;
         $this->required = $required;
         $this->timestamps = $timestamps;
-        $this->data = new stdClass;
         $this->errors = [];
+    }
+
+    /**
+     * @param string|null $rules
+     * @param string|null $rulesValues
+     * @param string $columns
+     * @return Base
+     */
+    public function find(?string $rules = null, ?string $rulesValues = null, string $columns = "*"): Base
+    {
+        $this->query = "SELECT {$columns} FROM {$this->table} WHERE 1=:n" . (!empty($rules) ? " AND " . $rules : null);
+        parse_str($rulesValues ? $rulesValues . "&n=1" : "n=1", $this->rulesValuesArr);
+        return $this;
     }
 
     /**
@@ -42,11 +60,11 @@ class Base extends Connect
      */
     public function add(): bool
     {
-        $query = "INSERT INTO {$this->table} (" . $this->columns() . ") VALUES (" . implode(",", array_map(function ($i) {
+        $this->query = "INSERT INTO {$this->table} (" . $this->columns() . ") VALUES (" . implode(",", array_map(function ($i) {
             return ":" . $i;
         }, explode(",", $this->columns()))) . ")";
 
-        $stmt = $this->bind($query, $this->getConnection());
+        $stmt = $this->bind($this->getConnection());
         if (!$stmt)
             return false;
 
@@ -54,28 +72,63 @@ class Base extends Connect
     }
 
     /**
-     * @param string $query
-     * @param PDO $con
-     * @return null|PDOStatement
+     * @param boolean $all
+     * @return null|Array|Base
      */
-    private function bind(string $query, PDO $con)
+    public function get(bool $all = false)
     {
-        if (!$this->requiredCheck())
-            return null;
+        $stmt = $this->bind($this->getConnection(), $this->rulesValuesArr);
 
-        $stmt = $con->prepare($query);
         if (!$stmt)
             return null;
 
-        if ($this->timestamps) {
-            if (!empty($this->data->id)) {
-                $this->updated_at = date("Y-m-d H:i:s");
-            } else {
-                $this->created_at = date("Y-m-d H:i:s");
-            }
+        if ($stmt->execute()) {
+            if ($all)
+                return $stmt->fetchAll(PDO::FETCH_CLASS, static::class);
+            else
+                return $stmt->fetchObject(static::class);
         }
 
-        foreach ($this->data as $key => $value) {
+        return null;
+    }
+
+    /**
+     * @return integer
+     */
+    public function count(): int
+    {
+        $stmt = $this->bind($this->getConnection(), $this->rulesValuesArr);
+        if (!$stmt || !$stmt->execute())
+            return null;
+        return $stmt->rowCount();
+    }
+
+    /**
+     * @param PDO $con
+     * @return null|PDOStatement
+     */
+    private function bind(PDO $con, ?array $arr = null)
+    {
+        $stmt = $con->prepare($this->query);
+        if (!$stmt)
+            return null;
+
+        if ($arr == null) {
+            if (!$this->requiredCheck())
+                return null;
+
+            if ($this->timestamps) {
+                if (!empty($this->data->id))
+                    $this->updated_at = date("Y-m-d H:i:s");
+                else
+                    $this->created_at = date("Y-m-d H:i:s");
+            }
+            $data = $this->data;
+        } else {
+            $data = $arr;
+        }
+
+        foreach ($data as $key => $value) {
             switch ($value) {
                 case is_int($value):
                     $type = PDO::PARAM_INT;
@@ -147,6 +200,10 @@ class Base extends Connect
      */
     public function __set(string $key, $value): void
     {
+        if (empty($this->data)) {
+            $this->data = new stdClass;
+        }
+
         $this->data->$key = $value;
     }
 
@@ -156,5 +213,14 @@ class Base extends Connect
     public function __get(string $key)
     {
         return $this->data->$key ?? null;
+    }
+
+    /**
+     * @param string $key
+     * @return boolean
+     */
+    public function __isset(string $key): bool
+    {
+        return isset($this->data->$key);
     }
 }
