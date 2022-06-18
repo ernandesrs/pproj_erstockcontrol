@@ -69,7 +69,7 @@ class Message
 
         $message = $_SESSION["flashMessage"] ?? null;
         if ($message)
-            unset($_SERVER["flashMessage"]);
+            unset($_SESSION["flashMessage"]);
 
         return $message ? unserialize($message) : null;
     }
