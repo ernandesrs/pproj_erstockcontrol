@@ -65,16 +65,18 @@ trait MessageTrait
     public function fixed(): Message
     {
         $this->type = self::TYPE_FIXED;
+        $this->timer = null;
         return $this;
     }
 
     /**
+     * @param float $time
      * @return Message
      */
-    public function float(): Message
+    public function float(float $time = 7.5): Message
     {
         $this->type = self::TYPE_FLOAT;
-        $this->time();
+        $this->time($time);
         return $this;
     }
 

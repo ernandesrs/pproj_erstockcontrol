@@ -32,6 +32,8 @@ class Message
 
     public function __construct()
     {
+        $this->title = null;
+        $this->message = null;
         $this->style = self::STYLE_DEFAULT;
         $this->type = self::TYPE_FIXED;
         $this->timer = null;
@@ -52,6 +54,42 @@ class Message
     }
 
     /**
+     * Adiciona/obtém mensagem na/da sessão
+     * 
+     * Quando invocado em um objeto com dados preenchidos, adiciona o objeto na sessão.
+     * Quando invocado em novo objeto obtém e retorna um objeto Message quando existir na sessão ou null quando não existir
+     * @return void|null|Message
+     */
+    public function flash()
+    {
+        if ($this->message) {
+            $_SESSION["flashMessage"] = serialize($this);
+            return;
+        }
+
+        $message = $_SESSION["flashMessage"] ?? null;
+        if ($message)
+            unset($_SERVER["flashMessage"]);
+
+        return $message ? unserialize($message) : null;
+    }
+
+    /**
+     * @return string
+     */
+    public function json(): string
+    {
+        return json_encode([
+            "title" => $this->title,
+            "message" => $this->message,
+            "type" => $this->type,
+            "style" => $this->style,
+            "timer" => $this->timer,
+        ]);
+    }
+
+    /**
+     * Retorna HTML baseado em componente de alerta do Bootstrap
      * @return string
      */
     public function render(): string

@@ -8,7 +8,7 @@
         max-width: 375px;
         position: fixed;
         right: 20px;
-        bottom: 20px;
+        top: 20px;
         z-index: 100;
         box-shadow: 0 0 12px -2px rgb(0, 0, 0, 0.35);
     }
@@ -26,6 +26,13 @@
         <?= $messages->float ?>
         <?= $messages->wtimer ?>
         <?= $messages->wotimer ?>
+        <?php
+        $flash = (new \Components\Message\Message)->flash();
+        $flash->time(4);
+        if ($flash)
+            echo $flash->render();
+        ?>
+        <?= $messages->json ?>
     </div>
 </div>
 <?= $v->end("content") ?>

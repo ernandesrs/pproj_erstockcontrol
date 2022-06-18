@@ -36,10 +36,12 @@ class IndexController extends Controller
 
     public function messageTest(): void
     {
+        (new Message())->danger("Uma mensagem de perigo", "Mensagem na sessão")->float()->fixed()->flash();
         $messages = [
             "float" => (new Message())->success("Uma mensagem de sucesso fluatuante temporária por definição por 7.5s", "Flutuante temporária por 7.5s")->float()->render(),
             "wtimer" => (new Message())->success("Uma mensagem de sucesso temporária por 10s", "Temporária por 10s")->time(10)->render(),
             "wotimer" => (new Message())->success("Uma mensagem de sucesso fixa permanente", "Permanente fixa")->render(),
+            "json"=>(new Message())->success("Uma mensagem de sucesso json", "Mensagem em json")->float()->fixed()->json()
         ];
 
         $this->view("tests/message", [
