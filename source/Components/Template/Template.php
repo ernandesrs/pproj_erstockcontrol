@@ -84,7 +84,7 @@ class Template
         require $viewPath;
         $view = ob_get_clean();
 
-        $v->getSections($view);
+        $v->getSections(trim($view));
 
         require $v->dir . "/{$v->layoutName}.{$v->ext}";
 
