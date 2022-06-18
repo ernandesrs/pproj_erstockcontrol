@@ -13,6 +13,7 @@ trait ImageTrait
     ];
 
     /**
+     * Upload de imagens
      * @param array $image
      * @param string $subDir
      * @return null|Uploader

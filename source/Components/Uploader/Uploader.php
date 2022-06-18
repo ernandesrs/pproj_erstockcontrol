@@ -39,6 +39,7 @@ class Uploader
     }
 
     /**
+     * Armazena o aquivo
      * @param string|null $rename
      * @return string|null
      */
@@ -68,6 +69,7 @@ class Uploader
     }
 
     /**
+     * Define se serão criadas pastas baseadas no ano e mês
      * @param boolean $make
      * @return Uploader
      */
@@ -78,6 +80,7 @@ class Uploader
     }
 
     /**
+     * Verifica e cria diretórios
      * @return string
      */
     private function cmDirectory(): string
@@ -109,6 +112,7 @@ class Uploader
     }
 
     /**
+     * Valida extensão do arquivo
      * @param array $file
      * @param array $mimes
      * @return bool
