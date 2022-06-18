@@ -13,17 +13,6 @@ class Session
 
     public function __construct()
     {
-        if (!session_id())
-            session_start();
-
         $this->data = (object) $_SESSION;
-    }
-
-    /**
-     * @return bool
-     */
-    public function destroy(): bool
-    {
-        return session_destroy();
     }
 }
