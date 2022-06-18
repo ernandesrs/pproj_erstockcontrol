@@ -4,14 +4,18 @@ namespace App\Controllers;
 
 use Components\Router\Router;
 use Components\Template\Template;
+use Components\Uploader\Uploader;
 
 class Controller
 {
     /** @var Router */
-    private $router;
+    protected $router;
 
     /** @var Template */
-    protected $view;
+    private $view;
+
+    /** @var Uploader */
+    protected $uploader;
 
     /**
      * @param Router $router
@@ -21,6 +25,7 @@ class Controller
     {
         $this->router = $router;
         $this->view = new Template(CONF_BASE_DIR . CONF_VIEWS_DIR);
+        $this->uploader = new Uploader(CONF_BASE_DIR . CONF_UPLOAD_BASE_DIR);
     }
 
     /**

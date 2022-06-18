@@ -12,6 +12,15 @@
     </div>
 
     <div class="row justify-content-center">
+        <div class="col-12 pb-3">
+            <?php
+            $flash = (new \Components\Message\Message())->flash();
+            if ($flash) {
+                echo $flash->render();
+            }
+            ?>
+
+        </div>
         <div class="col-12 col-md-6 col-lg-4 mb-3">
             <h4>Images</h4>
             <hr>

@@ -19,3 +19,4 @@ define("CONF_DBASE_OPTIONS", [
 
 define("CONF_BASE_DIR", __DIR__ . "/..");
 define("CONF_VIEWS_DIR", "/shared/views");
+define("CONF_UPLOAD_BASE_DIR", "/storage/uploads");
