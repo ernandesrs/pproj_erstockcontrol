@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use Components\Message\Message;
 use Components\Session\Session;
 
 class IndexController extends Controller
@@ -22,7 +23,7 @@ class IndexController extends Controller
             $updates = $session->get("page_updates");
             $session->update("page_updates", $updates += 1);
         }
-    
+        // $session->destroy();
         // $session->remove("user_id");
 
         $this->view("pages/index", [
@@ -33,18 +34,18 @@ class IndexController extends Controller
             ->render();
     }
 
-    public function index2(): void
+    public function messageTest(): void
     {
-        echo "Dashboard - Home 2";
-    }
+        $messages = [
+            "float" => (new Message())->success("Uma mensagem de sucesso fluatuante temporária por definição por 7.5s", "Flutuante temporária por 7.5s")->float()->render(),
+            "wtimer" => (new Message())->success("Uma mensagem de sucesso temporária por 10s", "Temporária por 10s")->time(10)->render(),
+            "wotimer" => (new Message())->success("Uma mensagem de sucesso fixa permanente", "Permanente fixa")->render(),
+        ];
 
-    public function index3(): void
-    {
-        echo "Dashboard - Home 3";
-    }
-
-    public function error(): void
-    {
-        echo "Erro!";
+        $this->view("tests/message", [
+            "firstName" => "My First Name",
+            "lastName" => "My Last Name",
+            "messages" => $messages
+        ])->render();
     }
 }
