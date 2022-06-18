@@ -19,7 +19,17 @@
         <h1>LAYOUT</h1>
         <?= $v->section("jujubas") ?>
         <p>
-            <?= $firstName ?> - <?= $lastName ?>
+            <?php
+            $session = new \Components\Session\Session();
+            if ($session->get("user_id")) :
+            ?>
+                <?= $firstName ?> <?= $lastName ?>, você está logado
+            <?php else : ?>
+                Você não está logado
+            <?php endif; ?>
+        </p>
+        <p>
+            Atualizações da página: <?= $session->get("page_updates") ?>
         </p>
     </header>
     <main>
