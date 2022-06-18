@@ -41,7 +41,7 @@ class IndexController extends Controller
             "float" => (new Message())->success("Uma mensagem de sucesso fluatuante temporária por definição por 7.5s", "Flutuante temporária por 7.5s")->float()->render(),
             "wtimer" => (new Message())->success("Uma mensagem de sucesso temporária por 10s", "Temporária por 10s")->time(10)->render(),
             "wotimer" => (new Message())->success("Uma mensagem de sucesso fixa permanente", "Permanente fixa")->render(),
-            "json"=>(new Message())->success("Uma mensagem de sucesso json", "Mensagem em json")->float()->fixed()->json()
+            "json" => (new Message())->success("Uma mensagem de sucesso json", "Mensagem em json")->float()->fixed()->json()
         ];
 
         $this->view("tests/message", [
@@ -49,5 +49,26 @@ class IndexController extends Controller
             "lastName" => "My Last Name",
             "messages" => $messages
         ])->render();
+    }
+
+    public function uploadTest(): void
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (key_exists("image", $_FILES)) {
+                echo "images";
+            } else if (key_exists("video", $_FILES)) {
+                echo "videos";
+            } elseif (key_exists("file", $_FILES)) {
+                echo "files";
+            } else {
+                echo "nenhum upload";
+            }
+            return;
+        }
+
+        $this->view("tests/upload", [
+            "firstName" => "My First Name",
+            "lastName" => "My Last Name"
+        ])->seo("Teste de upload")->render();
     }
 }
