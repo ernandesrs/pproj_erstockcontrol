@@ -11,6 +11,37 @@ class Uploader
     use MediaTrait;
     use FileTrait;
 
+    /** @var array */
+    private $allowedImageMimes = [
+        "image/png",
+        "image/jpeg",
+        "image/webp"
+    ];
+
+    /** @var array */
+    private $allowedMediaMimes = [
+        "video/webm",
+        "video/ogg",
+        "video/mp4",
+
+        "audio/mpeg",
+        "audio/webm",
+        "audio/ogg",
+        "audio/wav"
+    ];
+
+    /** @var array */
+    private $allowedFileMimes = [
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/vnd.ms-fontobject",
+        "application/vnd.oasis.opendocument.text",
+        "application/pdf"
+    ];
+
+    /** @var array */
+    private $allowedMimes;
+
     /** @var string */
     private $uploadDir;
 
@@ -45,17 +76,18 @@ class Uploader
      */
     public function store(?string $rename = null): ?string
     {
-        // checar e criar diretórios
+        if (!$this->validate())
+            return null;
+
         $finalPath = $this->cmDirectory();
 
-        // renomear e/ou mover arquivos
         $name = $this->uploaded["name"];
         $tmpName = $this->uploaded["tmp_name"];
         $ext = pathinfo($this->uploaded["name"], PATHINFO_EXTENSION);
 
         if ($rename) $newName = $rename;
         else $newName = base64_encode($name . "_" . time());
-        
+
         $to = $finalPath . "/{$newName}.{$ext}";
 
         if (!is_uploaded_file($tmpName))
@@ -64,7 +96,6 @@ class Uploader
         if (!move_uploaded_file($tmpName, $to))
             return null;
 
-        // limpar o caminho para o arquivo
         return str_replace($this->uploadDir, "", $to);
     }
 
@@ -112,18 +143,16 @@ class Uploader
     }
 
     /**
-     * Valida extensão do arquivo
-     * @param array $file
-     * @param array $mimes
+     * Validar arquivo
      * @return bool
      */
-    private function extValidation(array $file, array $mimes): bool
+    private function validate(): bool
     {
-        if (!in_array($file["type"], $mimes, true)) {
-            $this->exception = new Exception("A extensão do arquivo enviado não é não aceito");
+        if (!in_array($this->uploaded["type"], $this->allowedMimes, true)) {
+            $this->exception = new Exception("A extensão do arquivo enviado não é não aceito.");
             $this->error = [
-                "message" => $this->exception->getMessage(),
-                "allowedExtensions" => implode(", ", $mimes),
+                "message" => $this->exception->getMessage() . " Tipos aceitos: " . implode(", ", $this->allowedMimes),
+                "allowedExtensions" => implode(", ", $this->allowedMimes),
             ];
             return false;
         }

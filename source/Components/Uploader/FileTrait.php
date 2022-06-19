@@ -4,30 +4,29 @@ namespace Components\Uploader;
 
 trait FileTrait
 {
-    private static $fileMimes = [
-        "text/plain",
-        "text/html",
-        "text/css",
-        "text/javascript",
-
-        "application/vnd.mspowerpoint",
-        "application/pdf"
-    ];
-
     /**
      * Upload de arquivso em geral
      * @param array $file
      * @param string $subDir
-     * @return null|Uploader
+     * @return Uploader
      */
-    public function file(array $file, string $subDir = "files"): ?Uploader
+    public function file(array $file, string $subDir = "files"): Uploader
     {
-        if (!$this->extValidation($file, self::$fileMimes))
-            return null;
-
         $this->uploaded = $file;
         $this->subDir = $subDir;
+        $this->allowedMimes = $this->allowedFileMimes;
 
+        return $this;
+    }
+
+    /**
+     * @param array $allowedMimes
+     * @return Uploader
+     */
+    public function fileMimes(array $allowedMimes): Uploader
+    {
+        $this->allowedFileMimes = $allowedMimes;
+        $this->allowedMimes = $allowedMimes;
         return $this;
     }
 }

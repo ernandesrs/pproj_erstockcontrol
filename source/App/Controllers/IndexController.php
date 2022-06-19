@@ -57,20 +57,20 @@ class IndexController extends Controller
             $upload = null;
 
             if (key_exists("image", $_FILES)) {
-                $upload = $this->uploader->image($_FILES["image"], "images");
+                $upload = $this->uploader->imageMimes(["image/png"])->image($_FILES["image"], "images");
             } else if (key_exists("video", $_FILES)) {
-                $upload = $this->uploader->media($_FILES["video"], "medias");
+                $upload = $this->uploader->media($_FILES["video"], "medias")->mediaMimes(["video/mpg"]);
             } elseif (key_exists("file", $_FILES)) {
-                $upload = $this->uploader->file($_FILES["file"], "files");
+                $upload = $this->uploader->fileMimes(["application/pdf"])->file($_FILES["file"], "files");
             } else {
                 echo "nenhum upload";
             }
 
-            if (!$upload) {
-                (new Message())->danger($this->uploader->error()->message, "Falha no upload")->flash();
+            $path = $upload->store();
+            if (!$path) {
+                (new Message())->danger($upload->error()->message, "Falha no upload")->flash();
             } else {
-                $path = $upload->store();
-                (new Message())->success("Upload concluído: " . $this->route("index.index") . $path . " :)", "Tudo certo :D")->flash();
+                (new Message())->success("Upload concluído: " . $this->route("index.index") . "/storage/uploads" . $path . " :)", "Tudo certo :D")->flash();
             }
 
             $this->router->redirect("index.uploadTest");

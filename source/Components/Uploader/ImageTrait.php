@@ -4,28 +4,29 @@ namespace Components\Uploader;
 
 trait ImageTrait
 {
-    private static $imageMimes = [
-        "image/gif",
-        "image/png",
-        "image/jpeg",
-        "image/bmp",
-        "image/webp"
-    ];
-
     /**
      * Upload de imagens
      * @param array $image
      * @param string $subDir
-     * @return null|Uploader
+     * @return Uploader
      */
-    public function image(array $image, string $subDir = "images"): ?Uploader
+    public function image(array $image, string $subDir = "images"): Uploader
     {
-        if (!$this->extValidation($image, self::$imageMimes))
-            return null;
-
         $this->uploaded = $image;
         $this->subDir = $subDir;
+        $this->allowedMimes = $this->allowedImageMimes;
 
+        return $this;
+    }
+
+    /**
+     * @param array $allowedMimes
+     * @return Uploader
+     */
+    public function imageMimes(array $allowedMimes): Uploader
+    {
+        $this->allowedImageMimes = $allowedMimes;
+        $this->allowedMimes = $allowedMimes;
         return $this;
     }
 }
