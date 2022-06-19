@@ -1,6 +1,6 @@
 <?php
 
-$env = parse_ini_file(__DIR__ . "/../.env");
+$env = parse_ini_file(__DIR__ . "/../../.env");
 
 define("CONF_APP_NAME", $env["APP_NAME"] ?? null);
 define("CONF_URL_BASE", $env["APP_URL_BASE"] ?? null);
@@ -17,6 +17,6 @@ define("CONF_DBASE_OPTIONS", [
     PDO::ATTR_CASE => PDO::CASE_NATURAL
 ]);
 
-define("CONF_BASE_DIR", __DIR__ . "/..");
+define("CONF_BASE_DIR", __DIR__ . "/../..");
 define("CONF_VIEWS_DIR", "/shared/views");
 define("CONF_UPLOAD_BASE_DIR", "/storage/uploads");

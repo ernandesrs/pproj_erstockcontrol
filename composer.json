@@ -8,7 +8,7 @@
             "Components\\": "source/Components/"
         },
         "files": [
-            "config/config.php"
+            "source/Config/config.php"
         ]
     },
     "authors": [
