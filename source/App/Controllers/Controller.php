@@ -21,7 +21,7 @@ class Controller
      * @param Router $router
      * @return void
      */
-    public function __contruct(Router $router)
+    public function __contruct(Router $router = null)
     {
         $this->router = $router;
         $this->view = new Template(CONF_BASE_DIR . CONF_VIEWS_DIR);

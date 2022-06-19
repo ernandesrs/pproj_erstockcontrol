@@ -1,4 +1,4 @@
-<?= $v->layout("layout") ?>
+<?= $v->layout("layouts/tests") ?>
 
 <?= $v->start("content") ?>
 <div style="width:100%;padding:100px 0; text-align:center;">

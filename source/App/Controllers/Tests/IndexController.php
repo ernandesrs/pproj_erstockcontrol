@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Tests;
 
+use App\Controllers\Tests\TestController;
 use Components\Message\Message;
 use Components\Session\Session;
 
-class IndexController extends Controller
+class IndexController extends TestController
 {
     public function __construct($router)
     {
@@ -26,7 +27,7 @@ class IndexController extends Controller
         // $session->destroy();
         // $session->remove("user_id");
 
-        $this->view("pages/index", [
+        $this->view("tests/index", [
             "firstName" => "My First Name",
             "lastName" => "My Last Name"
         ])
