@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Controllers\Dashboard;
+namespace App\Controllers\Dash;
 
-class IndexController extends DashboardController
+class IndexController extends DashController
 {
     /**
-     * @param [type] $router
+     * @param \Components\Router\Router $router
      */
     public function __construct($router)
     {
-        parent::__contruct($router);
+        parent::__construct($router);
     }
 
     /**
@@ -18,6 +18,7 @@ class IndexController extends DashboardController
     public function index(): void
     {
         $this->router->redirect("dash.dash");
+        return;
     }
 
     /**
@@ -25,7 +26,6 @@ class IndexController extends DashboardController
      */
     public function dash(): void
     {
-        $this->view("dashboard/index")->seo("Resumo geral")->render();
-        return;
+        echo "Dash logged";
     }
 }

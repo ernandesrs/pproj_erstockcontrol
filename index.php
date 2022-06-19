@@ -12,7 +12,7 @@ $router = new Router(CONF_URL_BASE);
  * dashboard
  */
 
-$router->namespace("App\\Controllers\\Dashboard");
+$router->namespace("App\\Controllers\\Dash");
 $router->get("/", "IndexController@index", "dash.index");
 $router->get("/dash", "IndexController@dash", "dash.dash");
 
