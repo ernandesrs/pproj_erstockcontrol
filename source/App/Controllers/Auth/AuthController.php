@@ -3,7 +3,6 @@
 namespace App\Controllers\Auth;
 
 use App\Controllers\Controller;
-use App\Models\Auth;
 
 class AuthController extends Controller
 {
@@ -12,11 +11,6 @@ class AuthController extends Controller
      */
     public function __construct($router)
     {
-        if ((new Auth())->isLogged()) {
-            $router->redirect("dash.dash");
-            return;
-        }
-
         parent::__contruct($router);
     }
 }

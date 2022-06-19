@@ -22,6 +22,7 @@ $router->get("/dash", "IndexController@dash", "dash.dash");
 $router->namespace("App\\Controllers\\Auth");
 $router->get("/auth/login", "LoginController@login", "auth.login");
 $router->post("/auth/authenticate", "LoginController@authenticate", "auth.authenticate");
+$router->get("/auth/logout", "LoginController@logout", "auth.logout");
 
 /**
  * testes
