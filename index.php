@@ -8,7 +8,20 @@ session_start();
 
 $router = new Router(CONF_URL_BASE);
 
-$router->namespace("App\\Controllers");
+/**
+ * dashboard
+ */
+
+$router->namespace("App\\Controllers\\Dashboard");
+$router->get("/", "IndexController@index", "dash.index");
+$router->get("/dash", "IndexController@dash", "dash.dash");
+
+/**
+ * auth
+ */
+$router->namespace("App\\Controllers\\Auth");
+$router->get("/auth/login", "LoginController@login", "auth.login");
+$router->post("/auth/authenticate", "LoginController@authenticate", "auth.authenticate");
 
 /**
  * testes
