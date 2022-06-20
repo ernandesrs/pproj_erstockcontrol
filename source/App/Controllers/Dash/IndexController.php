@@ -28,4 +28,10 @@ class IndexController extends DashController
     {
         echo "Dash logged";
     }
+
+    public function error(): void
+    {
+        $this->view("error", ["errorCode" => filter_input(INPUT_GET, "err", FILTER_VALIDATE_INT) ?? 404])
+            ->render();
+    }
 }

@@ -15,6 +15,7 @@ $router = new Router(CONF_URL_BASE);
 $router->namespace("App\\Controllers\\Dash");
 $router->get("/", "IndexController@index", "dash.index");
 $router->get("/dash", "IndexController@dash", "dash.dash");
+$router->get("/error", "IndexController@error", "dash.error");
 
 /**
  * auth
@@ -35,5 +36,5 @@ $router->get("/testes/uploads", "IndexController@uploadTest", "index.uploadTest"
 $router->post("/testes/uploads", "IndexController@uploadTest", "index.uploadTest.post");
 
 if (!$router->boot()) {
-    echo "Erro " . $router->error();
+    $router->redirect("dash.error", ["err" => $router->error()]);
 }
