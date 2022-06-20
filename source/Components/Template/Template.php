@@ -44,6 +44,9 @@ class Template
      */
     private function getSections(string $view): void
     {
+        if (!is_array($this->sections))
+            return;
+
         $vCpy = $view;
         foreach ($this->sections as $key => $value) {
             $this->sections[$key] = substr(
@@ -77,14 +80,14 @@ class Template
         }
 
         $viewPath = $v->dir . "/" . $v->viewName . "." . $v->ext;
-        if (!file_exists($viewPath))
-            return;
+        if (!file_exists($viewPath)) return;
 
         ob_flush();
         require $viewPath;
         $view = ob_get_clean();
 
-        $v->getSections(trim($view));
+        if (empty($v->layoutName)) $v->layoutName = $v->viewName;
+        else $v->getSections(trim($view));
 
         require $v->dir . "/{$v->layoutName}.{$v->ext}";
 
