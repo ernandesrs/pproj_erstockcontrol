@@ -11,8 +11,19 @@
     <meta name="description" content="<?= $seo->description ?? null ?>">
     <link rel="canonical" href="<?= $seo->url ?? null ?>" />
     <link rel="shortcut icon" href="<?= asset("favicon.ico") ?>" type="image/x-icon">
-    <link rel="stylesheet" href="<?= asset("/css/dash/custom.css") ?>">
-    <link rel="stylesheet" href="<?= asset("/css/bootstrap-icons.css") ?>">
+
+    <?php
+
+    $styles = [
+        "/dash/custom.css",
+        "/bootstrap-icons.css"
+    ];
+
+    foreach ($styles as $style) {
+        echo "<link rel='stylesheet' href='" . asset("css/{$style}") . "'>\n";
+    }
+
+    ?>
 
     <?= $v->section("styles") ?>
 </head>
@@ -27,7 +38,21 @@
         </main>
     </div>
 
-    <script src="<?= asset("/js/dash/scripts.js") ?>"></script>
+    <?php
+
+    $scripts = [
+        "/jquery.min.js",
+        "/jquery-ui.min.js",
+        "/bootstrap.min.js",
+        "/dash/scripts.js",
+    ];
+
+    foreach ($scripts as $script) {
+        echo "<script src='" . asset("js/{$script}") . "'></script>\n";
+    }
+
+    ?>
+
     <?= $v->section("scripts") ?>
 </body>
 
