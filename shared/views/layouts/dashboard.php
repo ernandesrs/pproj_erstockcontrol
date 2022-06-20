@@ -10,6 +10,8 @@
     <title>Dashboard: <?= ("" . !empty($seo->title) ? ("" . $seo->title) : null) ?></title>
     <meta name="description" content="<?= $seo->description ?? null ?>">
     <link rel="canonical" href="<?= $seo->url ?? null ?>" />
+    <link rel="shortcut icon" href="<?= CONF_URL_BASE ?>/public/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="<?= CONF_URL_BASE ?>/public/assets/dash/custom.css">
 
     <?= $v->section("styles") ?>
 </head>
