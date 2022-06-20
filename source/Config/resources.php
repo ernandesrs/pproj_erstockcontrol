@@ -11,11 +11,11 @@ if (CONF_APP_LOCAL !== "dev")
  */
 
 $sources = [
-    "public/assets/css" => [
+    "public/assets/css/dash" => [
         "shared/styles/dash/custom.css"
     ],
 
-    "public/assets/js" => [
+    "public/assets/js/dash" => [
         "shared/scripts/dash/scripts.js",
 
         "node_modules/jquery/dist/jquery.min.js"

@@ -26,7 +26,7 @@ class IndexController extends DashController
      */
     public function dash(): void
     {
-        echo "Dash logged";
+        $this->view("dash/index")->seo("Resumo geral do sistema")->render();
     }
 
     public function error(): void
