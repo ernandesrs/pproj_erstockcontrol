@@ -1,4 +1,4 @@
-<?= $v->layout("layouts/dashboard") ?>
+<?= $v->layout("layouts/dash") ?>
 
 <?= $v->start("content") ?>
 
