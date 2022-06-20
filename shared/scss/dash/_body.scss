@@ -29,6 +29,18 @@ body {
             .photo {
                 background-color: rgb($white, 0.60);
                 border: 0;
+
+                &.no-image {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    max-width: 45px;
+                    height: 45px;
+                    max-height: 100%;
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                }
             }
 
             .info {
