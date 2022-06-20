@@ -11,6 +11,11 @@
         font-size: 1.5rem;
         padding: 0;
         color: $dark-light;
+
+        &:hover, &:focus {
+            box-shadow: none;
+            color: rgb($dark-light, 0.25);
+        }
     }
 
     .breadcrumb {

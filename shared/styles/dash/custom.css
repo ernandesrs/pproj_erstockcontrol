@@ -9055,6 +9055,10 @@ body {
   padding: 0;
   color: rgb(75, 75, 75);
 }
+.main-bar .btn-sidebar-toggler:hover, .main-bar .btn-sidebar-toggler:focus {
+  box-shadow: none;
+  color: rgba(75, 75, 75, 0.25);
+}
 .main-bar .breadcrumb {
   background-color: transparent;
   padding-top: 0.4rem;
