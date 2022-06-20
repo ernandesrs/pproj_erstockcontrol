@@ -9,6 +9,14 @@ function in_dev(): bool
 }
 
 /**
+ * @return string|null
+ */
+function app_name(): ?string
+{
+    return CONF_APP_NAME;
+}
+
+/**
  * @param string|null $path
  * @return string
  */
@@ -30,9 +38,25 @@ function asset(string $asset): ?string
 }
 
 /**
- * @return string|null
+ * @param string $name
+ * @return string
  */
-function app_name(): ?string
+function icon_class(string $name): string
 {
-    return CONF_APP_NAME;
+    return CONF_ICONS[$name] ?? "";
+}
+
+/**
+ * @param string $name
+ * @param string|null $alt
+ * @return string
+ */
+function icon_elem(string $name, ?string $alt = null): string
+{
+    $icon = icon_class($name);
+    $attr = "class='icon {$icon}'";
+    if ($alt)
+        $attr .= " data-active-icon='{$icon}' data-alt-icon='" . icon_class($alt) . "'";
+
+    return "<i {$attr}></i>";
 }

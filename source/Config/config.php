@@ -2,9 +2,13 @@
 
 $env = parse_ini_file(__DIR__ . "/../../.env");
 
+$iconsPath = __DIR__ . "/../../shared/others/icons.json";
+$icons = json_decode(file_exists($iconsPath) ? file_get_contents($iconsPath) : "");
+
 define("CONF_APP_LOCAL", $env["APP_LOCAL"] ?? "dev");
 define("CONF_APP_NAME", $env["APP_NAME"] ?? null);
 define("CONF_URL_BASE", $env["APP_URL_BASE"] ?? null);
+define("CONF_ICONS", (array) $icons);
 
 define("CONF_DBASE_NAME", $env["DBASE_NAME"]);
 define("CONF_DBASE_HOST", $env["DBASE_HOST"]);
