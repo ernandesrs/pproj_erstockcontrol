@@ -7,7 +7,8 @@
  */
 
 $functions = [
-    "components"
+    "components",
+    "helpers",
 ];
 
 foreach ($functions as $func) {
