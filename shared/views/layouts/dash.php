@@ -28,8 +28,8 @@
     <?= $v->section("styles") ?>
 </head>
 
-<body class="w-sidebar">
-    <aside class="sidebar">
+<body>
+    <aside class="d-none d-lg-block sidebar jsDashboardSidebar">
         <div class="container-fluid">
             <div class="profile d-flex align-items-center">
                 <img class="photo img-thumbnail rounded-circle" src="https://via.placeholder.com/45x45" alt="">
@@ -78,7 +78,17 @@
     <main class="main">
         <div class="container-fluid">
             <div class="main-bar d-flex align-items-center py-2">
-                <button class="btn btn-sidebar-toggler jsSidebarToggler bi bi-arrow-left-square" data-icon-toggle="bi bi-arrow-right-square"></button>
+                <button class="btn btn-sidebar-toggler jsSidebarToggler d-lg-none bi bi-arrow-right-square" data-active-icon="bi bi-arrow-right-square" data-alt-icon="bi bi-arrow-left-square"></button>
+                <div class="ml-1">
+                    <a class="btn btn-sm btn-outline-secondary border-0" href="">
+                        <i class="icon bi bi-bell"></i>
+                    </a>
+                </div>
+                <div class="ml-auto">
+                    <a class="btn btn-sm btn-outline-danger" href="<?= url("auth/logout") ?>">
+                        <i class="icon bi bi-box-arrow-left"></i> Sair
+                    </a>
+                </div>
             </div>
 
             <?= $v->section("content") ?>

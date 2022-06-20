@@ -9012,78 +9012,94 @@ body {
   min-height: 100vh;
   color: rgb(61, 61, 61);
 }
-
-.sidebar {
-  display: none;
+body .sidebar {
   grid-area: "sidebar";
-  background-color: rgb(250, 250, 250);
+  background-color: rgb(61, 61, 61);
+  min-width: 225px;
+  height: 100%;
   max-height: 100vh;
   overflow-y: auto;
+  color: rgb(210, 210, 210);
 }
-.sidebar .profile {
+body .sidebar.mobile {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999;
+}
+body .sidebar .profile {
   padding: 0.5rem 0 1rem 0;
+  cursor: default;
 }
-.sidebar .sidebar-elements {
-  background-color: #fff;
+body .sidebar .profile .photo {
+  background-color: rgba(255, 255, 255, 0.6);
+  border: 0;
+}
+body .sidebar .profile .info .username {
+  font-weight: 600;
+}
+body .sidebar .sidebar-elements {
+  background-color: rgba(255, 255, 255, 0.125);
   padding-left: 1rem;
   padding-right: 1rem;
-  border-top: 5px solid rgb(49, 184, 208);
+  border-top: 5px solid rgba(49, 184, 208, 0.5);
   border-radius: 0.6666666667rem 0.6666666667rem;
-  box-shadow: 0 0 6px 2px rgba(61, 61, 61, 0.125);
+  box-shadow: 0 0 6px 2px rgba(75, 75, 75, 0.125);
 }
-.sidebar .sidebar-elements .element {
+body .sidebar .sidebar-elements .element {
   padding: 0.5rem 0 1rem 0;
 }
-.sidebar .sidebar-elements .element .title {
+body .sidebar .sidebar-elements .element .title {
   font-weight: 600;
   font-size: 1.2rem;
-  color: rgb(75, 75, 75);
+  color: rgb(230, 230, 230);
   text-transform: uppercase;
 }
-
-.main {
+body .main {
   grid-area: "content";
   background-color: rgb(250, 250, 250);
 }
-
-.main-bar {
+body .main .main-bar {
   background-color: transparent;
 }
-.main-bar .btn-sidebar-toggler {
+body .main .main-bar .btn-sidebar-toggler {
   background-color: transparent;
   font-size: 1.5rem;
   padding: 0;
   color: rgb(75, 75, 75);
+  position: relative;
+  z-index: 999;
 }
-.main-bar .btn-sidebar-toggler:hover, .main-bar .btn-sidebar-toggler:focus {
-  box-shadow: none;
+body .main .main-bar .btn-sidebar-toggler:hover {
   color: rgba(75, 75, 75, 0.25);
 }
-.main-bar .breadcrumb {
+body .main .main-bar .btn-sidebar-toggler:focus {
+  box-shadow: none;
+}
+body .main .main-bar .breadcrumb {
   background-color: transparent;
   padding-top: 0.4rem;
   padding-bottom: 0.4rem;
   margin-bottom: 0;
 }
-
-.section {
+body .main .section {
   margin-bottom: 1rem;
 }
-.section .section-header {
+body .main .section .section-header {
   display: flex;
   align-items: center;
   padding: 1rem 0;
 }
-.section .section-header .left-side .title {
+body .main .section .section-header .left-side .title {
   font-size: 1.2rem;
   margin-bottom: 0;
   font-weight: 600;
   color: rgb(75, 75, 75);
 }
-.section .section-header .right-side {
+body .main .section .section-header .right-side {
   margin-left: auto;
 }
-.section .section-content {
+body .main .section .section-content {
   background-color: #fff;
   padding: 0.5rem 1rem;
   border: 1px solid rgb(230, 230, 230);
@@ -9093,9 +9109,6 @@ body {
   body {
     grid-template-areas: "sidebar content";
     grid-template-columns: 225px auto;
-  }
-  .sidebar {
-    display: block;
   }
 }
 
