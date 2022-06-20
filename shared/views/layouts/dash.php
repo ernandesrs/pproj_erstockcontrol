@@ -12,6 +12,7 @@
     <link rel="canonical" href="<?= $seo->url ?? null ?>" />
     <link rel="shortcut icon" href="<?= asset("favicon.ico") ?>" type="image/x-icon">
     <link rel="stylesheet" href="<?= asset("/css/dash/custom.css") ?>">
+    <link rel="stylesheet" href="<?= asset("/css/bootstrap-icons.css") ?>">
 
     <?= $v->section("styles") ?>
 </head>

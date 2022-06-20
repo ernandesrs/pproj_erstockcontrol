@@ -11,20 +11,39 @@ if (CONF_APP_LOCAL !== "dev")
  */
 
 $sources = [
+    /**
+     * global
+     */
+    "public/assets/css" => [
+        "node_modules/bootstrap-icons/font/bootstrap-icons.css"
+    ],
+
+    "public/assets/css/fonts" => [
+        "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff",
+        "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2",
+    ],
+
+    "public/assets/js" => [
+        "node_modules/jquery/dist/jquery.min.js",
+        "node_modules/jquery-ui-dist/jquery-ui.min.js",
+        "node_modules/bootstrap/dist/js/bootstrap.min.js",
+    ],
+
+    /**
+     * dash
+     */
     "public/assets/css/dash" => [
         "shared/styles/dash/custom.css"
     ],
 
     "public/assets/js/dash" => [
         "shared/scripts/dash/scripts.js",
-
-        "node_modules/jquery/dist/jquery.min.js"
     ],
 ];
 
 foreach ($sources as $destiny => $resources) {
     foreach ($resources as $resource) {
-        
+
         $fResourcePath = CONF_BASE_DIR . "/{$resource}";
         $fResourceDestiny = CONF_BASE_DIR . "/{$destiny}";
 
