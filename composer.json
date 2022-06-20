@@ -9,7 +9,8 @@
         },
         "files": [
             "source/Config/config.php",
-            "source/Config/functionsLoader.php"
+            "source/Config/functionsLoader.php",
+            "source/Config/resources.php"
         ]
     },
     "authors": [

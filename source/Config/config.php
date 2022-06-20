@@ -2,6 +2,7 @@
 
 $env = parse_ini_file(__DIR__ . "/../../.env");
 
+define("CONF_APP_LOCAL", $env["APP_LOCAL"] ?? "dev");
 define("CONF_APP_NAME", $env["APP_NAME"] ?? null);
 define("CONF_URL_BASE", $env["APP_URL_BASE"] ?? null);
 
