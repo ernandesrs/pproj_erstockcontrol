@@ -78,7 +78,23 @@ $(function () {
             },
 
             success: function (response) {
+                if (response.redirect) {
+                    window.location.href = response.redirect;
+                    return;
+                }
 
+                if (response.reload) {
+                    window.location.reload();
+                    return;
+                }
+
+                if (response.message) {
+                    $("body").find(".message-area").html($(response.message).hide().show(function () {
+                        $(this).effect("bounce");
+                    }));
+                }
+
+                addFormErrors(form, response.errors ?? null);
             },
 
             complete: function () {
@@ -155,4 +171,41 @@ function removeLoadingMode(buttonObject) {
         .addClass(buttonObject.attr("data-active-icon"))
         .removeClass(buttonObject.attr("data-alt-icon"))
         .prop("disabled", false);
+}
+
+/**
+ * 
+ * FUNÇÕES: FORM ERRORS
+ * 
+ */
+
+/**
+ * @param {jQuery} formObject
+ * @param {Array} errs
+ */
+function addFormErrors(formObject, errs) {
+    let fields = formObject.find("input, select, textarea");
+    let errors = errs ?? [];
+
+    if (!fields.length) return;
+
+    $.each(fields, function (fieldKey, field) {
+        let fieldObj = $(field);
+        let fieldName = fieldObj.attr("name");
+
+        if (errors[fieldName]) {
+            let invalid = fieldObj.parent().find(".invalid-feedback");
+
+            if (invalid.length) invalid.html(errors[fieldName]);
+            else fieldObj.parent().append(`<div class="invalid-feedback">${errors[fieldName]}</div>`);
+
+            fieldObj.addClass("is-invalid");
+        } else {
+            fieldObj
+                .removeClass("is-invalid")
+                .parent().find(".invalid-feedback").hide("fade", function () {
+                    $(this).remove();
+                });
+        }
+    });
 }

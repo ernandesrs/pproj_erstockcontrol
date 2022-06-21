@@ -38,6 +38,34 @@ class UserController extends DashController
      */
     public function store(): void
     {
+        // message()->success("tudo certo e recarregado kkk")->flash();
+        // echo json_encode([
+        //     "reload" => true,
+        // ]);
+        // return;
+
+        // message()->success("tudo certo e redirecionado kkk")->flash();
+        // echo json_encode([
+        //     "redirect" => $this->route("dash.users"),
+        // ]);
+        // return;
+
+        // echo json_encode([
+        //     "success" => false,
+        //     "message" => message()->success("Cetin kkk")->render(),
+        // ]);
+        // return;
+
+        // echo json_encode([
+        //     "success" => false,
+        //     "message" => message()->warning("Corrija os erros nos campos")->render(),
+        //     "errors" => [
+        //         "first_name" => "Informe este campo",
+        //         "last_name" => "Informe este campo",
+        //         "email" => "Informe este campo",
+        //         "gender" => "Informe este campo",
+        //     ]
+        // ]);
     }
 
     /**
