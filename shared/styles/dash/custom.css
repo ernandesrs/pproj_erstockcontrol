@@ -9122,6 +9122,44 @@ body .main .section .section-content {
   padding: 0.5rem 1rem;
   border: 1px solid rgb(230, 230, 230);
 }
+body .main .section .section-content .list-items .list-item:hover {
+  box-shadow: 0 0 8px 0 rgba(75, 75, 75, 0);
+}
+body .main .section .section-content .list-items .list-item.user .photo {
+  width: 125px;
+  height: 125px;
+}
+body .main .section .section-content .list-items .list-item.user .photo.no-photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 2.5rem;
+  cursor: default;
+  color: rgba(75, 75, 75, 0.5);
+}
+body .main .section .section-content .list-items .list-item.user .username,
+body .main .section .section-content .list-items .list-item.user .fullname,
+body .main .section .section-content .list-items .list-item.user .email {
+  padding-bottom: 0.1666666667rem;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+body .main .section .section-content .list-items .list-item.user .username {
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+body .main .section .section-content .list-items .list-item.user .fullname,
+body .main .section .section-content .list-items .list-item.user .email {
+  color: rgb(75, 75, 75);
+}
+body .main .section .section-content .list-items .list-item.user .fullname {
+  font-size: 1rem;
+}
+body .main .section .section-content .list-items .list-item.user .email {
+  font-size: 0.875rem;
+}
 
 @media (min-width: 992px) {
   body {

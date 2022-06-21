@@ -144,6 +144,58 @@ body {
                 background-color: $white;
                 padding: $spacer / 2 $spacer;
                 border: 1px solid $light;
+
+                .list-items {
+                    .list-item {
+                        &:hover {
+                            box-shadow: 0 0 8px 0 rgb($dark-light, 0);
+                        }
+
+                        &.user {
+                            .photo {
+                                width: 125px;
+                                height: 125px;
+
+                                &.no-photo {
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    font-weight: 600;
+                                    font-size: 2.5rem;
+                                    cursor: default;
+                                    color: rgb($dark-light, 0.5);
+                                }
+                            }
+
+                            .username,
+                            .fullname,
+                            .email {
+                                padding-bottom: $spacer / 6;
+                                white-space: nowrap;
+                                overflow-x: hidden;
+                            }
+
+                            .username {
+                                font-size: 1.2rem;
+                                font-weight: 600;
+                                text-transform: uppercase;
+                            }
+
+                            .fullname,
+                            .email {
+                                color: $dark-light;
+                            }
+
+                            .fullname {
+                                font-size: 1rem;
+                            }
+
+                            .email {
+                                font-size: 0.875rem;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

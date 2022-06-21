@@ -2,6 +2,8 @@
 
 namespace App\Controllers\Dash;
 
+use App\Models\User;
+
 class UserController extends DashController
 {
     /**
@@ -17,7 +19,10 @@ class UserController extends DashController
      */
     public function index(): void
     {
-        $this->view("dash/users")->seo("Listando usuários")->render();
+        $page = filter_input(INPUT_GET, "page", FILTER_VALIDATE_INT) ?? 1;
+        $this->view("dash/users", [
+            "users" => (new User())->offset($page - 1)->limit(12)->find()->get(true)
+        ])->seo("Listando usuários")->render();
     }
 
     /**
