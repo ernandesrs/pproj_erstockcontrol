@@ -5,35 +5,35 @@ function getValue(string $name, $user)
     return $user->$name ?? null;
 }
 ?>
-<div class="col-12 col-md-6">
+<div class="col-12 col-sm-6">
     <div class="form-group">
         <label for="first_name">Nome:</label>
         <input class="form-control" type="text" name="first_name" id="first_name" value="<?= getValue("first_name", $user ?? null) ?>">
     </div>
 </div>
 
-<div class="col-12 col-md-6">
+<div class="col-12 col-sm-6">
     <div class="form-group">
         <label for="last_name">Sobrenome:</label>
         <input class="form-control" type="text" name="last_name" id="last_name" value="<?= getValue("last_name", $user ?? null) ?>">
     </div>
 </div>
 
-<div class="col-12 col-md-6">
+<div class="col-12 col-lg-6">
     <div class="form-group">
         <label for="email">Email:</label>
         <input class="form-control" type="email" name="email" id="email" value="<?= getValue("email", $user ?? null) ?>">
     </div>
 </div>
 
-<div class="col-12 col-md-3">
+<div class="col-12 col-sm-6 col-lg-3">
     <div class="form-group">
         <label for="username">Usuário:</label>
         <input class="form-control" type="text" name="username" id="username" value="<?= getValue("username", $user ?? null) ?>">
     </div>
 </div>
 
-<div class="col-12 col-md-3">
+<div class="col-12 col-sm-6 col-lg-3">
     <div class="form-group">
         <label for="gender">Gênero:</label>
         <select class="form-control" name="gender" id="gender">

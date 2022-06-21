@@ -150,50 +150,75 @@ body {
                         &:hover {
                             box-shadow: 0 0 8px 0 rgb($dark-light, 0);
                         }
+                    }
+                }
+            }
 
-                        &.user {
-                            .photo {
-                                width: 125px;
-                                height: 125px;
+            &.section-users {
+                .section-content {
+                    .list-items {
+                        .list-item {
 
-                                &.no-photo {
-                                    display: flex;
-                                    justify-content: center;
-                                    align-items: center;
+                            &.user {
+                                .photo {
+                                    width: 125px;
+                                    height: 125px;
+
+                                    &.no-photo {
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        font-weight: 600;
+                                        font-size: 2.5rem;
+                                        cursor: default;
+                                        color: rgb($dark-light, 0.5);
+                                    }
+                                }
+
+                                .username,
+                                .fullname,
+                                .email {
+                                    padding-bottom: $spacer / 6;
+                                    white-space: nowrap;
+                                    overflow-x: hidden;
+                                }
+
+                                .username {
+                                    font-size: 1.2rem;
                                     font-weight: 600;
-                                    font-size: 2.5rem;
-                                    cursor: default;
-                                    color: rgb($dark-light, 0.5);
+                                    text-transform: uppercase;
+                                }
+
+                                .fullname,
+                                .email {
+                                    color: $dark-light;
+                                }
+
+                                .fullname {
+                                    font-size: 1rem;
+                                }
+
+                                .email {
+                                    font-size: 0.875rem;
                                 }
                             }
-
-                            .username,
-                            .fullname,
-                            .email {
-                                padding-bottom: $spacer / 6;
-                                white-space: nowrap;
-                                overflow-x: hidden;
-                            }
-
-                            .username {
-                                font-size: 1.2rem;
-                                font-weight: 600;
-                                text-transform: uppercase;
-                            }
-
-                            .fullname,
-                            .email {
-                                color: $dark-light;
-                            }
-
-                            .fullname {
-                                font-size: 1rem;
-                            }
-
-                            .email {
-                                font-size: 0.875rem;
-                            }
                         }
+                    }
+                }
+            }
+
+            &.section-user-edit {
+                .photo {
+                    width: 275px;
+                    height: 275px;
+
+                    &.no-photo {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-weight: 600;
+                        font-size: 5rem;
+                        color: rgb($dark-light, 0.5);
                     }
                 }
             }

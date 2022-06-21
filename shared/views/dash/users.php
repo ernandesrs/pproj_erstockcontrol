@@ -2,7 +2,7 @@
 
 <?= $v->start("content") ?>
 
-<div class="section">
+<div class="section section-users">
     <div class="section-header">
         <div class="left-side">
             <h2 class="title">Listagem de usuários</h2>
