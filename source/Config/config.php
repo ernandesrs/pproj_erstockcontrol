@@ -32,3 +32,43 @@ define("CONF_UPLOAD_BASE_DIR", "/storage/uploads");
 define("CONF_UPLOAD_IMAGES_DIR", "images");
 define("CONF_UPLOAD_MEDIAS_DIR", "medias");
 define("CONF_UPLOAD_FILES_DIR", "files");
+
+/**
+ * DASHBOARD: menus do sidebar
+ */
+define("CONF_DASHBOARD_SIDEBAR", [
+    "menu" => [
+        [
+            "text" => "Resumo geral",
+            "routeName" => "dash.dash",
+            "iconName" => "pieChart",
+            "target" => "_self"
+        ],
+        [
+            "text" => "Produtos",
+            "routeName" => "dash.products",
+            "iconName" => "box2",
+            "target" => "_self"
+        ],
+    ],
+    "outros" => [
+        [
+            "text" => "Configurações",
+            "routeName" => "dash.settings",
+            "iconName" => "sliders",
+            "target" => "_self"
+        ],
+        [
+            "text" => "Perfil",
+            "routeName" => "dash.profile",
+            "iconName" => "userProfile",
+            "target" => "_self"
+        ],
+        [
+            "text" => "Sair",
+            "routeName" => "auth.logout",
+            "iconName" => "authLogout",
+            "target" => "_self"
+        ],
+    ]
+]);

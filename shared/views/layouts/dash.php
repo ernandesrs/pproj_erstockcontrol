@@ -31,15 +31,27 @@
 <body>
     <aside class="d-none d-lg-block sidebar jsDashboardSidebar">
         <div class="container-fluid">
+            <?php
+            $logged = (new \App\Models\Auth())->logged();
+            if (!$logged) {
+                exit;
+            }
+            ?>
             <div class="profile d-flex align-items-center">
-                <img class="photo img-thumbnail rounded-circle" src="https://via.placeholder.com/45x45" alt="">
+                <?php if ($logged->photo) : ?>
+                    <img class="photo img-thumbnail rounded-circle" src="<?= $logged->photo ?>" alt="">
+                <?php else : ?>
+                    <div class="photo no-image img-thumbnail rounded-circle">
+                        <?= strtoupper($logged->username[0]) ?>
+                    </div>
+                <?php endif; ?>
                 <div class="info pl-2 w-100">
-                    <div class="mb-0 username">Ernandes</div>
+                    <div class="mb-0 username"><?= $logged->username ?></div>
                     <div class="mb-0 d-flex">
-                        <span class="level">
+                        <span class="level d-none">
                             <small>Proprietário</small>
                         </span>
-                        <a class="profile-link ml-auto" href="">
+                        <a class="profile-link" href="">
                             <?= icon_elem("authLogout") ?> Sair
                         </a>
                     </div>
@@ -47,42 +59,26 @@
             </div>
 
             <div class="sidebar-elements">
-                <div class="element">
-                    <h5 class="title">menu</h5>
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <?= icon_elem("pieChart") ?> Resumo geral
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <?= icon_elem("box2") ?> Produtos
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="element">
-                    <h5 class="title">outros</h5>
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <?= icon_elem("sliders") ?> Configurações
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <?= icon_elem("userProfile") ?> Perfil
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?= url("auth/logout") ?>" title="Encerrar minha sessão">
-                                <?= icon_elem("authLogout") ?> Sair
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <?php
+                foreach (CONF_DASHBOARD_SIDEBAR as $key => $element) :
+                    $element = (object) $element;
+                ?>
+                    <div class="element">
+                        <h5 class="title"><?= $key ?></h5>
+                        <ul class="nav flex-column">
+                            <?php
+                            foreach ($element as $k => $el) :
+                                $el = (object) $el;
+                            ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="" target="<?= $el->target ?>">
+                                        <?= icon_elem($el->iconName) ?> <span><?= $el->text ?></span>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </aside>
