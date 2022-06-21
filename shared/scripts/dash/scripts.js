@@ -55,6 +55,47 @@ $(function () {
 });
 
 /**
+ * SUBMISSÃO DE FORMULÁRIOS
+ */
+$(function () {
+
+    $("form").on("submit", function (e) {
+        e.preventDefault();
+        let form = $(this);
+        let submitButton = $(e.originalEvent.submitter);
+        let action = form.attr("action");
+        let data = (new FormData(form[0]));
+
+        $.ajax({
+            url: action,
+            data: data,
+            method: 'POST',
+            processData: false,
+            dataType: 'json',
+
+            beforeSend: function () {
+                addLoadingMode(submitButton);
+            },
+
+            success: function (response) {
+
+            },
+
+            complete: function () {
+                removeLoadingMode(submitButton);
+            }
+        });
+    });
+
+});
+
+/**
+ * 
+ * FUNÇÕES: BACKDROP
+ * 
+ */
+
+/**
  * @param {String} id id para o backdrop
  * @param {String} position tipo de posicionamento. Padrão é 'absolute'
  * @param {String} container onde inserir o backdrop. Padrão é o 'body'
@@ -88,4 +129,30 @@ function removeBackdrop(id, container, effect) {
     cntnr.find("#" + id).hide(efct, function () {
         $(this).remove();
     });
+}
+
+/**
+ * 
+ * FUNÇÕES: BOTÕES
+ * 
+ */
+
+/**
+ * @param {jQuery} buttonObject objeto jQuery do botão
+ */
+function addLoadingMode(buttonObject) {
+    buttonObject
+        .removeClass(buttonObject.attr("data-active-icon"))
+        .addClass(buttonObject.attr("data-alt-icon"))
+        .prop("disabled", true);
+}
+
+/**
+ * @param {jQuery} buttonObject objeto jQuery do botão
+ */
+function removeLoadingMode(buttonObject) {
+    buttonObject
+        .addClass(buttonObject.attr("data-active-icon"))
+        .removeClass(buttonObject.attr("data-alt-icon"))
+        .prop("disabled", false);
 }

@@ -43,7 +43,7 @@ function asset(string $asset): ?string
  */
 function icon_class(string $name): string
 {
-    return CONF_ICONS[$name] ?? "";
+    return (CONF_ICONS[$name] ?? null) ? "icon " . CONF_ICONS[$name] : "";
 }
 
 /**

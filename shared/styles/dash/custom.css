@@ -9015,6 +9015,19 @@ body {
 body .icon {
   margin-right: 0.25rem;
 }
+body .icon.loading::before {
+  animation-name: rotateCircle;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease;
+  animation-fill-mode: both;
+  animation-play-state: running;
+}
+@keyframes rotateCircle {
+  to {
+    transform: rotateZ(360deg);
+  }
+}
 body .sidebar {
   grid-area: "sidebar";
   background-color: rgb(61, 61, 61);
