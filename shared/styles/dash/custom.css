@@ -9012,6 +9012,9 @@ body {
   min-height: 100vh;
   color: rgb(61, 61, 61);
 }
+body .icon {
+  margin-right: 0.25rem;
+}
 body .sidebar {
   grid-area: "sidebar";
   background-color: rgb(61, 61, 61);
@@ -9065,6 +9068,10 @@ body .sidebar .sidebar-elements .element .title {
   font-size: 1.2rem;
   color: rgb(230, 230, 230);
   text-transform: uppercase;
+}
+body .sidebar .sidebar-elements .element .nav .nav-item .nav-link.active {
+  background-color: rgba(255, 255, 255, 0.06125);
+  color: rgb(210, 210, 210);
 }
 body .main {
   grid-area: "content";

@@ -15,6 +15,14 @@ $router = new Router(CONF_URL_BASE);
 $router->namespace("App\\Controllers\\Dash");
 $router->get("/", "IndexController@index", "dash.index");
 $router->get("/dash", "IndexController@dash", "dash.dash");
+
+$router->get("/dash/produtos", "IndexController@dash", "dash.products");
+$router->get("/dash/produto/novo", "IndexController@dash", "dash.products.new");
+$router->get("/dash/produto/editar", "IndexController@dash", "dash.products.edit");
+
+$router->get("/dash/configuracao", "IndexController@dash", "dash.settings");
+$router->get("/dash/perfil", "IndexController@dash", "dash.profile");
+
 $router->get("/error", "IndexController@error", "dash.error");
 
 /**

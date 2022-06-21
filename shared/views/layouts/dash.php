@@ -67,7 +67,7 @@
                             <?php foreach ($element as $k => $el) :
                                 $el = (object) $el; ?>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?= $router->route($el->routeName) ?>" target="<?= $el->target ?>">
+                                    <a class="nav-link <?= in_array($router->currentRouteName(), $el->activeIn) ? "active" : null ?>" href="<?= $router->route($el->routeName) ?>" target="<?= $el->target ?>">
                                         <?= icon_elem($el->iconName) ?> <span><?= $el->text ?></span>
                                     </a>
                                 </li>

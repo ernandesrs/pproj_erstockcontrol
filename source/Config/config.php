@@ -42,13 +42,21 @@ define("CONF_DASHBOARD_SIDEBAR", [
             "text" => "Resumo geral",
             "routeName" => "dash.dash",
             "iconName" => "pieChart",
-            "target" => "_self"
+            "target" => "_self",
+            "activeIn" => [
+                "dash.dash"
+            ]
         ],
         [
             "text" => "Produtos",
             "routeName" => "dash.products",
             "iconName" => "box2",
-            "target" => "_self"
+            "target" => "_self",
+            "activeIn" => [
+                "dash.products",
+                "dash.products.new",
+                "dash.products.edit",
+            ]
         ],
     ],
     "outros" => [
@@ -56,19 +64,28 @@ define("CONF_DASHBOARD_SIDEBAR", [
             "text" => "Configurações",
             "routeName" => "dash.settings",
             "iconName" => "sliders",
-            "target" => "_self"
+            "target" => "_self",
+            "activeIn" => [
+                "dash.settings"
+            ]
         ],
         [
             "text" => "Perfil",
             "routeName" => "dash.profile",
             "iconName" => "userProfile",
-            "target" => "_self"
+            "target" => "_self",
+            "activeIn" => [
+                "dash.profile"
+            ]
         ],
         [
             "text" => "Sair",
             "routeName" => "auth.logout",
             "iconName" => "authLogout",
-            "target" => "_self"
+            "target" => "_self",
+            "activeIn" => [
+                "auth.logout"
+            ]
         ],
     ]
 ]);
