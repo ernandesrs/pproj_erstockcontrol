@@ -58,6 +58,17 @@ define("CONF_DASHBOARD_SIDEBAR", [
                 "dash.products.edit",
             ]
         ],
+        [
+            "text" => "Usuários",
+            "routeName" => "dash.users",
+            "iconName" => "userGroup",
+            "target" => "_self",
+            "activeIn" => [
+                "dash.users",
+                "dash.users.create",
+                "dash.users.edit",
+            ]
+        ],
     ],
     "outros" => [
         [

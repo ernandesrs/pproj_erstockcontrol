@@ -20,6 +20,13 @@ $router->get("/dash/produtos", "IndexController@products", "dash.products");
 $router->get("/dash/produto/novo", "IndexController@newProduct", "dash.products.new");
 $router->get("/dash/produto/editar", "IndexController@editProduct", "dash.products.edit");
 
+$router->get("/dash/usuarios", "UserController@index", "dash.users");
+$router->get("/dash/usuario/novo", "UserController@create", "dash.users.create");
+$router->post("/dash/usuario/cadastrar", "UserController@store", "dash.users.store");
+$router->get("/dash/usuario/editar", "UserController@edit", "dash.users.edit");
+$router->post("/dash/usuario/atualizar", "UserController@update", "dash.users.update");
+$router->post("/dash/usuario/excluir", "UserController@delete", "dash.users.delete");
+
 $router->get("/dash/configuracao", "IndexController@dash", "dash.settings");
 $router->get("/dash/perfil", "IndexController@dash", "dash.profile");
 
