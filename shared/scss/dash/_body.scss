@@ -7,8 +7,6 @@ body {
     color: $dark;
 
     .icon {
-        margin-right: $spacer / 4;
-
         &.loading {
             &::before {
                 animation-name: rotateCircle;

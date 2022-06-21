@@ -19,21 +19,24 @@ function getValue(string $name, $user)
     </div>
 </div>
 
-<div class="col-12 col-lg-6">
+<div class="col-12 col-md-6 col-xl-5">
     <div class="form-group">
         <label for="email">Email:</label>
         <input class="form-control" type="email" name="email" id="email" value="<?= getValue("email", $user ?? null) ?>">
     </div>
 </div>
 
-<div class="col-12 col-sm-6 col-lg-3">
+<div class="col-12 col-md-6 col-xl-3">
     <div class="form-group">
         <label for="username">Usuário:</label>
         <input class="form-control" type="text" name="username" id="username" value="<?= getValue("username", $user ?? null) ?>">
     </div>
 </div>
 
-<div class="col-12 col-sm-6 col-lg-3">
+<?php
+$logged = (new \App\Models\Auth())->logged();
+?>
+<div class="<?= $logged->level == 5 ? "col-6 col-xl-2" : "col-12" ?>">
     <div class="form-group">
         <label for="gender">Gênero:</label>
         <select class="form-control" name="gender" id="gender">
@@ -43,6 +46,19 @@ function getValue(string $name, $user)
         </select>
     </div>
 </div>
+
+<?php if ($logged->level == 5) : ?>
+    <div class="<?= $logged->level == 5 ? "col-6 col-xl-2" : "col-12" ?> col-xl-2">
+        <div class="form-group">
+            <label for="level">Nível:</label>
+            <select class="form-control" name="level" id="level">
+                <option value="1" <?= getValue("level", $user ?? null) == 1 ? "selected" : null ?>>Comum</option>
+                <option value="2" <?= getValue("level", $user ?? null) == 2 ? "selected" : null ?>>Administrador</option>
+                <option value="5" <?= getValue("level", $user ?? null) == 2 ? "selected" : null ?>>Proprietário</option>
+            </select>
+        </div>
+    </div>
+<?php endif; ?>
 
 <div class="col-12 col-md-6">
     <div class="form-group">

@@ -9012,9 +9012,6 @@ body {
   min-height: 100vh;
   color: rgb(61, 61, 61);
 }
-body .icon {
-  margin-right: 0.25rem;
-}
 body .icon.loading::before {
   animation-name: rotateCircle;
   animation-duration: 1s;

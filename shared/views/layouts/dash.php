@@ -48,10 +48,10 @@
                 <div class="info pl-2 w-100">
                     <div class="mb-0 username"><?= $logged->username ?></div>
                     <div class="mb-0 d-flex">
-                        <span class="level d-none">
-                            <small>Proprietário</small>
+                        <span class="level">
+                            <small><?= $logged->level == 1 ? "Comum" : ($logged->level == 2 ? "Administrador" : "Proprietário") ?></small>
                         </span>
-                        <a class="profile-link" href="<?= $router->route("auth.logout") ?>">
+                        <a class="profile-link ml-auto" href="<?= $router->route("auth.logout") ?>">
                             <?= icon_elem("authLogout") ?> Sair
                         </a>
                     </div>
