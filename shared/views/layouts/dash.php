@@ -95,6 +95,12 @@
                 </div>
             </div>
 
+            <div class="message-area mt-2">
+                <?php if ($flash = message_flash()) {
+                    echo $flash->render();
+                } ?>
+            </div>
+
             <?= $v->section("content") ?>
         </div>
     </main>
