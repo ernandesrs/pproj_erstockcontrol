@@ -15,7 +15,18 @@
     </div>
 
     <div class="section-content">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio soluta non dignissimos consequatur alias facere sed amet atque pariatur, praesentium commodi eligendi at ducimus animi culpa odio, tempore consectetur nisi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis molestias repudiandae autem quae obcaecati inventore doloremque, sed corporis possimus illum sunt animi. Aperiam, eum neque harum iste tenetur officiis voluptate!
+        <form action="<?= $router->route("dash.users.update", ["id" => $user->id]) ?>" method="post" enctype="multipart/form-data">
+            <div class="row py-3">
+                <?php
+                include __DIR__ . "/includes/users-form-fields.php";
+                ?>
+                <div class="col-12 form-group text-right mb-0">
+                    <button class="btn btn-info <?= icon_class("userCheck") ?>" data-active-icon="<?= icon_class("userCheck") ?>" data-alt-icon="<?= icon_class("loading") ?>" type="submit">
+                        Atualizar
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 

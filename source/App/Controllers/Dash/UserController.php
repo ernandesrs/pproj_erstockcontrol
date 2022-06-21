@@ -45,7 +45,17 @@ class UserController extends DashController
      */
     public function edit(): void
     {
-        $this->view("dash/users-edit")->seo("Editando usuário")->render();
+        $id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 0;
+
+        $user = (new User())->find("id=:id", "id={$id}")->get();
+        if (!$user) {
+            message()->warning("O usuário que você tentou editar não existe ou já foi excluído.")->flash();
+            $this->router->redirect("dash.users");
+        }
+
+        $this->view("dash/users-edit", [
+            "user" => $user
+        ])->seo("Editando usuário")->render();
     }
 
     /**
