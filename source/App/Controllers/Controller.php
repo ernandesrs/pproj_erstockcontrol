@@ -26,6 +26,8 @@ class Controller
         $this->router = $router;
         $this->view = new Template(CONF_BASE_DIR . CONF_VIEWS_DIR);
         $this->uploader = new Uploader(CONF_BASE_DIR . CONF_UPLOAD_BASE_DIR);
+
+        $this->view->addData(["router" => $this->router]);
     }
 
     /**

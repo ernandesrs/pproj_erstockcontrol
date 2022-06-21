@@ -51,7 +51,7 @@
                         <span class="level d-none">
                             <small>Proprietário</small>
                         </span>
-                        <a class="profile-link" href="">
+                        <a class="profile-link" href="<?= $router->route("auth.logout") ?>">
                             <?= icon_elem("authLogout") ?> Sair
                         </a>
                     </div>
@@ -67,7 +67,7 @@
                             <?php foreach ($element as $k => $el) :
                                 $el = (object) $el; ?>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="" target="<?= $el->target ?>">
+                                    <a class="nav-link" href="<?= $router->route($el->routeName) ?>" target="<?= $el->target ?>">
                                         <?= icon_elem($el->iconName) ?> <span><?= $el->text ?></span>
                                     </a>
                                 </li>
@@ -89,7 +89,7 @@
                     </a>
                 </div>
                 <div class="ml-auto">
-                    <a class="btn btn-sm btn-outline-danger" href="<?= url("auth/logout") ?>">
+                    <a class="btn btn-sm btn-outline-danger" href="<?= $router->route("auth.logout") ?>">
                         <?= icon_elem("authLogout") ?> Sair
                     </a>
                 </div>
