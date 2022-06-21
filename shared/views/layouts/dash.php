@@ -84,9 +84,9 @@
             <div class="main-bar d-flex align-items-center py-2">
                 <button class="btn btn-sidebar-toggler jsSidebarToggler d-lg-none <?= icon_class("arrowRightSquare") ?>" data-active-icon="<?= icon_class("arrowRightSquare") ?>" data-alt-icon="<?= icon_class("arrowLeftSquare") ?>"></button>
                 <div class="ml-1">
-                    <a class="btn btn-sm btn-outline-secondary border-0" href="">
+                    <button class="btn btn-sm btn-outline-secondary border-0 jsNotifications">
                         <?= icon_elem("bell") ?>
-                    </a>
+                    </button>
                 </div>
                 <div class="ml-auto">
                     <a class="btn btn-sm btn-outline-danger" href="<?= $router->route("auth.logout") ?>">

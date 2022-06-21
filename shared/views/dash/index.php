@@ -54,8 +54,7 @@
             </div>
 
             <div class="section-content">
-                <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio soluta non dignissimos consequatur alias facere sed amet atque pariatur, praesentium commodi eligendi at ducimus animi culpa odio, tempore consectetur nisi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis molestias repudiandae autem quae obcaecati inventore doloremque, sed corporis possimus illum sunt animi. Aperiam, eum neque harum iste tenetur officiis voluptate!
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio soluta non dignissimos consequatur alias facere sed amet atque pariatur, praesentium commodi eligendi at ducimus animi culpa odio, tempore consectetur nisi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis molestias repudiandae autem quae obcaecati inventore doloremque, sed corporis possimus illum sunt animi. Aperiam, eum neque harum iste tenetur officiis voluptate!
             </div>
         </div>
     </div>
