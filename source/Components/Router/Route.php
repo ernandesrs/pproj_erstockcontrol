@@ -6,6 +6,8 @@ use Exception;
 
 abstract class Route
 {
+    use RouteTrait;
+
     protected const GET_METHOD = "GET";
     protected const POST_METHOD = "POST";
     protected const NOTFOUND = 404;
@@ -22,6 +24,9 @@ abstract class Route
     /** @var Array */
     protected $routes;
 
+    /** @var Array */
+    protected $currentRoute;
+
     /** @var int */
     protected $errno;
 
@@ -29,6 +34,32 @@ abstract class Route
      * @return bool
      */
     public function boot(): bool
+    {
+        if (!$this->prepare())
+            return false;
+
+        $class = $this->currentRoute["namespace"] . "\\" . explode("@", $this->currentRoute["action"])[0];
+        $method = explode("@", $this->currentRoute["action"])[1];
+
+        if (!class_exists($class)) {
+            $this->errno = self::NOTIMPLEMENTED;
+            return false;
+        }
+
+        if (!method_exists($class, $method)) {
+            $this->errno = self::NOTIMPLEMENTED;
+            return false;
+        }
+
+        (new $class($this))->$method();
+
+        return true;
+    }
+
+    /**
+     * @return boolean
+     */
+    private function prepare(): bool
     {
         $requestMethod = $_SERVER["REQUEST_METHOD"];
 
@@ -43,26 +74,11 @@ abstract class Route
             return false;
         }
 
-        $route = $this->routes[$requestMethod][$url];
-        if (empty($route["namespace"])) {
+        $this->currentRoute = $this->routes[$requestMethod][$url];
+        if (empty($this->currentRoute["namespace"])) {
             throw new Exception("Namespace não definido");
             return false;
         }
-
-        $class = $route["namespace"] . "\\" . explode("@", $route["action"])[0];
-        $method = explode("@", $route["action"])[1];
-
-        if (!class_exists($class)) {
-            $this->errno = self::NOTIMPLEMENTED;
-            return false;
-        }
-
-        if (!method_exists($class, $method)) {
-            $this->errno = self::NOTIMPLEMENTED;
-            return false;
-        }
-
-        (new $class($this))->$method();
 
         return true;
     }
