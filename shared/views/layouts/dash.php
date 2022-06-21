@@ -59,17 +59,13 @@
             </div>
 
             <div class="sidebar-elements">
-                <?php
-                foreach (CONF_DASHBOARD_SIDEBAR as $key => $element) :
-                    $element = (object) $element;
-                ?>
+                <?php foreach (CONF_DASHBOARD_SIDEBAR as $key => $element) :
+                    $element = (object) $element; ?>
                     <div class="element">
                         <h5 class="title"><?= $key ?></h5>
                         <ul class="nav flex-column">
-                            <?php
-                            foreach ($element as $k => $el) :
-                                $el = (object) $el;
-                            ?>
+                            <?php foreach ($element as $k => $el) :
+                                $el = (object) $el; ?>
                                 <li class="nav-item">
                                     <a class="nav-link" href="" target="<?= $el->target ?>">
                                         <?= icon_elem($el->iconName) ?> <span><?= $el->text ?></span>
