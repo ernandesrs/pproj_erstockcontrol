@@ -3,6 +3,7 @@
 namespace App\Controllers\Tests;
 
 use App\Controllers\Tests\TestController;
+use App\Helpers\Storage;
 use Components\Message\Message;
 use Components\Session\Session;
 
@@ -71,6 +72,39 @@ class IndexController extends TestController
             if (!$path) {
                 (new Message())->danger($upload->error()->message, "Falha no upload")->flash();
             } else {
+                (new Message())->success("Upload concluído: " . $this->route("index.index") . "/storage/uploads" . $path . " :)", "Tudo certo :D")->flash();
+            }
+
+            $this->router->redirect("index.uploadTest");
+            return;
+        }
+
+        $this->view("tests/upload", [
+            "firstName" => "My First Name",
+            "lastName" => "My Last Name"
+        ])->seo("Teste de upload")->render();
+    }
+
+    public function uploadTestStorage(): void
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $storage = new Storage();
+
+            if (key_exists("image", $_FILES)) {
+                $storage->image($_FILES["image"], "tests/images");
+            } else if (key_exists("video", $_FILES)) {
+                $storage->media($_FILES["video"], "tests/medias");
+            } elseif (key_exists("file", $_FILES)) {
+                $storage->file($_FILES["file"], "tests/files");
+            } else {
+                echo "nenhum upload";
+            }
+
+            $path = $storage->store();
+            if (!$path) {
+                (new Message())->danger($storage->error()->message, "Falha no upload")->flash();
+            } else {
+                $storage->unlinkLast();
                 (new Message())->success("Upload concluído: " . $this->route("index.index") . "/storage/uploads" . $path . " :)", "Tudo certo :D")->flash();
             }
 

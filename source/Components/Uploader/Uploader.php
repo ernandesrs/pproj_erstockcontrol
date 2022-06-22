@@ -12,14 +12,14 @@ class Uploader
     use FileTrait;
 
     /** @var array */
-    private $allowedImageMimes = [
+    protected $allowedImageMimes = [
         "image/png",
         "image/jpeg",
         "image/webp"
     ];
 
     /** @var array */
-    private $allowedMediaMimes = [
+    protected $allowedMediaMimes = [
         "video/webm",
         "video/ogg",
         "video/mp4",
@@ -31,7 +31,7 @@ class Uploader
     ];
 
     /** @var array */
-    private $allowedFileMimes = [
+    protected $allowedFileMimes = [
         "application/msword",
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         "application/vnd.ms-fontobject",
@@ -40,25 +40,25 @@ class Uploader
     ];
 
     /** @var array */
-    private $allowedMimes;
+    protected $allowedMimes;
 
     /** @var string */
-    private $uploadDir;
+    protected $uploadDir;
 
     /** @var string */
-    private $subDir;
+    protected $subDir;
 
     /** @var bool */
-    private $dirByDate;
+    protected $dirByDate;
 
     /** @var array */
-    private $uploaded;
+    protected $uploaded;
 
     /** @var Exception */
-    private $exception;
+    protected $exception;
 
     /** @var array */
-    private $error;
+    protected $error;
 
     /**
      * @param string $uploadBaseDir
@@ -70,7 +70,7 @@ class Uploader
     }
 
     /**
-     * Armazena o aquivo
+     * Armazena o arquivo
      * @param string|null $rename
      * @return string|null
      */

@@ -48,7 +48,8 @@ $router->namespace("App\\Controllers\\Tests");
 $router->get("/testes", "IndexController@index", "index.index");
 $router->get("/testes/mensagens", "IndexController@messageTest", "index.messageTest");
 $router->get("/testes/uploads", "IndexController@uploadTest", "index.uploadTest");
-$router->post("/testes/uploads", "IndexController@uploadTest", "index.uploadTest.post");
+// $router->post("/testes/uploads", "IndexController@uploadTest", "index.uploadTest.post");
+$router->post("/testes/uploads", "IndexController@uploadTestStorage", "index.uploadTestStorage.post");
 
 if (!$router->boot()) {
     $router->redirect("dash.error", ["err" => $router->error()]);
