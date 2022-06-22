@@ -56,4 +56,22 @@ class Storage extends Uploader
 
         return;
     }
+
+    /**
+     * @param string|null $path
+     * @return string
+     */
+    public function url(?string $path = null): string
+    {
+        return url(CONF_UPLOAD_BASE_DIR . ($path ?? $this->uploadedPath));
+    }
+
+    /**
+     * @param string|null $path
+     * @return string
+     */
+    public function path(?string $path = null): string
+    {
+        return $this->uploadDir . ($path ?? $this->uploadedPath);
+    }
 }

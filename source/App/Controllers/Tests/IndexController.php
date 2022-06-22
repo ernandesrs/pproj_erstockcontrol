@@ -104,7 +104,8 @@ class IndexController extends TestController
             if (!$path) {
                 (new Message())->danger($storage->error()->message, "Falha no upload")->flash();
             } else {
-                $storage->unlinkLast();
+                // var_dump($storage->url("/jujubas/pebas/2022/10/218912.jpg"), $storage->path("/jujubas/pebas/2022/10/218912.jpg"));die;
+                // $storage->unlinkLast();
                 (new Message())->success("Upload concluído: " . $this->route("index.index") . "/storage/uploads" . $path . " :)", "Tudo certo :D")->flash();
             }
 

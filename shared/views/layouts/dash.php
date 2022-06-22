@@ -39,7 +39,7 @@
             ?>
             <div class="profile d-flex align-items-center">
                 <?php if ($logged->photo) : ?>
-                    <img class="photo img-thumbnail rounded-circle" src="<?= url(CONF_UPLOAD_BASE_DIR . $logged->photo) ?>" alt="">
+                    <img class="photo img-thumbnail rounded-circle" src="<?= storage_url($logged->photo) ?>" alt="">
                 <?php else : ?>
                     <div class="photo no-image img-thumbnail rounded-circle">
                         <?= strtoupper($logged->username[0]) ?>
