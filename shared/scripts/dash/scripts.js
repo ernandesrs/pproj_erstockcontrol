@@ -71,6 +71,7 @@ $(function () {
             data: data,
             method: 'POST',
             processData: false,
+            contentType: false,
             dataType: 'json',
 
             beforeSend: function () {
