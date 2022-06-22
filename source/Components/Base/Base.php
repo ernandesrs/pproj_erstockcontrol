@@ -39,7 +39,7 @@ abstract class Base extends Connect
     private $data;
 
     /** @var Array */
-    private $errors;
+    private $fail;
 
     /** @var String */
     private $errorMessage;
@@ -54,7 +54,7 @@ abstract class Base extends Connect
         $this->table = $table;
         $this->required = $required;
         $this->timestamps = $timestamps;
-        $this->errors = [];
+        $this->fail = [];
     }
 
     public function limit(int $limit): Base
@@ -211,7 +211,7 @@ abstract class Base extends Connect
 
         if ($arr == null) {
             if (!$this->requiredCheck()) {
-                $this->errorMessage = "Preencha todos os campos: " . implode(", ", $this->errors);
+                $this->errorMessage = "Preencha todos os campos: " . implode(", ", $this->fail);
                 return null;
             }
 
@@ -272,9 +272,9 @@ abstract class Base extends Connect
     {
         foreach ($this->required as $required) {
             if (empty($this->$required))
-                $this->errors[] = $required;
+                $this->fail[] = $required;
         }
-        return count($this->errors) == 0 ? true : false;
+        return count($this->fail) == 0 ? true : false;
     }
 
     /**
@@ -288,9 +288,9 @@ abstract class Base extends Connect
     /**
      * @return Array
      */
-    public function errors(): array
+    public function fail(): array
     {
-        return $this->errors;
+        return $this->fail;
     }
 
     /**
