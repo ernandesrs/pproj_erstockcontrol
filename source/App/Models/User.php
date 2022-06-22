@@ -35,13 +35,24 @@ class User extends Model
 
         if (!$this->validate()) return false;
 
+        // SE POSSUI O CAMPO SENHA, GERA A HASH
         if ($this->filtered["password"] ?? false)
             $this->filtered["password"] = password_hash($this->filtered["password"], PASSWORD_DEFAULT);
+
+        // EM UM UPDATE, CERTIFICA-SE DE QUE O NÍVEL NÃO SEJA PROPRIETÁRIO
+        if (!empty($this->id) && $this->level != self::LEVEL_OWNER) {
+            if ($this->filtered["level"] >= self::LEVEL_OWNER)
+                $this->filtered["level"] = $this->level;
+        }
+
+        // EM UM INSERT, IMPEDE QUE NOVO USUÁRIO SEJA DEFINIDO COMO PROPRIETÁRIO
+        if (empty($this->id) && $this->filtered["level"] >= self::LEVEL_OWNER)
+            $this->filtered["level"] = self::LEVEL_COMMON;
 
         foreach ($this->filtered as $filteredKey => $filteredData) {
             $this->$filteredKey = $filteredData;
         }
-        
+
         return true;
     }
 
