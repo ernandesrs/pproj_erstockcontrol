@@ -253,10 +253,7 @@ abstract class Base extends Connect
      */
     private function columns(): string
     {
-        if (empty($this->id))
-            $required = $this->required;
-        else
-            $required = array_keys((array) $this->data);
+        $required = array_keys((array) $this->data);
 
         if ($this->timestamps) {
             if (empty($this->id))
