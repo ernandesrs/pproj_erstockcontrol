@@ -131,33 +131,31 @@ class UserController extends DashController
             $data["level"] = $logged->level;
 
         // PHOTO UPLOAD
+        $storage = null;
         $newPhotoPath = null;
         if (!empty($_FILES["photo"]["name"])) {
-            $upload = uploader_image($_FILES["photo"], "images/photo");
-            $newPhotoPath = $upload->store();
+            $storage = storage_image($_FILES["photo"], "images/photo");
+            $newPhotoPath = $storage->store();
             if (!$newPhotoPath) {
                 echo json_encode([
                     "success" => false,
-                    "message" => message()->warning($upload->error()->message ?? "Erro no upload da foto")->render(),
+                    "message" => message()->warning($storage->error()->message ?? "Erro no upload da foto")->render(),
                     "errors" => [
-                        "photo" => "Extensões aceitas: " . $upload->error()->allowedExtensions ?? ""
+                        "photo" => "Extensões aceitas: " . $storage->error()->allowedExtensions ?? ""
                     ]
                 ]);
                 return;
             }
 
-            if (!empty($user->photo)) {
-                $oldPhotoPath = CONF_BASE_DIR . CONF_UPLOAD_BASE_DIR . "/{$user->photo}";
-                if (file_exists($oldPhotoPath))
-                    unlink($oldPhotoPath);
-            }
+            if (!empty($user->photo))
+                $storage->unlink($user->photo);
 
             $user->photo = $newPhotoPath;
         }
 
         if (!$user->set($data)) {
-            if ($newPhotoPath)
-                unlink(CONF_BASE_DIR . CONF_UPLOAD_BASE_DIR . "/{$newPhotoPath}");
+            if ($storage)
+                $storage->unlink($newPhotoPath);
             echo json_encode([
                 "success" => false,
                 "message" => message()->warning("Erro ao validar os dados informados")->render(),
@@ -167,8 +165,8 @@ class UserController extends DashController
         }
 
         if (!$user->update()) {
-            if ($newPhotoPath)
-                unlink(CONF_BASE_DIR . CONF_UPLOAD_BASE_DIR . "/{$newPhotoPath}");
+            if ($storage)
+                $storage->unlink($newPhotoPath);
             echo json_encode([
                 "success" => false,
                 "message" => message()->warning("Houve um erro interno ao tentar salvar os dados")->render(),
