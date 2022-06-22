@@ -22,6 +22,7 @@ function app_name(): ?string
  */
 function url(?string $path = null): string
 {
+    $path = $path ? ($path[0] == "/" ? (substr($path, 1, strlen($path))) : $path) : null;
     return $path ? (CONF_URL_BASE . "/{$path}") : CONF_URL_BASE;
 }
 
