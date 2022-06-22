@@ -25,7 +25,7 @@
                     <div class="col-12 col-sm-6 col-md-4">
                         <div class="card card-body border-0 d-flex flex-column justify-content-center align-items-center list-item user">
                             <?php if ($user->photo) : ?>
-                                <img class="photo rounded-circle img-thumbnail" src="<?= $user->photo ?>" alt="<?= $user->username ?>">
+                                <img class="photo rounded-circle img-thumbnail" src="<?= url(CONF_UPLOAD_BASE_DIR .$user->photo) ?>" alt="<?= $user->username ?>">
                             <?php else : ?>
                                 <div class="photo no-photo rounded-circle img-thumbnail"><?= $user->username[0] ?></div>
                             <?php endif; ?>

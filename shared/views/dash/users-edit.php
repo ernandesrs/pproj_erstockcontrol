@@ -18,7 +18,7 @@
         <div class="row py-3">
             <div class="col-12 col-lg-4">
                 <?php if ($user->photo) : ?>
-                    <img class="photo rounded-circle img-thumbnail" src="<?= $user->photo ?>" alt="<?= $user->username ?>">
+                    <img class="photo rounded-circle img-thumbnail" src="<?= url(CONF_UPLOAD_BASE_DIR . $user->photo) ?>" alt="<?= $user->username ?>">
                 <?php else : ?>
                     <div class="photo no-photo rounded-circle img-thumbnail"><?= $user->username[0] ?></div>
                 <?php endif; ?>

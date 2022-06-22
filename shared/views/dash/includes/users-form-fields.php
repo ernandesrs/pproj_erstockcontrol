@@ -54,11 +54,21 @@ $logged = (new \App\Models\Auth())->logged();
             <select class="form-control" name="level" id="level">
                 <option value="1" <?= getValue("level", $user ?? null) == 1 ? "selected" : null ?>>Comum</option>
                 <option value="2" <?= getValue("level", $user ?? null) == 2 ? "selected" : null ?>>Administrador</option>
-                <option value="5" <?= getValue("level", $user ?? null) == 2 ? "selected" : null ?>>Proprietário</option>
+                <option value="5" <?= getValue("level", $user ?? null) == 5 ? "selected" : null ?>>Proprietário</option>
             </select>
         </div>
     </div>
 <?php endif; ?>
+
+<div class="col-12">
+    <div class="form-group">
+        <label for="photo">Foto:</label>
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="photo" name="photo">
+            <label class="custom-file-label" for="photo" name="photo">Escolher arquivo</label>
+        </div>
+    </div>
+</div>
 
 <div class="col-12 col-md-6">
     <div class="form-group">

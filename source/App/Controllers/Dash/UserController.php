@@ -42,8 +42,8 @@ class UserController extends DashController
         $logged = (new Auth())->logged();
         $user = new User();
 
-        if ($logged->level != 5) {
-            message()->warning("Você não possui permissão para registrar usuários")->flash();
+        if ($logged->level != User::LEVEL_OWNER) {
+            message()->warning("Você não possui permissão para realizar este tipo de ação")->flash();
             echo json_encode([
                 "success" => false,
                 "redirect" => $this->route("dash.users"),
@@ -63,13 +63,13 @@ class UserController extends DashController
         if (!$user->add()) {
             echo json_encode([
                 "success" => false,
-                "message" => message()->warning("Houve um erro interno ao tentar salvar os dados :9")->render(),
+                "message" => message()->warning("Houve um erro interno ao tentar salvar os dados")->render(),
                 "errors" => $user->errors()
             ]);
             return;
         }
 
-        message()->success("Um novo usuário foi registrado com sucesso!")->flash();
+        message()->success("Um novo usuário foi registrado com sucesso")->flash();
         echo json_encode([
             "success" => true,
             "redirect" => $this->route("dash.users"),
@@ -86,7 +86,7 @@ class UserController extends DashController
 
         $user = (new User())->find("id=:id", "id={$id}")->get();
         if (!$user) {
-            message()->warning("O usuário que você tentou editar não existe ou já foi excluído.")->flash();
+            message()->warning("O usuário que você tentou editar não existe ou já foi excluído")->flash();
             $this->router->redirect("dash.users");
         }
 
@@ -100,6 +100,89 @@ class UserController extends DashController
      */
     public function update(): void
     {
+        $data = $_POST;
+
+        /** @var User $logged */
+        $logged = (new Auth())->logged();
+
+        /** @var User $user */
+        $user = (new User())->find("id=:id", "id=" . (filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 0))->get();
+
+        if (!$user) {
+            message()->warning("O usuário que você tentou atualizar não existe ou já foi excluído")->flash();
+            echo json_encode([
+                "success" => false,
+                "redirect" => $this->route("dash.users")
+            ]);
+            return;
+        }
+
+        if ($logged->level != User::LEVEL_OWNER) {
+            message()->warning("Você não possui permissão para realizar este tipo de ação")->flash();
+            echo json_encode([
+                "success" => false,
+                "redirect" => $this->route("dash.users"),
+            ]);
+            return;
+        }
+
+        // IMPEDE O PROPRIETÁRIO DE ALTERAR O PRÓPRIO NÍVEL
+        if ($logged->id == $user->id)
+            $data["level"] = $logged->level;
+
+        // PHOTO UPLOAD
+        $newPhotoPath = null;
+        if (!empty($_FILES["photo"]["name"])) {
+            $upload = uploader_image($_FILES["photo"], "images/photo");
+            $newPhotoPath = $upload->store();
+            if (!$newPhotoPath) {
+                echo json_encode([
+                    "success" => false,
+                    "message" => message()->warning($upload->error()->message ?? "Erro no upload da foto")->render(),
+                    "errors" => [
+                        "photo" => "Extensões aceitas: " . $upload->error()->allowedExtensions ?? ""
+                    ]
+                ]);
+                return;
+            }
+
+            if (!empty($user->photo)) {
+                $oldPhotoPath = CONF_BASE_DIR . CONF_UPLOAD_BASE_DIR . "/{$user->photo}";
+                if (file_exists($oldPhotoPath))
+                    unlink($oldPhotoPath);
+            }
+
+            $user->photo = $newPhotoPath;
+        }
+
+        if (!$user->set($data)) {
+            if ($newPhotoPath)
+                unlink(CONF_BASE_DIR . CONF_UPLOAD_BASE_DIR . "/{$newPhotoPath}");
+            echo json_encode([
+                "success" => false,
+                "message" => message()->warning("Erro ao validar os dados informados")->render(),
+                "errors" => $user->errors()
+            ]);
+            return;
+        }
+
+        if (!$user->update()) {
+            if ($newPhotoPath)
+                unlink(CONF_BASE_DIR . CONF_UPLOAD_BASE_DIR . "/{$newPhotoPath}");
+            echo json_encode([
+                "success" => false,
+                "message" => message()->warning("Houve um erro interno ao tentar salvar os dados")->render(),
+                "errors" => $user->errors()
+            ]);
+            return;
+        }
+
+        message()->success("O usuário foi atualizado com sucesso")->flash();
+        echo json_encode([
+            "success" => true,
+            "reload" => true,
+        ]);
+        return;
     }
 
     /**
