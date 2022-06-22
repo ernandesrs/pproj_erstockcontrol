@@ -22,7 +22,7 @@
                 </p>
                 <?php else :
                 foreach ($users as $user) : ?>
-                    <div class="col-12 col-sm-6 col-md-4">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="card card-body border-0 d-flex flex-column justify-content-center align-items-center list-item user">
                             <?php if ($user->photo) : ?>
                                 <img class="photo rounded-circle img-thumbnail" src="<?= storage_url($user->photo) ?>" alt="<?= $user->username ?>">

@@ -30,9 +30,9 @@
                         include __DIR__ . "/includes/users-form-fields.php";
                         ?>
                         <div class="col-12 form-group text-right mb-0">
-                            <button class="btn btn-sm btn-outline-danger <?= icon_class("userX") ?>" data-active-icon="<?= icon_class("userX") ?>" data-alt-icon="<?= icon_class("loading") ?>" type="submit">
+                            <a class="btn btn-sm btn-outline-danger <?= icon_class("userX") ?> jsDeleteUserButton" href="<?= $router->route("dash.users.delete", ["id" => $user->id]) ?>">
                                 Excluir
-                            </button>
+                            </a>
                             <button class="btn btn-sm btn-info <?= icon_class("userCheck") ?>" data-active-icon="<?= icon_class("userCheck") ?>" data-alt-icon="<?= icon_class("loading") ?>" type="submit">
                                 Atualizar
                             </button>
@@ -46,3 +46,29 @@
 
 
 <?= $v->end("content") ?>
+
+
+<?= $v->start("scripts") ?>
+
+
+<script>
+    $(".jsDeleteUserButton").on("click", function(e) {
+        e.preventDefault();
+        let response = window.confirm("Você está excluindo um usuário definitivamente e isso não pode ser desfeito. Confirme para continuar.");
+        if (!response) return;
+
+        let action = $(this).attr("href");
+
+        $.get(action, function(response) {
+            if (response.redirect) {
+                window.location.href = response.redirect;
+                return;
+            }
+
+            addAlert($(response.message));
+        }, "json");
+    });
+</script>
+
+
+<?= $v->end("scripts") ?>

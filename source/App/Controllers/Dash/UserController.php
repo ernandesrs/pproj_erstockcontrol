@@ -188,5 +188,50 @@ class UserController extends DashController
      */
     public function delete(): void
     {
+        /** @var User $logged */
+        $logged = (new Auth())->logged();
+
+        /** @var User $user */
+        $user = (new User())->find("id=:id", "id=" . (filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 0))->get();
+
+        if (!$user) {
+            message()->warning("O usuário que você tentou excluir não existe ou já foi excluído")->float()->flash();
+            echo json_encode([
+                "success" => false,
+                "redirect" => $this->route("dash.users")
+            ]);
+            return;
+        }
+
+        if ($logged->level != User::LEVEL_OWNER) {
+            message()->warning("Você não possui permissão para realizar este tipo de ação")->float()->flash();
+            echo json_encode([
+                "success" => false,
+                "redirect" => $this->route("dash.users"),
+            ]);
+            return;
+        }
+
+        // IMPEDE O PROPRIETÁRIO DE EXCLUIR O PRÓPRIO PERFIL
+        if ($logged->id == $user->id) {
+            echo json_encode([
+                "success" => false,
+                "message" => message()->warning("Você não pode excluir seu próprio perfil")->float()->render()
+            ]);
+            return;
+        }
+
+        // REMOVE A FOTO
+        if ($user->photo)
+            storage()->unlink($user->photo);
+
+        $user->delete();
+
+        message()->info("O usuário foi excluído com sucesso")->float()->flash();
+        echo json_encode([
+            "success" => true,
+            "redirect" => $this->route("dash.users"),
+        ]);
+        return;
     }
 }
