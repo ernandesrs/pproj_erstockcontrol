@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Dash;
 
+use App\Models\Auth;
 use App\Models\User;
 
 class UserController extends DashController
@@ -21,7 +22,7 @@ class UserController extends DashController
     {
         $page = filter_input(INPUT_GET, "page", FILTER_VALIDATE_INT) ?? 1;
         $this->view("dash/users", [
-            "users" => (new User())->offset($page - 1)->limit(12)->find()->get(true)
+            "users" => (new User())->offset($page - 1)->limit(12)->orderBy("level DESC, username ASC, created_at DESC")->find()->get(true)
         ])->seo("Listando usuários")->render();
     }
 
@@ -38,34 +39,42 @@ class UserController extends DashController
      */
     public function store(): void
     {
-        // message()->success("tudo certo e recarregado kkk")->flash();
-        // echo json_encode([
-        //     "reload" => true,
-        // ]);
-        // return;
+        $logged = (new Auth())->logged();
+        $user = new User();
 
-        // message()->success("tudo certo e redirecionado kkk")->flash();
-        // echo json_encode([
-        //     "redirect" => $this->route("dash.users"),
-        // ]);
-        // return;
+        if ($logged->level != 5) {
+            message()->warning("Você não possui permissão para registrar usuários")->flash();
+            echo json_encode([
+                "success" => false,
+                "redirect" => $this->route("dash.users"),
+            ]);
+            return;
+        }
 
-        // echo json_encode([
-        //     "success" => false,
-        //     "message" => message()->success("Cetin kkk")->render(),
-        // ]);
-        // return;
+        if (!$user->set($_POST)) {
+            echo json_encode([
+                "success" => false,
+                "message" => message()->warning("Erro ao validar os dados informados")->render(),
+                "errors" => $user->errors()
+            ]);
+            return;
+        }
 
-        // echo json_encode([
-        //     "success" => false,
-        //     "message" => message()->warning("Corrija os erros nos campos")->render(),
-        //     "errors" => [
-        //         "first_name" => "Informe este campo",
-        //         "last_name" => "Informe este campo",
-        //         "email" => "Informe este campo",
-        //         "gender" => "Informe este campo",
-        //     ]
-        // ]);
+        if (!$user->add()) {
+            echo json_encode([
+                "success" => false,
+                "message" => message()->warning("Houve um erro interno ao tentar salvar os dados :9")->render(),
+                "errors" => $user->errors()
+            ]);
+            return;
+        }
+
+        message()->success("Um novo usuário foi registrado com sucesso!")->flash();
+        echo json_encode([
+            "success" => true,
+            "redirect" => $this->route("dash.users"),
+        ]);
+        return;
     }
 
     /**
