@@ -43,7 +43,7 @@ class UserController extends DashController
         $user = new User();
 
         if ($logged->level != User::LEVEL_OWNER) {
-            message()->warning("Você não possui permissão para realizar este tipo de ação")->flash();
+            message()->warning("Você não possui permissão para realizar este tipo de ação")->float()->flash();
             echo json_encode([
                 "success" => false,
                 "redirect" => $this->route("dash.users"),
@@ -54,7 +54,7 @@ class UserController extends DashController
         if (!$user->set($_POST)) {
             echo json_encode([
                 "success" => false,
-                "message" => message()->warning("Erro ao validar os dados informados")->render(),
+                "message" => message()->warning("Erro ao validar os dados informados")->float()->render(),
                 "errors" => $user->errors()
             ]);
             return;
@@ -63,13 +63,13 @@ class UserController extends DashController
         if (!$user->add()) {
             echo json_encode([
                 "success" => false,
-                "message" => message()->warning("Houve um erro interno ao tentar salvar os dados")->render(),
+                "message" => message()->warning("Houve um erro interno ao tentar salvar os dados")->float()->render(),
                 "errors" => $user->errors()
             ]);
             return;
         }
 
-        message()->success("Um novo usuário foi registrado com sucesso")->flash();
+        message()->success("Um novo usuário foi registrado com sucesso")->float()->flash();
         echo json_encode([
             "success" => true,
             "redirect" => $this->route("dash.users"),
@@ -86,7 +86,7 @@ class UserController extends DashController
 
         $user = (new User())->find("id=:id", "id={$id}")->get();
         if (!$user) {
-            message()->warning("O usuário que você tentou editar não existe ou já foi excluído")->flash();
+            message()->warning("O usuário que você tentou editar não existe ou já foi excluído")->float()->flash();
             $this->router->redirect("dash.users");
         }
 
@@ -109,7 +109,7 @@ class UserController extends DashController
         $user = (new User())->find("id=:id", "id=" . (filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 0))->get();
 
         if (!$user) {
-            message()->warning("O usuário que você tentou atualizar não existe ou já foi excluído")->flash();
+            message()->warning("O usuário que você tentou atualizar não existe ou já foi excluído")->float()->flash();
             echo json_encode([
                 "success" => false,
                 "redirect" => $this->route("dash.users")
@@ -118,7 +118,7 @@ class UserController extends DashController
         }
 
         if ($logged->level != User::LEVEL_OWNER) {
-            message()->warning("Você não possui permissão para realizar este tipo de ação")->flash();
+            message()->warning("Você não possui permissão para realizar este tipo de ação")->float()->flash();
             echo json_encode([
                 "success" => false,
                 "redirect" => $this->route("dash.users"),
@@ -139,7 +139,7 @@ class UserController extends DashController
             if (!$newPhotoPath) {
                 echo json_encode([
                     "success" => false,
-                    "message" => message()->warning($storage->error()->message ?? "Erro no upload da foto")->render(),
+                    "message" => message()->warning($storage->error()->message ?? "Erro no upload da foto")->float()->render(),
                     "errors" => [
                         "photo" => "Extensões aceitas: " . $storage->error()->allowedExtensions ?? ""
                     ]
@@ -158,7 +158,7 @@ class UserController extends DashController
                 $storage->unlink($newPhotoPath);
             echo json_encode([
                 "success" => false,
-                "message" => message()->warning("Erro ao validar os dados informados")->render(),
+                "message" => message()->warning("Erro ao validar os dados informados")->float()->render(),
                 "errors" => $user->errors()
             ]);
             return;
@@ -169,13 +169,13 @@ class UserController extends DashController
                 $storage->unlink($newPhotoPath);
             echo json_encode([
                 "success" => false,
-                "message" => message()->warning("Houve um erro interno ao tentar salvar os dados")->render(),
+                "message" => message()->warning("Houve um erro interno ao tentar salvar os dados")->float()->render(),
                 "errors" => $user->errors()
             ]);
             return;
         }
 
-        message()->success("O usuário foi atualizado com sucesso")->flash();
+        message()->success("O usuário foi atualizado com sucesso")->float()->flash();
         echo json_encode([
             "success" => true,
             "reload" => true,

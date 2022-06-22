@@ -9004,6 +9004,29 @@ h3 {
     border-color: #dee2e6;
   }
 }
+.alert {
+  display: none;
+  border-left-width: 8px;
+  border-right-width: 8px;
+}
+.alert .alert-heading {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.alert .alert-body {
+  font-size: 1rem;
+}
+.alert.alert-float {
+  position: fixed;
+  top: 0.5rem;
+  right: 2rem;
+  z-index: 999;
+  width: 100%;
+  max-width: 325px;
+  box-shadow: 0 0 24px -6px rgba(75, 75, 75, 0.25);
+}
+
 body {
   display: grid;
   grid-template-areas: "content";
