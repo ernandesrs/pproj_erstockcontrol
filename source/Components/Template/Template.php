@@ -82,7 +82,7 @@ class Template
         $viewPath = $v->dir . "/" . $v->viewName . "." . $v->ext;
         if (!file_exists($viewPath)) return;
 
-        ob_flush();
+        ob_start();
         require $viewPath;
         $view = ob_get_clean();
 
