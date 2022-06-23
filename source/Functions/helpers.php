@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\Storage;
+use Components\Thumb\Thumb;
 
 /**
  * @return boolean

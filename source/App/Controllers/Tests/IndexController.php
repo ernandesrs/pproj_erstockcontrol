@@ -4,8 +4,10 @@ namespace App\Controllers\Tests;
 
 use App\Controllers\Tests\TestController;
 use App\Helpers\Storage;
+use App\Models\Auth;
 use Components\Message\Message;
 use Components\Session\Session;
+use Components\Thumb\Thumb;
 
 class IndexController extends TestController
 {
@@ -117,5 +119,15 @@ class IndexController extends TestController
             "firstName" => "My First Name",
             "lastName" => "My Last Name"
         ])->seo("Teste de upload")->render();
+    }
+
+    public function images(): void
+    {
+        $logged = (new Auth())->logged();
+        $thumb = (new Thumb(CONF_BASE_DIR . CONF_UPLOAD_BASE_DIR));
+
+        // $path = $thumb->make(CONF_BASE_DIR . "/shared/images/tests/square.png", 300);
+        $path = $thumb->make(storage_path($logged->photo), 50, 200);
+        // die;
     }
 }

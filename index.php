@@ -50,6 +50,7 @@ $router->get("/testes/mensagens", "IndexController@messageTest", "index.messageT
 $router->get("/testes/uploads", "IndexController@uploadTest", "index.uploadTest");
 // $router->post("/testes/uploads", "IndexController@uploadTest", "index.uploadTest.post");
 $router->post("/testes/uploads", "IndexController@uploadTestStorage", "index.uploadTestStorage.post");
+$router->get("/testes/imagens", "IndexController@images", "index.images");
 
 if (!$router->boot()) {
     $router->redirect("dash.error", ["err" => $router->error()]);
