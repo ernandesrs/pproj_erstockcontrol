@@ -47,4 +47,41 @@ class Thumb extends SIManipulator
 
         return "/" . $this->thumbs . "/{$this->output["name"]}.{$this->output["extension"]}";
     }
+
+    /**
+     * @param string|null $path caminho absoluto para a imagem a ser deletada. Se null, limpa o diretório de uploads
+     * @return void
+     */
+    public function unmake(?string $path = null)
+    {
+        $thumbnailsDir = "{$this->thumbsDir}/{$this->thumbs}";
+
+        if (!$path)
+            return $this->delTree($thumbnailsDir);
+
+        $rmFileInfo = pathinfo($path);
+        $files =  array_diff(scandir($thumbnailsDir) ?? [], array('.', '..'));
+
+        foreach ($files as $file) {
+            $encodedName = base64_encode($rmFileInfo["filename"]);
+            if (strpos($file, $encodedName) !== false) {
+                unlink($thumbnailsDir . "/{$file}");
+            }
+        }
+
+        return;
+    }
+
+    /**
+     * @param string $dir
+     * @return void
+     */
+    private function delTree(string $dir)
+    {
+        $files = array_diff(scandir($dir) ?? [], array('.', '..'));
+        foreach ($files as $file) {
+            (is_dir("$dir/$file")) ? $this->delTree("$dir/$file") : unlink("$dir/$file");
+        }
+        return;
+    }
 }

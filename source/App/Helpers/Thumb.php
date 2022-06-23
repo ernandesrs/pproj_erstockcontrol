@@ -73,4 +73,14 @@ class Thumb
     {
         return self::thumb($path, self::LG, ($square ? self::LG : null));
     }
+
+    /**
+     * @param string|null $path se nulo excluir todos thumbnails
+     * @return void
+     */
+    public static function thumbClear(?string $path = null): void
+    {
+        (new ThumbThumb(self::thumbsDirectory))->unmake($path);
+        return;
+    }
 }

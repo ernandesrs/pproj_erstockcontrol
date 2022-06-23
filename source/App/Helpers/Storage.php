@@ -38,8 +38,10 @@ class Storage extends Uploader
     {
         $path = $this->uploadDir . $path;
 
-        if (file_exists($path))
+        if (file_exists($path)) {
+            Thumb::thumbClear($path);
             unlink($path);
+        }
 
         return;
     }

@@ -126,7 +126,7 @@ class IndexController extends TestController
     {
         $logged = (new Auth())->logged();
         // THUMB COM O COMPONENTE
-        // $thumb = (new Thumb(CONF_BASE_DIR . CONF_UPLOAD_BASE_DIR));
+        $thumb = (new Thumb(CONF_BASE_DIR . CONF_UPLOAD_BASE_DIR));
 
         // $path = $thumb->make(CONF_BASE_DIR . "/shared/images/tests/square.png", 300);
         // $path = $thumb->make(storage_path($logged->photo), 50, 200);
@@ -136,10 +136,11 @@ class IndexController extends TestController
         // THUMB COM O HELPER
         echo "<img src='" . storage_url(HelpersThumb::thumbExtraSmall(storage_path($logged->photo))) . "'>";
         echo "<img src='" . storage_url(HelpersThumb::thumbSmall(storage_path($logged->photo))) . "'>";
-        echo "<img src='" . storage_url(HelpersThumb::thumbNormal(storage_path($logged->photo))) . "'>";
-        echo "<img src='" . storage_url(HelpersThumb::thumbMedium(storage_path($logged->photo))) . "'>";
+        // echo "<img src='" . storage_url(HelpersThumb::thumbNormal(storage_path($logged->photo))) . "'>";
+        // echo "<img src='" . storage_url(HelpersThumb::thumbMedium(storage_path($logged->photo))) . "'>";
         echo "<hr>";
-        echo "<img src='" . storage_url(HelpersThumb::thumbNormal(storage_path($logged->photo), false)) . "'>";
-        echo "<img src='" . storage_url(HelpersThumb::thumbLarge(storage_path($logged->photo), false)) . "'>";
+        // echo "<img src='" . storage_url(HelpersThumb::thumbNormal(storage_path($logged->photo), false)) . "'>";
+        // echo "<img src='" . storage_url(HelpersThumb::thumbLarge(storage_path($logged->photo), false)) . "'>";
+        $thumb->unmake(storage_path($logged->photo));
     }
 }

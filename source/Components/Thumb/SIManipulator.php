@@ -48,7 +48,7 @@ class SIManipulator
         ];
 
         $this->output = [
-            "name" => base64_encode($this->input["name"]) . "__{$w}" . ($h ? "x{$h}" : null),
+            "name" => base64_encode($this->input["name"]) . "_{$w}" . ($h ? "x{$h}" : null),
             "extension" => $this->toExt ?? $info["extension"],
             "width" => $w,
             "height" => $h ?? null,
