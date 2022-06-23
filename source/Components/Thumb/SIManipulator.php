@@ -26,6 +26,9 @@ class SIManipulator
     /** @var array */
     protected $errors;
 
+    /** @var bool */
+    protected $exists;
+
     /**
      * @param string $path
      * @param int $w
@@ -55,7 +58,7 @@ class SIManipulator
             "biggerSide" => $w >= $h ? $w : $h
         ];
 
-        return $this->load($path);
+        return true;
     }
 
     /**

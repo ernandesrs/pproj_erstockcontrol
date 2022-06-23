@@ -35,15 +35,20 @@ class Thumb extends SIManipulator
         if (!$this->ioDefine($path, $w, $h))
             return null;
 
-        if (!$this->resize($w, $h))
-            return null;
-
-        if ($h)
-            if (!$this->crop())
+        if (!$this->checkExistence()) {
+            if (!$this->load($path))
                 return null;
 
-        if (!$this->save())
-            return null;
+            if (!$this->resize())
+                return null;
+
+            if ($h)
+                if (!$this->crop())
+                    return null;
+
+            if (!$this->save())
+                return null;
+        }
 
         return "/" . $this->thumbs . "/{$this->output["name"]}.{$this->output["extension"]}";
     }
@@ -83,5 +88,21 @@ class Thumb extends SIManipulator
             (is_dir("$dir/$file")) ? $this->delTree("$dir/$file") : unlink("$dir/$file");
         }
         return;
+    }
+
+    /**
+     * @return boolean
+     */
+    private function checkExistence(): bool
+    {
+        $files = array_diff(scandir($this->thumbsDir . "/" . $this->thumbs) ?? [], array('.', '..'));
+        $fileCheck = "{$this->output["name"]}.{$this->output["extension"]}";
+
+        foreach ($files as $file) {
+            if (strpos($file, $fileCheck) !== false)
+                return true;
+        }
+
+        return false;
     }
 }
