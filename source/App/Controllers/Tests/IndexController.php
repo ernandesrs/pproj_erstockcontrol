@@ -4,6 +4,7 @@ namespace App\Controllers\Tests;
 
 use App\Controllers\Tests\TestController;
 use App\Helpers\Storage;
+use App\Helpers\Thumb as HelpersThumb;
 use App\Models\Auth;
 use Components\Message\Message;
 use Components\Session\Session;
@@ -124,10 +125,21 @@ class IndexController extends TestController
     public function images(): void
     {
         $logged = (new Auth())->logged();
-        $thumb = (new Thumb(CONF_BASE_DIR . CONF_UPLOAD_BASE_DIR));
+        // THUMB COM O COMPONENTE
+        // $thumb = (new Thumb(CONF_BASE_DIR . CONF_UPLOAD_BASE_DIR));
 
         // $path = $thumb->make(CONF_BASE_DIR . "/shared/images/tests/square.png", 300);
-        $path = $thumb->make(storage_path($logged->photo), 50, 200);
-        // die;
+        // $path = $thumb->make(storage_path($logged->photo), 50, 200);
+        // echo "<img src='" . storage_url($path) . "'>";
+        // echo "<img src='" . storage_url($path) . "'>";
+
+        // THUMB COM O HELPER
+        echo "<img src='" . storage_url(HelpersThumb::thumbExtraSmall(storage_path($logged->photo))) . "'>";
+        echo "<img src='" . storage_url(HelpersThumb::thumbSmall(storage_path($logged->photo))) . "'>";
+        echo "<img src='" . storage_url(HelpersThumb::thumbNormal(storage_path($logged->photo))) . "'>";
+        echo "<img src='" . storage_url(HelpersThumb::thumbMedium(storage_path($logged->photo))) . "'>";
+        echo "<hr>";
+        echo "<img src='" . storage_url(HelpersThumb::thumbNormal(storage_path($logged->photo), false)) . "'>";
+        echo "<img src='" . storage_url(HelpersThumb::thumbLarge(storage_path($logged->photo), false)) . "'>";
     }
 }
