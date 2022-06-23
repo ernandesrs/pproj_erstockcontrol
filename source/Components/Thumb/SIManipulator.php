@@ -157,9 +157,6 @@ class SIManipulator
             return false;
         }
 
-        if (!file_exists($this->thumbsDir . "/" . $this->thumbs))
-            mkdir($this->thumbsDir . "/" . $this->thumbs);
-
         $save = false;
         $finalImage = $this->input["final"];
         $to = $this->thumbsDir . "/{$this->thumbs}/{$this->output["name"]}.{$this->output["extension"]}";

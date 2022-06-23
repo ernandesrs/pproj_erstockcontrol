@@ -22,6 +22,9 @@ class Thumb extends SIManipulator
         $this->thumbsDir = $dir;
         $this->toExt = $toExt ? (in_array($toExt, $this->allowedExtensions) ? $toExt : null) : null;
         $this->thumbs = "thumbs";
+
+        if (!file_exists($this->thumbsDir . "/" . $this->thumbs))
+            mkdir($this->thumbsDir . "/" . $this->thumbs);
     }
 
     /**
