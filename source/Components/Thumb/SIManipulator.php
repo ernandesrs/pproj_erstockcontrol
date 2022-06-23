@@ -47,7 +47,8 @@ class SIManipulator
             "name" => $info["filename"],
             "extension" => $info["extension"] == "jpg" ? "jpeg" : $info["extension"],
             "width" => null,
-            "height" => null
+            "height" => null,
+            "orientation" => (exif_read_data($path) ?? [])["Orientation"] ?? null
         ];
 
         $this->output = [
@@ -93,9 +94,41 @@ class SIManipulator
         }
 
         $this->input["resource"] = $resource;
-        $this->input["final"] = $resource;
+        $this->input["final"] = $this->input["resource"];
         $this->input["width"] = imagesx($resource);
         $this->input["height"] = imagesy($resource);
+
+        return true;
+    }
+
+    /**
+     * @return boolean
+     */
+    protected function rotate(): bool
+    {
+        $angle = null;
+
+        switch ($this->input["orientation"]) {
+            case 3:
+                $angle = 180;
+                break;
+            case 6:
+                $angle = -90;
+                break;
+            case 8:
+                $angle = 90;
+                break;
+        }
+
+        if ($angle) {
+            $rotated = imagerotate($this->input["resource"], $angle, 0);
+
+            if (!$rotated)
+                return false;
+
+            $this->input["rotated"] = $rotated;
+            $this->input["final"] = $this->input["rotated"];
+        }
 
         return true;
     }
@@ -106,15 +139,15 @@ class SIManipulator
     protected function resize(): bool
     {
         if ($this->output["height"])
-            $resized = imagescale($this->input["resource"], -1, $this->output["biggerSide"]);
+            $resized = imagescale($this->input["final"], -1, $this->output["biggerSide"]);
         else
-            $resized = imagescale($this->input["resource"], $this->output["biggerSide"], -1);
+            $resized = imagescale($this->input["final"], $this->output["biggerSide"], -1);
 
         if (!$resized)
             return false;
 
         $this->input["resized"] = $resized;
-        $this->input["final"] = $resized;
+        $this->input["final"] = $this->input["resized"];
         $this->input["resized_width"] = imagesx($resized);
         $this->input["resized_height"] = imagesy($resized);
 
@@ -129,7 +162,7 @@ class SIManipulator
         $x = ($this->input["resized_width"] - $this->output["width"]) / 2;
         $y = ($this->output["biggerSide"] - ($this->output["height"] ?? $this->output["width"])) / 2;
 
-        $cropped = imagecrop($this->input["resized"], [
+        $cropped = imagecrop($this->input["final"], [
             "x" => $x,
             "y" => $y,
             "width" => $this->output["width"],
@@ -142,7 +175,7 @@ class SIManipulator
         }
 
         $this->input["cropped"]  = $cropped;
-        $this->input["final"]  = $cropped;
+        $this->input["final"]  = $this->input["cropped"];
 
         return true;
     }

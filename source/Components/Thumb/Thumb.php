@@ -42,6 +42,9 @@ class Thumb extends SIManipulator
             if (!$this->load($path))
                 return null;
 
+            if (!$this->rotate())
+                return null;
+
             if (!$this->resize())
                 return null;
 
