@@ -37,8 +37,10 @@ class Thumb extends SIManipulator
 
         if (!$this->resize($w, $h))
             return null;
-        if (!$this->crop())
-            return null;
+
+        if ($h)
+            if (!$this->crop())
+                return null;
 
         if (!$this->save())
             return null;

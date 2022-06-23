@@ -90,6 +90,7 @@ class SIManipulator
         }
 
         $this->input["resource"] = $resource;
+        $this->input["final"] = $resource;
         $this->input["width"] = imagesx($resource);
         $this->input["height"] = imagesy($resource);
 
@@ -101,12 +102,16 @@ class SIManipulator
      */
     protected function resize(): bool
     {
-        $resized = imagescale($this->input["resource"], -1, $this->output["biggerSide"]);
+        if ($this->output["height"])
+            $resized = imagescale($this->input["resource"], -1, $this->output["biggerSide"]);
+        else
+            $resized = imagescale($this->input["resource"], $this->output["biggerSide"], -1);
 
         if (!$resized)
             return false;
 
         $this->input["resized"] = $resized;
+        $this->input["final"] = $resized;
         $this->input["resized_width"] = imagesx($resized);
         $this->input["resized_height"] = imagesy($resized);
 
@@ -134,6 +139,7 @@ class SIManipulator
         }
 
         $this->input["cropped"]  = $cropped;
+        $this->input["final"]  = $cropped;
 
         return true;
     }
@@ -152,18 +158,18 @@ class SIManipulator
             mkdir($this->thumbsDir . "/" . $this->thumbs);
 
         $save = false;
-        $resized = $this->input["cropped"];
+        $finalImage = $this->input["final"];
         $to = $this->thumbsDir . "/{$this->thumbs}/{$this->output["name"]}.{$this->output["extension"]}";
 
         switch ($this->input["extension"]) {
             case "jpeg":
-                $save = imagejpeg($resized, $to, $this->quality["jpeg"]);
+                $save = imagejpeg($finalImage, $to, $this->quality["jpeg"]);
                 break;
             case "png":
-                $save = imagepng($resized, $to, $this->quality["png"]);
+                $save = imagepng($finalImage, $to, $this->quality["png"]);
                 break;
             case "webp":
-                $save = imagewebp($resized, $to, $this->quality["webp"]);
+                $save = imagewebp($finalImage, $to, $this->quality["webp"]);
                 break;
             default:
                 $save = false;
