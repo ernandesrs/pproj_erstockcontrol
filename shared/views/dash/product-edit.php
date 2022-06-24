@@ -21,9 +21,9 @@
                     <?php include __DIR__ . "/includes/products-form-fields.php" ?>
 
                     <div class="form-group py-2 text-right">
-                        <button class="btn btn-danger <?= icon_class("trash") ?>" data-active-icon="<?= icon_class("trash") ?>" data-alt-icon="<?= icon_class("loading") ?>">
+                        <a class="btn btn-danger jsDeleteButtonAlert" href="<?= $router->route("dash.products.delete", ["id" => $product->id]) ?>">
                             Excluir
-                        </button>
+                        </a>
                         <button class="btn btn-info <?= icon_class("checkLg") ?>" data-active-icon="<?= icon_class("checkLg") ?>" data-alt-icon="<?= icon_class("loading") ?>">
                             Atualizar agora
                         </button>

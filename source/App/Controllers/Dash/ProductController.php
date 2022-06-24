@@ -87,4 +87,25 @@ class ProductController extends DashController
 
         $this->view("dash/product-edit", ["product" => $product])->seo("Editar produto")->render();
     }
+
+    /**
+     * @return void
+     */
+    public function delete(): void
+    {
+        $id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 1;
+        $product = (new Product())->find("id=:id", "id={$id}")->get();
+
+        if (!$product) {
+            message()->warning("O produto que você tentou excluir não existe ou já foi excluído.")->float()->flash();
+            $this->router->redirect("dash.products");
+            return;
+        }
+
+        $product->delete();
+
+        message()->info("O produto foi excluído com sucesso.")->float()->flash();
+        $this->router->redirect("dash.products");
+        return;
+    }
 }

@@ -1,5 +1,18 @@
 let timeoutHandler = null;
 
+$(function () {
+    $(".jsDeleteButtonAlert").on("click", function (e) {
+        e.preventDefault();
+
+        if (!window.confirm("Esta é uma exclusão que não pode ser desfeita! Confirme a exclusão."))
+            return;
+
+        let url = $(this).attr("href");
+
+        window.location.href = url;
+    });
+});
+
 /**
  * ALERTA/MENSAGENS
  */

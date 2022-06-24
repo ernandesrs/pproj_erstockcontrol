@@ -48,9 +48,9 @@
                                     <a class="btn btn-info" href="<?= $router->route("dash.products.edit", ["id" => $product->id]) ?>">
                                         <?= icon_elem("pencilSquare") ?>
                                     </a>
-                                    <button class="btn btn-outline-danger">
+                                    <a class="btn btn-outline-danger jsDeleteButtonAlert" href="<?= $router->route("dash.products.delete", ["id" => $product->id]) ?>">
                                         <?= icon_elem("trash") ?>
-                                    </button>
+                                    </a>
                                 </td>
                             </tr>
                         <?php
