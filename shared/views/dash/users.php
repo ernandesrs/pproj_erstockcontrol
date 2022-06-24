@@ -17,9 +17,7 @@
     <div class="section-content">
         <div class="row justify-content-start list-items">
             <?php if (!$users) : ?>
-                <p class="h5 text-center py-3 mb-0">
-                    Nenhum usuário para listar
-                </p>
+                <?php include __DIR__ . "/includes/alert-empty-list.php" ?>
                 <?php else :
                 foreach ($users as $user) : ?>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
