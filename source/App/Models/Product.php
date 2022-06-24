@@ -49,6 +49,10 @@ class Product extends Model
         if (!$this->validate($data))
             return false;
 
+        $this->name = strtoupper($this->filtered["name"] . " " . self::PURCHASE_MODES_NAME[$this->filtered["purchase_mode"]]);
+        $this->purchase_mode = $this->filtered["purchase_mode"];
+        $this->sale_mode = $this->filtered["sale_mode"];
+
         return true;
     }
 
@@ -78,8 +82,9 @@ class Product extends Model
         $this->errors = [];
 
         // NAME VALIDATE
+        $upperName = $this->filtered['name'] . " " . self::PURCHASE_MODES_NAME[$this->filtered['purchase_mode']];
         $rules = "name=:name";
-        $rValues = "name={$this->filtered['name']}";
+        $rValues = "name={$upperName}";
         if (!empty($this->id)) {
             $rules .= " AND id!=:id";
             $rValues .= "&id=" . $this->id;
