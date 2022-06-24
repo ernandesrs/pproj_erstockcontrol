@@ -172,6 +172,30 @@ body {
                 }
             }
 
+            &.section-overview {
+                background-color: transparent;
+
+                .section-content {
+                    .overview-boxes-list {
+                        .overview-boxes-item {
+                            background-color: rgb($light-light, 0.5);
+
+                            .icon {
+                                font-size: 3rem;
+                                margin-right: $spacer;
+                                color: rgb($dark-light, 0.25);
+                            }
+
+                            .title {
+                                font-size: 1rem;
+                                font-weight: 600;
+                                color: $dark-light;
+                            }
+                        }
+                    }
+                }
+            }
+
             &.section-users {
                 .section-content {
                     .list-items {

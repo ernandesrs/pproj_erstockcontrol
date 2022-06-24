@@ -3,6 +3,7 @@
 namespace App\Controllers\Dash;
 
 use App\Models\Auth;
+use App\Models\User;
 
 class IndexController extends DashController
 {
@@ -28,7 +29,35 @@ class IndexController extends DashController
      */
     public function dash(): void
     {
-        $this->view("dash/index")->seo("Resumo geral do sistema")->render();
+        $overviewBoxes = [
+            "users" => (object) [
+                "total" => (new User())->find()->count(),
+                "text" => "Usuários",
+                "icon" => icon_class("userGroup"),
+                "link" => $this->route("dash.users")
+            ],
+            "products" => (object) [
+                "total" => 0,
+                "text" => "Produtos",
+                "icon" => icon_class("box2"),
+                "link" => $this->route("dash.products")
+            ],
+            "lorem1" => (object) [
+                "total" => 0,
+                "text" => "Lorem 1",
+                "icon" => icon_class("bell"),
+                "link" => ""
+            ],
+            "lorem2" => (object) [
+                "total" => 0,
+                "text" => "Lorem 2",
+                "icon" => icon_class("sliders"),
+                "link" => ""
+            ],
+        ];
+        $this->view("dash/index", [
+            "overviewBoxes" => $overviewBoxes
+        ])->seo("Resumo geral do sistema")->render();
     }
 
     /**
