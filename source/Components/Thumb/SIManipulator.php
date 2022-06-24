@@ -44,12 +44,15 @@ class SIManipulator
 
         $info = pathinfo($path);
         $this->input = [
+            "path" => $path,
             "name" => $info["filename"],
             "extension" => $info["extension"] == "jpg" ? "jpeg" : $info["extension"],
             "width" => null,
             "height" => null,
-            "orientation" => (exif_read_data($path) ?? [])["Orientation"] ?? null
+            "orientation" => null
         ];
+
+        $this->getExifData();
 
         $this->output = [
             "name" => base64_encode($this->input["name"]) . "_{$w}" . ($h ? "x{$h}" : null),
@@ -178,6 +181,20 @@ class SIManipulator
         $this->input["final"]  = $this->input["cropped"];
 
         return true;
+    }
+
+    /**
+     * @return void
+     */
+    private function getExifData(): void
+    {
+        if (in_array($this->input["extension"], ["jpeg", "tiff"])) {
+            $exif = exif_read_data($this->input["path"]) ?? null;
+            if ($exif)
+                $this->input["orientation"] = $exif["Orientation"];
+        }
+
+        return;
     }
 
     /**
