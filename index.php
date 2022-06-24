@@ -27,8 +27,8 @@ $router->get("/dash/usuario/editar", "UserController@edit", "dash.users.edit");
 $router->post("/dash/usuario/atualizar", "UserController@update", "dash.users.update");
 $router->get("/dash/usuario/excluir", "UserController@delete", "dash.users.delete");
 
-$router->get("/dash/configuracao", "IndexController@dash", "dash.settings");
-$router->get("/dash/perfil", "IndexController@dash", "dash.profile");
+$router->get("/dash/configuracao", "IndexController@settings", "dash.settings");
+$router->get("/dash/perfil", "IndexController@profile", "dash.profile");
 
 $router->get("/error", "IndexController@error", "dash.error");
 

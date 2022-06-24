@@ -2,6 +2,8 @@
 
 namespace App\Controllers\Dash;
 
+use App\Models\Auth;
+
 class IndexController extends DashController
 {
     /**
@@ -32,17 +34,19 @@ class IndexController extends DashController
     /**
      * @return void
      */
-    public function products()
+    public function settings()
     {
-        $this->view("dash/products")->seo("Listagem de produtos")->render();
+        $this->view("dash/settings")->seo("Configurações")->render();
     }
 
     /**
      * @return void
      */
-    public function newProduct()
+    public function profile()
     {
-        $this->view("dash/product-new")->seo("Registrar novo produto")->render();
+        $this->view("dash/profile", [
+            "logged" => (new Auth())->logged()
+        ])->seo("Meu perfil")->render();
     }
 
     /**

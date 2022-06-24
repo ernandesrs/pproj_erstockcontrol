@@ -73,7 +73,7 @@ $logged = (new \App\Models\Auth())->logged();
 <div class="col-12 col-md-6">
     <div class="form-group">
         <label for="password">Senha:</label>
-        <input class="form-control" type="password" name="password" id="password">
+        <input class="form-control" type="password" name="password" id="password" autocomplete="new-password">
     </div>
 </div>
 
