@@ -36,4 +36,70 @@ class Product extends Model
     {
         parent::__construct("products", ["name", "purchase_mode", "sale_mode"]);
     }
+
+    /**
+     * @param array $data
+     * @return boolean
+     */
+    public function set(array $data): bool
+    {
+        if (!$this->filter($data))
+            return false;
+
+        if (!$this->validate($data))
+            return false;
+
+        return true;
+    }
+
+    /**
+     * @param array $data
+     * @return boolean
+     */
+    private function filter(array $data): bool
+    {
+        $this->filtered["name"] = filter_var($data["name"] ?? null);
+        $this->filtered["purchase_mode"] = filter_var($data["purchase_mode"] ?? null, FILTER_VALIDATE_INT);
+        $this->filtered["sale_mode"] = filter_var($data["sale_mode"] ?? null, FILTER_VALIDATE_INT);
+
+        foreach ($this->filtered as $key => $filtered) {
+            if (empty($filtered))
+                $this->errors[$key] = "O campo {$key} é obrigatório";
+        }
+
+        return $this->hasErrors();
+    }
+
+    /**
+     * @return boolean
+     */
+    private function validate(): bool
+    {
+        $this->errors = [];
+
+        // NAME VALIDATE
+        $rules = "name=:name";
+        $rValues = "name={$this->filtered['name']}";
+        if (!empty($this->id)) {
+            $rules .= " AND id!=:id";
+            $rValues .= "&id=" . $this->id;
+        }
+
+        if ($this->find($rules, $rValues)->count())
+            $this->errors["name"] = "Este nome de produto já está sendo utilizado";
+
+        // PURCHASE MODE VALIDATE
+        if (!in_array($this->filtered["purchase_mode"], self::PURCHASE_MODES))
+            $this->errors["purchase_mode"] = "Escolha um modo de compra válido";
+
+        // SALE MODE VALIDATE
+        if (!in_array($this->filtered["sale_mode"], self::SALE_MODES))
+            $this->errors["sale_mode"] = "Escolha um modo de venda válido";
+        else {
+            if ($this->filtered["sale_mode"] > $this->filtered["purchase_mode"])
+                $this->errors["sale_mode"] = "Modo de venda não válido para o tipo de compra selecionado";
+        }
+
+        return $this->hasErrors();
+    }
 }
