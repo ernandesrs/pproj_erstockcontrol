@@ -8,7 +8,7 @@
             <h2 class="title">Novo usuário</h2>
         </div>
         <div class="right-side">
-            <a class="btn btn-sm btn-info" href="<?= $router->route("dash.users") ?>">
+            <a class="btn btn-info" href="<?= $router->route("dash.users") ?>">
                 <?= icon_elem("arrowLeft") ?> Voltar
             </a>
         </div>

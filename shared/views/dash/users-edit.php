@@ -8,7 +8,7 @@
             <h2 class="title">Editar usuário</h2>
         </div>
         <div class="right-side">
-            <a class="btn btn-sm btn-info" href="<?= $router->route("dash.users") ?>">
+            <a class="btn btn-info" href="<?= $router->route("dash.users") ?>">
                 <?= icon_elem("arrowLeft") ?> Voltar
             </a>
         </div>
@@ -30,10 +30,10 @@
                         include __DIR__ . "/includes/users-form-fields.php";
                         ?>
                         <div class="col-12 form-group text-right mb-0">
-                            <a class="btn btn-sm btn-outline-danger <?= icon_class("userX") ?> jsDeleteUserButton" href="<?= $router->route("dash.users.delete", ["id" => $user->id]) ?>">
+                            <a class="btn btn-outline-danger <?= icon_class("userX") ?> jsDeleteUserButton" href="<?= $router->route("dash.users.delete", ["id" => $user->id]) ?>">
                                 Excluir
                             </a>
-                            <button class="btn btn-sm btn-info <?= icon_class("userCheck") ?>" data-active-icon="<?= icon_class("userCheck") ?>" data-alt-icon="<?= icon_class("loading") ?>" type="submit">
+                            <button class="btn btn-info <?= icon_class("userCheck") ?>" data-active-icon="<?= icon_class("userCheck") ?>" data-alt-icon="<?= icon_class("loading") ?>" type="submit">
                                 Atualizar
                             </button>
                         </div>

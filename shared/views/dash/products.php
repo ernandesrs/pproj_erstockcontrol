@@ -17,6 +17,11 @@
     <div class="section-content">
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio soluta non dignissimos consequatur alias facere sed amet atque pariatur, praesentium commodi eligendi at ducimus animi culpa odio, tempore consectetur nisi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis molestias repudiandae autem quae obcaecati inventore doloremque, sed corporis possimus illum sunt animi. Aperiam, eum neque harum iste tenetur officiis voluptate!
     </div>
+
+    <div class="section-footer pt-3">
+        <!-- pagination -->
+        <?php include __DIR__ . "/includes/pagination.php" ?>
+    </div>
 </div>
 
 

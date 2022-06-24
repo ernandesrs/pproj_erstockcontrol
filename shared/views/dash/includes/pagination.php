@@ -1,4 +1,4 @@
-<?php if ($pagination ?? null) : ?>
+<?php if (($pagination ?? null) && $pagination->pages > 1) : ?>
     <div class="d-flex justify-content-end align-items-center">
         <span class="font-weight-bold text-dark-light mr-3">
             Paginação:

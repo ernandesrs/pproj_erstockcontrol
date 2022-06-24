@@ -8,7 +8,7 @@
             <h2 class="title">Listagem de usuários</h2>
         </div>
         <div class="right-side">
-            <a class="btn btn-sm btn-info" href="<?= $router->route("dash.users.create") ?>">
+            <a class="btn btn-info" href="<?= $router->route("dash.users.create") ?>">
                 <?= icon_elem("userPlus") ?> Novo usuário
             </a>
         </div>
@@ -34,7 +34,7 @@
                                 <p class="mb-0 h5 fullname"><?= $user->first_name . " " . $user->last_name ?></p>
                                 <p class="mb-0 h5 email"><?= $user->email ?></p>
                             </div>
-                            <a class="btn btn-sm btn-info" href="<?= $router->route("dash.users.edit", ["id" => $user->id]) ?>">
+                            <a class="btn btn-info" href="<?= $router->route("dash.users.edit", ["id" => $user->id]) ?>">
                                 <?= icon_elem("pencilSquare") ?> Editar
                             </a>
                         </div>
