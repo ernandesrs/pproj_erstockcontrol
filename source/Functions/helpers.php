@@ -2,7 +2,6 @@
 
 use App\Helpers\Storage;
 use App\Helpers\Thumb as HelpersThumb;
-use Components\Thumb\Thumb;
 
 /**
  * @return boolean
@@ -64,6 +63,18 @@ function icon_elem(string $name, ?string $alt = null): string
         $attr .= " data-active-icon='{$icon}' data-alt-icon='" . icon_class($alt) . "'";
 
     return "<i {$attr}></i>";
+}
+
+/**
+ * @param string $name
+ * @param null|array|object $datas
+ * @return null|string
+ */
+function input_value(string $name, $datas): ?string
+{
+    $datas = is_array($datas) ? (object) $datas : (is_object($datas) ? $datas : null);
+    if (!$datas) return null;
+    return $datas->$name ?? null;
 }
 
 /**
