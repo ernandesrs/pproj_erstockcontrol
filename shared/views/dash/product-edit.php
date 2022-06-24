@@ -22,7 +22,7 @@
 
                     <div class="form-group py-2 text-right">
                         <a class="btn btn-danger jsDeleteButtonAlert" href="<?= $router->route("dash.products.delete", ["id" => $product->id]) ?>">
-                            Excluir
+                            <?= icon_elem("trash") ?> Excluir
                         </a>
                         <button class="btn btn-info <?= icon_class("checkLg") ?>" data-active-icon="<?= icon_class("checkLg") ?>" data-alt-icon="<?= icon_class("loading") ?>">
                             Atualizar agora
