@@ -16,9 +16,12 @@ $router->namespace("App\\Controllers\\Dash");
 $router->get("/", "IndexController@index", "dash.index");
 $router->get("/dash", "IndexController@dash", "dash.dash");
 
-$router->get("/dash/produtos", "IndexController@products", "dash.products");
-$router->get("/dash/produto/novo", "IndexController@newProduct", "dash.products.new");
-$router->get("/dash/produto/editar", "IndexController@editProduct", "dash.products.edit");
+$router->get("/dash/produtos", "ProductController@index", "dash.products");
+$router->get("/dash/produto/novo", "ProductController@create", "dash.products.create");
+$router->post("/dash/produto/cadastrar", "ProductController@store", "dash.products.store");
+$router->get("/dash/produto/editar", "ProductController@edit", "dash.products.edit");
+$router->post("/dash/produto/atualizar", "ProductController@update", "dash.products.update");
+$router->get("/dash/produto/excluir", "ProductController@delete", "dash.products.delete");
 
 $router->get("/dash/usuarios", "UserController@index", "dash.users");
 $router->get("/dash/usuario/novo", "UserController@create", "dash.users.create");

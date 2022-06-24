@@ -54,7 +54,7 @@ define("CONF_DASHBOARD_SIDEBAR", [
             "target" => "_self",
             "activeIn" => [
                 "dash.products",
-                "dash.products.new",
+                "dash.products.create",
                 "dash.products.edit",
             ]
         ],

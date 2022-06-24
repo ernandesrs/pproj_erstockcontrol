@@ -9,7 +9,7 @@
         </div>
         <div class="right-side">
             <a class="btn btn-info" href="<?= $router->route("dash.products") ?>">
-                Voltar
+                <?= icon_elem("arrowLeft") ?> Voltar
             </a>
         </div>
     </div>
