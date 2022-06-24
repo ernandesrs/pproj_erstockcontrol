@@ -21,8 +21,13 @@ class UserController extends DashController
     public function index(): void
     {
         $page = filter_input(INPUT_GET, "page", FILTER_VALIDATE_INT) ?? 1;
+
+        /** @var User */
+        $user = (new User())->offset($page)->limit(3)->orderBy("level DESC, username ASC, created_at DESC")->find();
+        // var_dump($user->paginate(), $user, $user->get(true));die;
         $this->view("dash/users", [
-            "users" => (new User())->offset($page - 1)->limit(12)->orderBy("level DESC, username ASC, created_at DESC")->find()->get(true)
+            "pagination" => $user->paginate(),
+            "users" => $user->get(true),
         ])->seo("Listando usuários")->render();
     }
 

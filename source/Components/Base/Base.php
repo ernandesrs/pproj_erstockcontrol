@@ -132,8 +132,10 @@ abstract class Base extends Connect
         if ($this->limit)
             $this->query .= " LIMIT " . $this->limit;
 
-        if ($this->offset)
-            $this->query .= " OFFSET " . $this->offset;
+        if ($this->offset) {
+            $this->offset = $this->offset < 1 ? 1 : $this->offset;
+            $this->query .= " OFFSET " . ($this->offset * $this->limit - $this->limit);
+        }
 
         $stmt = $this->bind($this->getConnection(), $this->rulesValuesArr);
 

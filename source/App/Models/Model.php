@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Components\Base\Base;
+use stdClass;
 
 class Model extends Base
 {
@@ -20,6 +21,22 @@ class Model extends Base
     public function __construct(string $table, array $required = [], bool $timestamps = true)
     {
         parent::__construct($table, $required, $timestamps);
+    }
+
+    /**
+     * @return null|stdClass
+     */
+    public function paginate(): ?stdClass
+    {
+        if (empty($this->offset) || empty($this->limit))
+            return null;
+
+        $total = $this->count();
+        return (object) [
+            "total" => $total,
+            "currentPage" => $this->offset,
+            "pages" => ceil($total / $this->limit)
+        ];
     }
 
     /**

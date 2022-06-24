@@ -43,6 +43,11 @@
             endif; ?>
         </div>
     </div>
+
+    <div class="section-footer pt-3">
+        <!-- pagination -->
+        <?php include __DIR__ . "/includes/pagination.php" ?>
+    </div>
 </div>
 
 
