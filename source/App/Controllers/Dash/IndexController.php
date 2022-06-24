@@ -3,6 +3,7 @@
 namespace App\Controllers\Dash;
 
 use App\Models\Auth;
+use App\Models\Product;
 use App\Models\User;
 
 class IndexController extends DashController
@@ -37,7 +38,7 @@ class IndexController extends DashController
                 "link" => $this->route("dash.users")
             ],
             "products" => (object) [
-                "total" => 0,
+                "total" => (new Product())->find()->count(),
                 "text" => "Produtos",
                 "icon" => icon_class("box2"),
                 "link" => $this->route("dash.products")

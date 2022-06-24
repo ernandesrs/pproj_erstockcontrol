@@ -19,7 +19,16 @@ class ProductController extends DashController
      */
     public function index(): void
     {
-        $this->view("dash/products")->seo("Lista de produtos")->render();
+        /** @var int */
+        $page = filter_input(INPUT_GET, "page", FILTER_VALIDATE_INT) ?? 1;
+
+        /** @var Product */
+        $products = (new Product())->limit(12)->offset($page)->orderBy("created_at ASC")->find();
+
+        $this->view("dash/products", [
+            "pagination" => $products->paginate(),
+            "products" => $products->get(true),
+        ])->seo("Lista de produtos")->render();
     }
 
     /**
