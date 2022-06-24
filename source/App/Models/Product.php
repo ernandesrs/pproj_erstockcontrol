@@ -68,7 +68,7 @@ class Product extends Model
 
         foreach ($this->filtered as $key => $filtered) {
             if (empty($filtered))
-                $this->errors[$key] = "O campo {$key} é obrigatório";
+                $this->errors[$key] = "Este é um campo obrigatório";
         }
 
         return $this->hasErrors();

@@ -17,6 +17,7 @@
         <div class="form-group">
             <label for="purchase_mode">Modo de compra:</label>
             <select class="form-control" name="purchase_mode" id="purchase_mode">
+                <option>Selecione</option>
                 <?php foreach ($purchaseModes as $pm) : ?>
                     <option value="<?= $pm ?>" <?= input_value("purchase_mode", $product ?? null) == $pm ? "selected" : null ?>>
                         <?= $purchaseModesNames[$pm] ?>
@@ -30,6 +31,7 @@
         <div class="form-group">
             <label for="sale_mode">Modo de venda:</label>
             <select class="form-control" name="sale_mode" id="sale_mode" value="<?= input_value("sale_mode", $product ?? null) ?>">
+                <option>Selecione</option>
                 <?php foreach ($saleModes as $sm) : ?>
                     <option value="<?= $sm ?>" <?= input_value("sale_mode", $product ?? null) == $pm ? "selected" : null ?>>
                         <?= $saleModesNames[$sm] ?>
