@@ -77,6 +77,14 @@ class ProductController extends DashController
      */
     public function edit(): void
     {
-        $this->view("dash/product-edit")->seo("Editar produto")->render();
+        $id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 0;
+        $product = (new Product())->find("id=:id", "id={$id}")->get();
+        if (!$product) {
+            message()->warning("O produto não foi encontrado ou já foi excluído.")->float()->flash();
+            $this->router->redirect("dash.products");
+            return;
+        }
+
+        $this->view("dash/product-edit", ["product" => $product])->seo("Editar produto")->render();
     }
 }

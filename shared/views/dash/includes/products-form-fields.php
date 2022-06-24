@@ -2,12 +2,7 @@
     <div class="col-12">
         <div class="form-group">
             <label for="name">Nome do produto:</label>
-            <div class="input-group mb-2">
-                <input type="text" class="form-control" id="name" name="name" value="<?= input_value("name", $product ?? null) ?>">
-                <div class="input-group-prepend">
-                    <div class="input-group-text"></div>
-                </div>
-            </div>
+            <input type="text" class="form-control" id="name" name="name" value="<?= input_value("name", $product ?? null) ?>">
         </div>
     </div>
 

@@ -49,7 +49,7 @@ class Product extends Model
         if (!$this->validate($data))
             return false;
 
-        $this->name = strtoupper($this->filtered["name"] . " " . self::PURCHASE_MODES_NAME[$this->filtered["purchase_mode"]]);
+        $this->name = strtoupper($this->filtered["name"]);
         $this->purchase_mode = $this->filtered["purchase_mode"];
         $this->sale_mode = $this->filtered["sale_mode"];
 
@@ -81,18 +81,6 @@ class Product extends Model
     {
         $this->errors = [];
 
-        // NAME VALIDATE
-        $upperName = $this->filtered['name'] . " " . self::PURCHASE_MODES_NAME[$this->filtered['purchase_mode']];
-        $rules = "name=:name";
-        $rValues = "name={$upperName}";
-        if (!empty($this->id)) {
-            $rules .= " AND id!=:id";
-            $rValues .= "&id=" . $this->id;
-        }
-
-        if ($this->find($rules, $rValues)->count())
-            $this->errors["name"] = "Este nome de produto já está sendo utilizado";
-
         // PURCHASE MODE VALIDATE
         if (!in_array($this->filtered["purchase_mode"], self::PURCHASE_MODES))
             $this->errors["purchase_mode"] = "Escolha um modo de compra válido";
@@ -104,6 +92,11 @@ class Product extends Model
             if ($this->filtered["sale_mode"] > $this->filtered["purchase_mode"])
                 $this->errors["sale_mode"] = "Modo de venda não válido para o tipo de compra selecionado";
         }
+
+        $rules = "name=:name AND purchase_mode=:pm AND sale_mode=:sm";
+        $rulesValue = "name={$this->filtered["name"]}&pm={$this->filtered["purchase_mode"]}&sm={$this->filtered["sale_mode"]}";
+        if ($this->find($rules, $rulesValue)->count())
+            $this->errors["name"] = "Um produto com este nome e com os mesmos modos de compra e venda já está registrado";
 
         return $this->hasErrors();
     }

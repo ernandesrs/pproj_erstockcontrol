@@ -15,19 +15,20 @@
     </div>
 
     <div class="section-content py-3">
-        <div class="table-responsive">
-            <table class="table table-sm table-hover table-borderless rounded">
-                <thead class="thead-light">
-                    <tr>
-                        <th class="text-center">ID</th>
-                        <th>Nome</th>
-                        <th>Modo de compra</th>
-                        <th>Modo de venda</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if ($products ?? null) :
+        <?php if ($products ?? null) : ?>
+            <div class="table-responsive">
+                <table class="table table-sm table-hover table-borderless rounded">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="text-center">ID</th>
+                            <th>Nome</th>
+                            <th>Modo de compra</th>
+                            <th>Modo de venda</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
                         /** @var \App\Models\Product $product */
                         foreach ($products as $product) : ?>
                             <tr>
@@ -52,11 +53,14 @@
                                     </button>
                                 </td>
                             </tr>
-                    <?php endforeach;
-                    endif; ?>
-                </tbody>
-            </table>
-        </div>
+                        <?php
+                        endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php else : ?>
+            <?php include __DIR__ . "/includes/alert-empty-list.php" ?>
+        <?php endif; ?>
     </div>
 
     <div class="section-footer pt-3">

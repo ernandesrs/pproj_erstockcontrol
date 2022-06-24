@@ -36,23 +36,6 @@
 
 <?= $v->start("scripts") ?>
 <script>
-    let form = $("#productForm");
 
-    form.on("keyup", "#name", function (e) {
-        $(this).val($(this).val().toUpperCase());
-    });
-
-    form.on("change", "#purchase_mode", function() {
-        defineOs();
-    });
-
-    $(document).ready(function() {
-        defineOs();
-    });
-
-    function defineOs() {
-        let nameText = form.find("#purchase_mode").find("option:selected").text();
-        form.find("#name").parent().find(".input-group-text").text(nameText.toUpperCase());
-    }
 </script>
 <?= $v->end("scripts") ?>
