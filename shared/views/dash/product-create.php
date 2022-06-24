@@ -15,7 +15,7 @@
     </div>
 
     <div class="section-content">
-        <form action="<?= $router->route("dash.products.store") ?>" method="post" enctype="multipart/form-data">
+        <form id="productForm" action="<?= $router->route("dash.products.store") ?>" method="post" enctype="multipart/form-data">
             <div class="row justify-content-center">
                 <div class="col-12 col-sm-10 col-md-8 col-lg-6">
                     <?php include __DIR__ . "/includes/products-form-fields.php" ?>
@@ -31,5 +31,28 @@
     </div>
 </div>
 
-
 <?= $v->end("content") ?>
+
+
+<?= $v->start("scripts") ?>
+<script>
+    let form = $("#productForm");
+
+    form.on("keyup", "#name", function (e) {
+        $(this).val($(this).val().toUpperCase());
+    });
+
+    form.on("change", "#purchase_mode", function() {
+        defineOs();
+    });
+
+    $(document).ready(function() {
+        defineOs();
+    });
+
+    function defineOs() {
+        let nameText = form.find("#purchase_mode").find("option:selected").text();
+        form.find("#name").parent().find(".input-group-text").text(nameText.toUpperCase());
+    }
+</script>
+<?= $v->end("scripts") ?>
