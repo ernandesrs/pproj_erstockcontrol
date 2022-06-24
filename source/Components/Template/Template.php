@@ -75,7 +75,7 @@ class Template
         $v = $this;
 
         foreach ($v->data as $key => $value) {
-            if (is_array($value)) $$key = (object) $value;
+            if (is_array($value)) $$key = $value;
             else $$key = $value;
         }
 
