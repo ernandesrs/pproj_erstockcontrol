@@ -18,10 +18,10 @@ abstract class Base extends Connect
     private $query;
 
     /** @var int */
-    private $limit;
+    protected $limit;
 
     /** @var int */
-    private $offset;
+    protected $offset;
 
     /** @var String */
     private $groupBy;
@@ -92,18 +92,6 @@ abstract class Base extends Connect
         $this->query = "SELECT {$columns} FROM {$this->table} WHERE 1=:n" . (!empty($rules) ? " AND " . $rules : null);
         parse_str($rulesValues ? $rulesValues . "&n=1" : "n=1", $this->rulesValuesArr);
 
-        if ($this->groupBy)
-            $this->query .= " GROUP BY " . $this->groupBy;
-
-        if ($this->orderBy)
-            $this->query .= " ORDER BY " . $this->orderBy;
-
-        if ($this->limit)
-            $this->query .= " LIMIT " . $this->limit;
-
-        if ($this->offset)
-            $this->query .= " OFFSET " . $this->offset;
-
         return $this;
     }
 
@@ -135,6 +123,18 @@ abstract class Base extends Connect
      */
     public function get(bool $all = false)
     {
+        if ($this->groupBy)
+            $this->query .= " GROUP BY " . $this->groupBy;
+
+        if ($this->orderBy)
+            $this->query .= " ORDER BY " . $this->orderBy;
+
+        if ($this->limit)
+            $this->query .= " LIMIT " . $this->limit;
+
+        if ($this->offset)
+            $this->query .= " OFFSET " . $this->offset;
+
         $stmt = $this->bind($this->getConnection(), $this->rulesValuesArr);
 
         if (!$stmt)
