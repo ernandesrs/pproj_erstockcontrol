@@ -2,17 +2,19 @@
     <div class="left-side col-12 col-lg-6 d-flex align-items-center">
         <h2 class="title"><?= $pageTitle ?? $seo->title ?></h2>
 
-        <?php foreach ($headerButtons ?? [] as $kHeaderButton => $headerButton) : ?>
+        <?php $i = 0;
+        foreach ($headerButtons ?? [] as $kHeaderButton => $headerButton) : ?>
             <?php if ($headerButton["type"] == "link") : ?>
-                <a class="btn btn-<?= $headerButton["style"] ?> ml-auto ml-lg-2 <?= $kHeaderButton ?>" href="<?= $headerButton["link"] ?>" id="<?= $kHeaderButton ?>">
+                <a class="btn btn-<?= $headerButton["style"] ?> <?= $i == 0 ? "ml-auto" : "ml-2" ?> ml-lg-2 <?= $kHeaderButton ?>" href="<?= $headerButton["link"] ?>" id="<?= $kHeaderButton ?>">
                     <i class="icon <?= $headerButton["activeIcon"] ?>"></i> <?= $headerButton["text"] ?>
                 </a>
             <?php else : ?>
-                <button class="btn btn-<?= $headerButton["style"] ?> ml-auto ml-lg-2 <?= $kHeaderButton ?> <?= $headerButton["activeIcon"] ?>" data-active-icon="<?= $headerButton["activeIcon"] ?>" data-alt-icon="<?= $headerButton["altIcon"] ?>" data-action="<?= $headerButton["link"] ?>" id="<?= $kHeaderButton ?>">
+                <button class="btn btn-<?= $headerButton["style"] ?> <?= $i == 0 ? "ml-auto" : "ml-2" ?> ml-lg-2 <?= $kHeaderButton ?> <?= $headerButton["activeIcon"] ?>" data-active-icon="<?= $headerButton["activeIcon"] ?>" data-alt-icon="<?= $headerButton["altIcon"] ?>" data-action="<?= $headerButton["link"] ?>" id="<?= $kHeaderButton ?>">
                     <?= $headerButton["text"] ?>
                 </button>
             <?php endif; ?>
-        <?php endforeach; ?>
+        <?php $i++;
+        endforeach; ?>
     </div>
 
     <div class="right-side col-12 col-lg-6 d-flex align-items-center mt-3 mt-lg-0">
