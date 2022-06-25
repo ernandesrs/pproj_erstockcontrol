@@ -15,7 +15,7 @@
     </div>
 
     <div class="section-content">
-        <form id="productForm" action="<?= $router->route("dash.products.update") ?>" method="post" enctype="multipart/form-data">
+        <form id="productForm" action="<?= $router->route("dash.products.update", ["id" => $product->id]) ?>" method="post" enctype="multipart/form-data">
             <div class="row justify-content-center">
                 <div class="col-12 col-sm-10 col-md-8 col-lg-6">
                     <?php include __DIR__ . "/includes/products-form-fields.php" ?>

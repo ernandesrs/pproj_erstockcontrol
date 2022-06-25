@@ -33,7 +33,7 @@
             <select class="form-control" name="sale_mode" id="sale_mode" value="<?= input_value("sale_mode", $product ?? null) ?>">
                 <option>Selecione</option>
                 <?php foreach ($saleModes as $sm) : ?>
-                    <option value="<?= $sm ?>" <?= input_value("sale_mode", $product ?? null) == $pm ? "selected" : null ?>>
+                    <option value="<?= $sm ?>" <?= input_value("sale_mode", $product ?? null) == $sm ? "selected" : null ?>>
                         <?= $saleModesNames[$sm] ?>
                     </option>
                 <?php endforeach; ?>

@@ -95,6 +95,11 @@ class Product extends Model
 
         $rules = "name=:name AND purchase_mode=:pm AND sale_mode=:sm";
         $rulesValue = "name={$this->filtered["name"]}&pm={$this->filtered["purchase_mode"]}&sm={$this->filtered["sale_mode"]}";
+        if (!empty($this->id)) {
+            $rules .= " AND id!=:id";
+            $rulesValue .= "&id={$this->id}";
+        }
+
         if ($this->find($rules, $rulesValue)->count())
             $this->errors["name"] = "Um produto com este nome e com os mesmos modos de compra e venda já está registrado";
 

@@ -91,6 +91,45 @@ class ProductController extends DashController
     /**
      * @return void
      */
+    public function update(): void
+    {
+        /** @var int */
+        $id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 0;
+
+        /** @var Product */
+        $product = (new Product())->find("id=:id", "id={$id}")->get();
+
+        if (!$product) {
+            message()->warning("Atualização de produto que não existe ou que já foi excluído.")->float()->flash();
+            echo json_encode([
+                "success" => true,
+                "redirect" => $this->route("dash.products")
+            ]);
+            return;
+        }
+
+        $data = $_POST;
+        if (!$product->set($data)) {
+            echo json_encode([
+                "success" => false,
+                "message" => message()->warning("Houve erros na validação dos dados, verifique e tente de novo.")->float()->render(),
+                "errors" => $product->errors()
+            ]);
+            return;
+        }
+
+        $product->update();
+
+        echo json_encode([
+            "success" => true,
+            "message" => message()->info("Este produto foi atualizado com sucesso.")->float()->render()
+        ]);
+        return;
+    }
+
+    /**
+     * @return void
+     */
     public function delete(): void
     {
         $id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 1;
