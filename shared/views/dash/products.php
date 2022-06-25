@@ -34,7 +34,7 @@
         <?php if ($products ?? null) : ?>
             <div class="table-responsive">
                 <table class="table table-sm table-hover table-borderless rounded">
-                    <thead class="thead-light">
+                    <thead>
                         <tr>
                             <th class="text-center">ID</th>
                             <th>Nome</th>

@@ -9035,6 +9035,21 @@ body {
   min-height: 100vh;
   color: rgb(61, 61, 61);
 }
+body .pagination .page-item {
+  margin: 0 0.2rem;
+}
+body .pagination .page-item .page-link {
+  background-color: rgba(230, 230, 230, 0.25);
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  border-radius: 0.25rem;
+  border-color: rgba(230, 230, 230, 0.5);
+  color: rgb(75, 75, 75);
+}
+body .pagination .page-item.disabled .page-link {
+  background-color: rgba(230, 230, 230, 0.75);
+  color: rgb(59, 148, 163);
+}
 body .icon.loading::before {
   animation-name: rotateCircle;
   animation-duration: 1s;
@@ -9179,11 +9194,12 @@ body .main .section.section-overview .section-content .overview-boxes-list .over
   color: rgb(75, 75, 75);
 }
 body .main .section.section-users .section-content .list-items .list-item {
-  background-color: rgba(210, 210, 210, 0.5);
+  background-color: rgba(210, 210, 210, 0);
 }
 body .main .section.section-users .section-content .list-items .list-item.user .photo {
   width: 125px;
   height: 125px;
+  border: 0;
 }
 body .main .section.section-users .section-content .list-items .list-item.user .photo.no-photo {
   display: flex;
@@ -9229,6 +9245,15 @@ body .main .section.section-user-edit .photo.no-photo {
   color: rgba(75, 75, 75, 0.5);
 }
 
+body .btn {
+  color: rgb(210, 210, 210);
+}
+body .pagination .page-item .page-link {
+  color: rgb(230, 230, 230);
+}
+body .pagination .page-item.disabled .page-link {
+  color: rgb(59, 148, 163);
+}
 body .sidebar .sidebar-elements .sidebar-element {
   color: rgb(210, 210, 210);
 }
@@ -9248,6 +9273,15 @@ body .main .section .section-header .left-side .subtitle {
 body .main .section .section-content {
   background-color: rgba(230, 230, 230, 0.25);
   border-color: rgba(230, 230, 230, 0.125);
+}
+body .main .section.section-users .section-content .list-items .list-item {
+  background-color: rgba(210, 210, 210, 0.125);
+}
+body .main .section.section-users .section-content .list-items .list-item.user .photo {
+  background-color: rgba(210, 210, 210, 0.25);
+}
+body .main .section.section-users .section-content .list-items .list-item.user .photo.no-photo {
+  color: rgba(75, 75, 75, 0.5);
 }
 
 @media (min-width: 992px) {

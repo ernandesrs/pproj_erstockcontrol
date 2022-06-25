@@ -9035,6 +9035,21 @@ body {
   min-height: 100vh;
   color: rgb(61, 61, 61);
 }
+body .pagination .page-item {
+  margin: 0 0.2rem;
+}
+body .pagination .page-item .page-link {
+  background-color: rgba(230, 230, 230, 0.25);
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  border-radius: 0.25rem;
+  border-color: rgba(230, 230, 230, 0.5);
+  color: rgb(75, 75, 75);
+}
+body .pagination .page-item.disabled .page-link {
+  background-color: rgba(230, 230, 230, 0.75);
+  color: rgb(49, 184, 208);
+}
 body .icon.loading::before {
   animation-name: rotateCircle;
   animation-duration: 1s;
@@ -9179,11 +9194,12 @@ body .main .section.section-overview .section-content .overview-boxes-list .over
   color: rgb(75, 75, 75);
 }
 body .main .section.section-users .section-content .list-items .list-item {
-  background-color: rgba(210, 210, 210, 0.5);
+  background-color: rgba(210, 210, 210, 0);
 }
 body .main .section.section-users .section-content .list-items .list-item.user .photo {
   width: 125px;
   height: 125px;
+  border: 0;
 }
 body .main .section.section-users .section-content .list-items .list-item.user .photo.no-photo {
   display: flex;
