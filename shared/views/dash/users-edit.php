@@ -3,16 +3,24 @@
 <?= $v->start("content") ?>
 
 <div class="section section-user-edit">
-    <div class="section-header">
-        <div class="left-side">
-            <h2 class="title">Editar usuário</h2>
-        </div>
-        <div class="right-side">
-            <a class="btn btn-info" href="<?= $router->route("dash.users") ?>">
-                <?= icon_elem("arrowLeft") ?> Voltar
-            </a>
-        </div>
-    </div>
+    <?php
+
+    $headerButtons = [
+        "phButtonOne" => [
+            "type" => "link",
+            "text" => "Voltar",
+            "style" => "info",
+            "link" => $router->route("dash.users"),
+            "activeIcon" => icon_class("arrowLeft"),
+            "altIcon" => icon_class("arrowLeft"),
+        ]
+    ];
+
+    $filterFormActionLink = $router->route("dash.users.filter");
+
+    include __DIR__ . "/includes/page-header.php";
+
+    ?>
 
     <div class="section-content">
         <div class="row py-3">

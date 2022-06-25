@@ -5,8 +5,25 @@
 <div class="section products-section">
     <?php
 
-    $headerButtonNewLink = $router->route("dash.products.create");
-    $headerButtonNewText = "Novo produto";
+    $headerButtons = [
+        "phButtonOne" => [
+            "type" => "link",
+            "text" => "Novo produto",
+            "style" => "info",
+            "link" => $router->route("dash.products.create"),
+            "activeIcon" => icon_class("plusLg"),
+            "altIcon" => icon_class("loading"),
+        ],
+        "phButtonTwo" => [
+            "type" => "button",
+            "text" => "Exemplo",
+            "style" => "secondary",
+            "link" => "#link",
+            "activeIcon" => icon_class("pieChart"),
+            "altIcon" => icon_class("loading"),
+        ]
+    ];
+
     $filterFormActionLink = $router->route("dash.products.filter");
 
     include __DIR__ . "/includes/page-header.php";

@@ -2,18 +2,24 @@
     <div class="left-side col-12 col-lg-6 d-flex align-items-center">
         <h2 class="title"><?= $pageTitle ?? $seo->title ?></h2>
 
-        <?php if ($headerButtonNewLink ?? null) : ?>
-            <a class="btn btn-info ml-auto ml-lg-2" href="<?= $headerButtonNewLink ?>">
-                <?= icon_elem("plusLg") ?> <?= $headerButtonNewText ?>
-            </a>
-        <?php endif; ?>
+        <?php foreach ($headerButtons ?? [] as $kHeaderButton => $headerButton) : ?>
+            <?php if ($headerButton["type"] == "link") : ?>
+                <a class="btn btn-<?= $headerButton["style"] ?> ml-auto ml-lg-2 <?= $kHeaderButton ?>" href="<?= $headerButton["link"] ?>" id="<?= $kHeaderButton ?>">
+                    <i class="icon <?= $headerButton["activeIcon"] ?>"></i> <?= $headerButton["text"] ?>
+                </a>
+            <?php else : ?>
+                <button class="btn btn-<?= $headerButton["style"] ?> ml-auto ml-lg-2 <?= $kHeaderButton ?> <?= $headerButton["activeIcon"] ?>" data-active-icon="<?= $headerButton["activeIcon"] ?>" data-alt-icon="<?= $headerButton["altIcon"] ?>" data-action="<?= $headerButton["link"] ?>" id="<?= $kHeaderButton ?>">
+                    <?= $headerButton["text"] ?>
+                </button>
+            <?php endif; ?>
+        <?php endforeach; ?>
     </div>
 
     <div class="right-side col-12 col-lg-6 d-flex align-items-center mt-3 mt-lg-0">
         <?php if ($filterFormActionLink ?? null) : ?>
             <div class="filter-bar w-100">
                 <form action="<?= $filterFormActionLink ?>" method="post">
-                    <div class="d-flex justify-content-end align-items-center">
+                    <div class="d-flex justify-content-center justify-content-lg-end align-items-center">
                         <!-- order input -->
                         <div class="form-group ml-2">
                             <label for="order">Data de criação:</label>

@@ -5,8 +5,17 @@
 <div class="section section-users">
     <?php
 
-    $headerButtonNewLink = $router->route("dash.users.create");
-    $headerButtonNewText = "Novo usuário";
+    $headerButtons = [
+        "phButtonOne" => [
+            "type" => "link",
+            "text" => "Novo usuário",
+            "style" => "info",
+            "link" => $router->route("dash.users.create"),
+            "activeIcon" => icon_class("plusLg"),
+            "altIcon" => icon_class("loading"),
+        ]
+    ];
+
     $filterFormActionLink = $router->route("dash.users.filter");
 
     include __DIR__ . "/includes/page-header.php";

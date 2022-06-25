@@ -3,16 +3,24 @@
 <?= $v->start("content") ?>
 
 <div class="section">
-    <div class="section-header">
-        <div class="left-side">
-            <h2 class="title">Novo produto</h2>
-        </div>
-        <div class="right-side">
-            <a class="btn btn-info" href="<?= $router->route("dash.products") ?>">
-                <?= icon_elem("arrowLeft") ?> Voltar
-            </a>
-        </div>
-    </div>
+    <?php
+
+    $headerButtons = [
+        "phButtonOne" => [
+            "type" => "link",
+            "text" => "Voltar",
+            "style" => "info",
+            "link" => $router->route("dash.products"),
+            "activeIcon" => icon_class("arrowLeft"),
+            "altIcon" => icon_class("arrowLeft"),
+        ]
+    ];
+
+    $filterFormActionLink = $router->route("dash.products.filter");
+
+    include __DIR__ . "/includes/page-header.php";
+
+    ?>
 
     <div class="section-content">
         <form id="productForm" action="<?= $router->route("dash.products.store") ?>" method="post" enctype="multipart/form-data">
