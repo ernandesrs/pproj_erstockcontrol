@@ -20,10 +20,40 @@ class UserController extends DashController
      */
     public function index(): void
     {
+        /**
+         * 
+         * start filter
+         * 
+         */
+
+        $search = filter_input(INPUT_GET, "search");
+        $order = filter_input(INPUT_GET, "order");
+
+        $rules = "";
+        $ruleValues = "";
+        if (!empty($search)) {
+            $rules .= "MATCH(first_name, last_name, username, email) AGAINST(:search) AND ";
+            $ruleValues .= "search={$search}&";
+        }
+
+        $orderBy = "created_at {$this->settings->listings->order_create_date}";
+        if (!empty($order) && in_array($order, ["asc", "desc"])) {
+            $orderBy = "created_at " . strtoupper($order);
+        }
+
+        $rules = !empty($rules) ? substr($rules, 0, strlen($rules) - 5) : null;
+        $ruleValues = !empty($ruleValues) ? substr($ruleValues, 0, strlen($ruleValues) - 1) : null;
+
+        /**
+         * 
+         * end filter
+         * 
+         */
+
         $page = filter_input(INPUT_GET, "page", FILTER_VALIDATE_INT) ?? 1;
 
         /** @var User */
-        $user = (new User())->offset($page)->limit($this->settings->listings->limit_items)->orderBy("level DESC, username ASC, created_at {$this->settings->listings->order_create_date}")->find();
+        $user = (new User())->offset($page)->limit($this->settings->listings->limit_items)->orderBy("level DESC, username ASC, {$orderBy}")->find($rules, $ruleValues);
 
         $this->view("dash/users", [
             "pagination" => $user->paginate(),
@@ -236,6 +266,32 @@ class UserController extends DashController
         echo json_encode([
             "success" => true,
             "redirect" => $this->route("dash.users"),
+        ]);
+        return;
+    }
+
+    /**
+     * @return void
+     */
+    public function filter(): void
+    {
+        $page = filter_input(INPUT_GET, "page", FILTER_VALIDATE_INT) ?? 1;
+        $search = filter_input(INPUT_POST, "search");
+        $order = filter_input(INPUT_POST, "order");
+
+        $params = [];
+        if (!empty($search))
+            $params["search"] = $search;
+
+        if (!empty($order) && in_array($order, ["asc", "desc"]))
+            $params["order"] = $order;
+
+        if (count($params) != 0 && $page)
+            $params["page"] = $page;
+
+        echo json_encode([
+            "success" => true,
+            "redirect" => $this->route("dash.users", $params)
         ]);
         return;
     }
