@@ -52,7 +52,7 @@
                 "phButtonOne" => [
                     "type" => "link",
                     "text" => "Mais detalhes",
-                    "style" => "info",
+                    "style" => "info btn-link",
                     "link" => $router->route("dash.products"),
                     "activeIcon" => "",
                     "altIcon" => "",

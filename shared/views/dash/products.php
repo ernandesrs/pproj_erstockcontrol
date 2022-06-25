@@ -9,7 +9,7 @@
         "phButtonOne" => [
             "type" => "link",
             "text" => "Novo produto",
-            "style" => "info",
+            "style" => "success",
             "link" => $router->route("dash.products.create"),
             "activeIcon" => icon_class("plusLg"),
             "altIcon" => icon_class("loading"),

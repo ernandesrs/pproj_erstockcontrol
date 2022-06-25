@@ -1,0 +1,37 @@
+body {
+    .sidebar {
+        .sidebar-elements {
+            .sidebar-element {
+                color: $light-dark;
+            }
+        }
+    }
+
+    .main {
+        background-color: $dark-light;
+        color: $light-dark !important;
+
+        .btn-outline-secondary {
+            color: $light-dark !important;
+        }
+
+        .section {
+            .section-header {
+                .left-side {
+                    .title {
+                        color: $light-dark !important;
+                    }
+
+                    .subtitle {
+                        color: $light!important;
+                    }
+                }
+            }
+
+            .section-content {
+                background-color: rgb($light, 0.25);
+                border-color: rgb($light, 0.125);
+            }
+        }
+    }
+}

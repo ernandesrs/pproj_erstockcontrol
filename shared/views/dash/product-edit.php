@@ -9,7 +9,7 @@
         "phButtonOne" => [
             "type" => "link",
             "text" => "Voltar",
-            "style" => "info",
+            "style" => "secondary",
             "link" => $router->route("dash.products"),
             "activeIcon" => icon_class("arrowLeft"),
             "altIcon" => icon_class("arrowLeft"),

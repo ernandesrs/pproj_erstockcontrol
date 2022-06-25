@@ -182,7 +182,7 @@ body {
                 .section-content {
                     .overview-boxes-list {
                         .overview-boxes-item {
-                            background-color: rgb($light-light, 0.5);
+                            background-color: rgb($light-light, 0.35);
 
                             .icon {
                                 font-size: 3rem;
@@ -204,6 +204,7 @@ body {
                 .section-content {
                     .list-items {
                         .list-item {
+                            background-color: rgb($light-dark, 0.5);
 
                             &.user {
                                 .photo {

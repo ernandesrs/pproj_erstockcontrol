@@ -9,7 +9,7 @@
         "phButtonOne" => [
             "type" => "link",
             "text" => "Novo usuário",
-            "style" => "info",
+            "style" => "success",
             "link" => $router->route("dash.users.create"),
             "activeIcon" => icon_class("plusLg"),
             "altIcon" => icon_class("loading"),
