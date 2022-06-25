@@ -33,7 +33,8 @@ $sources = [
      * dash
      */
     "public/assets/css/dash" => [
-        "shared/styles/dash/custom.css"
+        "shared/styles/dash/custom.css",
+        "shared/styles/dash/custom.dark.css",
     ],
 
     "public/assets/js/dash" => [

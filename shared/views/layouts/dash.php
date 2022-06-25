@@ -15,7 +15,7 @@
     <?php
 
     $styles = [
-        "dash/custom.css",
+        ($dash_settings->theme->dark_mode ? "dash/custom.dark.css" : "dash/custom.css"),
         "bootstrap-icons.css"
     ];
 

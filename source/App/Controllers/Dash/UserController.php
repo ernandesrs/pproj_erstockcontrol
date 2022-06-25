@@ -23,7 +23,7 @@ class UserController extends DashController
         $page = filter_input(INPUT_GET, "page", FILTER_VALIDATE_INT) ?? 1;
 
         /** @var User */
-        $user = (new User())->offset($page)->limit(12)->orderBy("level DESC, username ASC, created_at DESC")->find();
+        $user = (new User())->offset($page)->limit($this->settings->listings->limit_items)->orderBy("level DESC, username ASC, created_at {$this->settings->listings->order_create_date}")->find();
 
         $this->view("dash/users", [
             "pagination" => $user->paginate(),

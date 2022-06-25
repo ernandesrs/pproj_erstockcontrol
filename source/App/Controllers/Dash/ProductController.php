@@ -35,7 +35,7 @@ class ProductController extends DashController
             $ruleValues .= "name={$search}&";
         }
 
-        $orderBy = "created_at ASC";
+        $orderBy = "created_at {$this->settings->listings->order_create_date}";
         if (!empty($order) && in_array($order, ["asc", "desc"])) {
             $orderBy = "created_at " . strtoupper($order);
         }
@@ -53,7 +53,7 @@ class ProductController extends DashController
         $page = filter_input(INPUT_GET, "page", FILTER_VALIDATE_INT) ?? 1;
 
         /** @var Product */
-        $products = (new Product())->limit(12)->offset($page)->orderBy($orderBy)->find($rules, $ruleValues);
+        $products = (new Product())->limit($this->settings->listings->limit_items)->offset($page)->orderBy($orderBy)->find($rules, $ruleValues);
 
         $this->view("dash/products", [
             "pagination" => $products->paginate(),

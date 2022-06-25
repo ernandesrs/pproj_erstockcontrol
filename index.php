@@ -33,6 +33,7 @@ $router->get("/dash/usuario/excluir", "UserController@delete", "dash.users.delet
 $router->post("/dash/usuarios/filtrar", "UserController@filter", "dash.users.filter");
 
 $router->get("/dash/configuracao", "IndexController@settings", "dash.settings");
+$router->post("/dash/configuracao", "IndexController@settings", "dash.settings");
 $router->get("/dash/perfil", "IndexController@profile", "dash.profile");
 
 $router->get("/error", "IndexController@error", "dash.error");

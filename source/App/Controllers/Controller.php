@@ -12,7 +12,7 @@ class Controller
     protected $router;
 
     /** @var Template */
-    private $view;
+    protected $view;
 
     /** @var Uploader */
     protected $uploader;

@@ -64,9 +64,39 @@ class IndexController extends DashController
     /**
      * @return void
      */
-    public function settings()
+    public function settings(): void
     {
-        $this->view("dash/settings")->seo("Configurações")->render();
+        $apply = filter_input(INPUT_GET, "apply", FILTER_VALIDATE_BOOLEAN) ?? null;
+
+        if ($apply) {
+            $logged = (new Auth())->logged();
+            $id = $logged->id;
+
+            $darkMode = filter_input(INPUT_POST, "dark_mode");
+            $limitItems = filter_input(INPUT_POST, "limit_items", FILTER_VALIDATE_INT);
+            $orderCreateDate = filter_input(INPUT_POST, "order_create_date");
+
+            $this->settings->theme->dark_mode = $darkMode == "on" ? true : false;
+
+            $this->settings->listings->limit_items = ($limitItems ?? 12) < 1 ? 1 : $limitItems;
+            $this->settings->listings->order_create_date = in_array($orderCreateDate, ["asc", "desc"]) ? $orderCreateDate : "asc";
+            $dashSettings = json_decode(file_get_contents(CONF_BASE_DIR . "/storage/dash_settings.json"));
+            $dashSettings->$id = $this->settings;
+
+            file_put_contents(CONF_BASE_DIR . "/storage/dash_settings.json", json_encode($dashSettings));
+
+            message()->info("Configurações atualizadas com sucesso.")->float()->flash();
+            echo json_encode([
+                "success" => true,
+                "reload" => true
+            ]);
+
+            return;
+        }
+
+        $this->view("dash/settings", [
+            "dash_settings" => $this->settings
+        ])->seo("Configurações")->render();
     }
 
     /**
