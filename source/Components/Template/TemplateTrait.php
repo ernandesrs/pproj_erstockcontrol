@@ -21,7 +21,7 @@ trait TemplateTrait
         bool $follow = true
     ): Template {
         $this->addData([
-            "seo" => [
+            "seo" => (object) [
                 "title" => $title,
                 "description" => $desc,
                 "url" => $url,
