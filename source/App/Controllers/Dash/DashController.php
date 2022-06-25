@@ -4,6 +4,7 @@ namespace App\Controllers\Dash;
 
 use App\Controllers\Controller;
 use App\Models\Auth;
+use App\Models\User;
 use Components\Router\Router;
 use stdClass;
 
@@ -18,6 +19,12 @@ class DashController extends Controller
     {
         if (!(new Auth())->isLogged()) {
             $router->redirect("auth.login");
+            return;
+        }
+
+        $loggedLevel = (new Auth())->logged()->level;
+        if (!in_array($loggedLevel, [User::LEVEL_ADMIN, User::LEVEL_OWNER])) {
+            $router->redirect("auth.logout");
             return;
         }
 
