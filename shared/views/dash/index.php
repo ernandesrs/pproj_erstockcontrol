@@ -3,13 +3,14 @@
 <?= $v->start("content") ?>
 
 <div class="section section-overview">
-    <div class="section-header">
-        <div class="left-side">
-            <h2 class="title">
-                Resumo geral
-            </h2>
-        </div>
-    </div>
+    <!-- page header -->
+    <?php
+
+    $pageTitle = "Visão geral";
+
+    include __DIR__ . "/includes/page-header.php";
+
+    ?>
 
     <div class="section-content border-0 bg-transparent">
         <div class="row justify-content-center overview-boxes-list">
@@ -39,28 +40,56 @@
     </div>
 </div>
 
-<div class="section section-overview">
-    <div class="section-header">
-        <div class="left-side">
-            <h2 class="title">
-                Lugar bom para um gráfico
-            </h2>
-            <p class="subtitle">
-                Poderia ter um gráfico maneiro aqui embaixo
-            </p>
-        </div>
+<div class="row">
+    <div class="col-12 col-md-6 col-lg-8">
+        <div class="section section-overview">
+            <!-- page header -->
+            <?php
 
-        <div class="right-side">
-            <a class="btn btn-info" href="">
-                Mais detalhes
-            </a>
+            $pageTitle = "Um gráfico cairia bem aqui";
+            $pageSubtitle = "Poderia ter um gráfico maneiro aqui embaixo";
+            $headerButtons = [
+                "phButtonOne" => [
+                    "type" => "link",
+                    "text" => "Mais detalhes",
+                    "style" => "info",
+                    "link" => $router->route("dash.products"),
+                    "activeIcon" => "",
+                    "altIcon" => "",
+                ]
+            ];
+
+            include __DIR__ . "/includes/page-secondary-header.php";
+
+            ?>
+
+            <div class="section-content">
+                <p class="mb-0">
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam, tempora fugiat architecto hic ullam ratione repellat cupiditate rem explicabo fugit, in ex provident corrupti labore ea vitae autem magnam voluptatem. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem repudiandae accusamus inventore temporibus, molestiae aliquam eius, odio eveniet quia in consectetur deleniti perspiciatis nesciunt et adipisci quasi ad tenetur recusandae.
+                </p>
+            </div>
         </div>
     </div>
 
-    <div class="section-content">
-        <p class="mb-0">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam, tempora fugiat architecto hic ullam ratione repellat cupiditate rem explicabo fugit, in ex provident corrupti labore ea vitae autem magnam voluptatem. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem repudiandae accusamus inventore temporibus, molestiae aliquam eius, odio eveniet quia in consectetur deleniti perspiciatis nesciunt et adipisci quasi ad tenetur recusandae.
-        </p>
+    <div class="col-12 col-md-6 col-lg-4">
+        <div class="section section-overview">
+            <!-- page header -->
+            <?php
+
+            $pageTitle = "Outra seção maneira";
+            $pageSubtitle = "Descrição top em lorem ipsum dolor sit";
+            $headerButtons = null;
+
+            include __DIR__ . "/includes/page-secondary-header.php";
+
+            ?>
+
+            <div class="section-content">
+                <p class="mb-0">
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam, tempora fugiat architecto hic ullam ratione repellat cupiditate rem explicabo fugit, in ex provident corrupti labore ea vitae autem magnam voluptatem.
+                </p>
+            </div>
+        </div>
     </div>
 </div>
 

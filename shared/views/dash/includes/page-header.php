@@ -1,6 +1,11 @@
 <div class="section-header row">
     <div class="left-side col-12 col-lg-6 d-flex align-items-center">
-        <h2 class="title"><?= $pageTitle ?? $seo->title ?></h2>
+        <div>
+            <h2 class="title"><?= $pageTitle ?? $seo->title ?></h2>
+            <?php if ($pageSubtitle ?? null) : ?>
+                <p class="mb-0"><?= $pageSubtitle ?></p>
+            <?php endif; ?>
+        </div>
 
         <?php $i = 0;
         foreach ($headerButtons ?? [] as $kHeaderButton => $headerButton) : ?>
