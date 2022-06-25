@@ -3,16 +3,15 @@
 <?= $v->start("content") ?>
 
 <div class="section section-users">
-    <div class="section-header">
-        <div class="left-side">
-            <h2 class="title">Listagem de usuários</h2>
-        </div>
-        <div class="right-side">
-            <a class="btn btn-info" href="<?= $router->route("dash.users.create") ?>">
-                <?= icon_elem("userPlus") ?> Novo usuário
-            </a>
-        </div>
-    </div>
+    <?php
+
+    $headerButtonNewLink = $router->route("dash.users.create");
+    $headerButtonNewText = "Novo usuário";
+    $filterFormActionLink = $router->route("dash.users.filter");
+
+    include __DIR__ . "/includes/page-header.php";
+
+    ?>
 
     <div class="section-content">
         <div class="row justify-content-start list-items">

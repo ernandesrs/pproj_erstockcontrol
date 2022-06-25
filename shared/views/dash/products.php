@@ -3,16 +3,15 @@
 <?= $v->start("content") ?>
 
 <div class="section products-section">
-    <div class="section-header">
-        <div class="left-side">
-            <h2 class="title">Listagem de produtos</h2>
-        </div>
-        <div class="right-side">
-            <a class="btn btn-info" href="<?= $router->route("dash.products.create") ?>">
-                <?= icon_elem("plusSquare") ?> Novo produto
-            </a>
-        </div>
-    </div>
+    <?php
+
+    $headerButtonNewLink = $router->route("dash.products.create");
+    $headerButtonNewText = "Novo produto";
+    $filterFormActionLink = $router->route("dash.products.filter");
+
+    include __DIR__ . "/includes/page-header.php";
+
+    ?>
 
     <div class="section-content py-3">
         <?php if ($products ?? null) : ?>

@@ -30,6 +30,21 @@ function url(?string $path = null): string
 }
 
 /**
+ * @param array|null $exceptArr
+ * @return array|null
+ */
+function url_params(?array $exceptArr = null): ?array
+{
+    $get = $_GET;
+    $except = array_merge(($exceptArr ?? []), ["route"]);
+
+    foreach ($except as $expt)
+        unset($get[$expt]);
+
+    return count($get) == 0 ? null : $get;
+}
+
+/**
  * @param string $asset
  * @return string|null
  */

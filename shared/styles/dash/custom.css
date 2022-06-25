@@ -9141,6 +9141,7 @@ body .main .section {
 }
 body .main .section .section-header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   padding: 1rem 0;
 }
@@ -9150,8 +9151,8 @@ body .main .section .section-header .left-side .title {
   font-weight: 600;
   color: rgb(75, 75, 75);
 }
-body .main .section .section-header .right-side {
-  margin-left: auto;
+body .main .section .section-header .right-side .filter-bar {
+  background-color: transparent;
 }
 body .main .section .section-content {
   background-color: #fff;

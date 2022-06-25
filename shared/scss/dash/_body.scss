@@ -141,6 +141,7 @@ body {
 
             .section-header {
                 display: flex;
+                flex-wrap: wrap;
                 align-items: center;
                 padding: $spacer 0;
 
@@ -154,8 +155,11 @@ body {
                 }
 
                 .right-side {
-                    margin-left: auto;
+                    .filter-bar {
+                        background-color: transparent;
+                    }
                 }
+
             }
 
             .section-content {

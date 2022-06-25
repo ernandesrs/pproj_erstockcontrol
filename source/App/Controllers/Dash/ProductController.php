@@ -19,11 +19,41 @@ class ProductController extends DashController
      */
     public function index(): void
     {
+        /**
+         * 
+         * start filter
+         * 
+         */
+
+        $search = filter_input(INPUT_GET, "search");
+        $order = filter_input(INPUT_GET, "order");
+
+        $rules = "";
+        $ruleValues = "";
+        if (!empty($search)) {
+            $rules .= "MATCH(name) AGAINST(:name) AND ";
+            $ruleValues .= "name={$search}&";
+        }
+
+        $orderBy = "created_at ASC";
+        if (!empty($order) && in_array($order, ["asc", "desc"])) {
+            $orderBy = "created_at " . strtoupper($order);
+        }
+
+        $rules = !empty($rules) ? substr($rules, 0, strlen($rules) - 5) : null;
+        $ruleValues = !empty($ruleValues) ? substr($ruleValues, 0, strlen($ruleValues) - 1) : null;
+
+        /**
+         * 
+         * end filter
+         * 
+         */
+
         /** @var int */
         $page = filter_input(INPUT_GET, "page", FILTER_VALIDATE_INT) ?? 1;
 
         /** @var Product */
-        $products = (new Product())->limit(12)->offset($page)->orderBy("created_at ASC")->find();
+        $products = (new Product())->limit(12)->offset($page)->orderBy($orderBy)->find($rules, $ruleValues);
 
         $this->view("dash/products", [
             "pagination" => $products->paginate(),
@@ -145,6 +175,32 @@ class ProductController extends DashController
 
         message()->info("O produto foi excluído com sucesso.")->float()->flash();
         $this->router->redirect("dash.products");
+        return;
+    }
+
+    /**
+     * @return void
+     */
+    public function filter(): void
+    {
+        $page = filter_input(INPUT_GET, "page", FILTER_VALIDATE_INT) ?? 1;
+        $search = filter_input(INPUT_POST, "search");
+        $order = filter_input(INPUT_POST, "order");
+
+        $params = [];
+        if (!empty($search))
+            $params["search"] = $search;
+
+        if (!empty($order) && in_array($order, ["asc", "desc"]))
+            $params["order"] = $order;
+
+        if (count($params) != 0 && $page)
+            $params["page"] = $page;
+
+        echo json_encode([
+            "success" => true,
+            "redirect" => $this->route("dash.products", $params)
+        ]);
         return;
     }
 }
