@@ -34,29 +34,26 @@ class DashController extends Controller
     {
         $loggedId = (new Auth())->logged()->id;
         $dashSettingsPath = CONF_BASE_DIR . "/storage/dash_settings.json";
+        if (!file_exists($dashSettingsPath))
+            file_put_contents($dashSettingsPath, json_encode([]));
 
-        if (!file_exists($dashSettingsPath)) {
-            $dashSettings = [
-                $loggedId => [
-                    "theme" => [
-                        "dark_mode" => false
-                    ],
-                    "listings" => [
-                        "limit_items" => 12,
-                        "order_create_date" => "desc",
-                    ],
-                ],
-            ];
+        $dashSettings = (array) json_decode(file_get_contents($dashSettingsPath));
 
-            file_put_contents($dashSettingsPath, json_encode($dashSettings));
-        }
+        if ($dashSettings[$loggedId] ?? null)
+            return (object) $dashSettings[$loggedId];
 
-        $dashSettings = json_decode(file_get_contents($dashSettingsPath));
+        $defaultSettings[$loggedId] = [
+            "theme" => (object) [
+                "dark_mode" => false
+            ],
+            "listings" => (object) [
+                "limit_items" => 12,
+                "order_create_date" => "desc",
+            ],
+        ];
 
-        foreach ($dashSettings as $key => $dsetting)
-            if ($key == $loggedId)
-                return $dsetting;
+        file_put_contents($dashSettingsPath, json_encode($defaultSettings + $dashSettings));
 
-        return null;
+        return (object) $defaultSettings[$loggedId];
     }
 }
