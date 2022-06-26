@@ -191,7 +191,7 @@ class SIManipulator
         if (in_array($this->input["extension"], ["jpeg", "tiff"])) {
             $exif = exif_read_data($this->input["path"]) ?? null;
             if ($exif)
-                $this->input["orientation"] = $exif["Orientation"];
+                $this->input["orientation"] = $exif["Orientation"] ?? null;
         }
 
         return;
