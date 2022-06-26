@@ -143,12 +143,12 @@
             label: 'Linha 1',
             backgroundColor: 'rgb(217, 120, 130)',
             borderColor: 'rgb(217, 120, 130)',
-            data: [5, 10, 15, 30, 30, 40],
+            data: [5, 10, 15, 20, 25, 20],
         }, {
             label: 'Linha 2',
             backgroundColor: 'rgb(210, 210, 210)',
             borderColor: 'rgb(210, 210, 210)',
-            data: [15, 15, 20, 25, 25, 30],
+            data: [10, 15, 20, 15, 20, 10],
         }]
     };
 
