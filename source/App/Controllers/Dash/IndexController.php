@@ -31,6 +31,29 @@ class IndexController extends DashController
      */
     public function dash(): void
     {
+        if ($this->logged->level == User::LEVEL_OWNER)
+            $reports = (new User())->find("level>:level", "level=1")->get(true);
+
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            $data = [
+                "reports" => ($reports ?? null) ? array_map(function ($item) {
+                    $activity = $item->lastActivityReport()->data();
+
+                    if ($activity) {
+                        unset($activity->users_id, $activity->created_at, $activity->updated_at);
+                        $activity->last_report = Date::hoursElapsedSoFar($activity->last_report);
+                        $activity->last_page_name = $activity->last_page;
+                        $activity->last_page = url($activity->last_page);
+                    }
+
+                    return $activity;
+                }, $reports) : null
+            ];
+
+            echo json_encode($data);
+            return;
+        }
+
         $overviewBoxes = [
             "users" => (object) [
                 "total" => (new User())->find()->count(),
@@ -57,9 +80,6 @@ class IndexController extends DashController
                 "link" => ""
             ],
         ];
-
-        if ($this->logged->level == User::LEVEL_OWNER)
-            $reports = (new User())->find("level>:level", "level=1")->get(true);
 
         $this->view("dash/index", [
             "overviewBoxes" => $overviewBoxes,
@@ -119,5 +139,15 @@ class IndexController extends DashController
     {
         $this->view("error", ["errorCode" => filter_input(INPUT_GET, "err", FILTER_VALIDATE_INT) ?? 404])
             ->render();
+    }
+
+    /**
+     * @return void
+     */
+    public function onlineReport(): void
+    {
+        if (!$this->logged) return;
+        $this->logged->activityReport(["last_page" => $this->router->currentRoutePath(true)]);
+        return;
     }
 }

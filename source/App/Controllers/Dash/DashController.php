@@ -41,7 +41,8 @@ class DashController extends Controller
             "logged" => $this->logged
         ]);
 
-        $this->logged->activityReport(["last_page" => $this->router->currentRoutePath(true)]);
+        if ($_SERVER["REQUEST_METHOD"] == "GET")
+            $this->logged->activityReport(["last_page" => $this->router->currentRoutePath(true)]);
     }
 
     /**

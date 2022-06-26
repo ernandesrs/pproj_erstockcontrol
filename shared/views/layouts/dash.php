@@ -112,6 +112,28 @@
     ?>
 
     <?= $v->section("scripts") ?>
+    <script>
+        let urlDash = "<?= $router->route("dash.dash") ?>";
+
+        // dash get updated data
+        setInterval(function() {
+            dashData();
+        }, 30000);
+
+        function dashData() {
+            $.post(urlDash, function(response) {
+                let reportsTable = $(".jsReportsTable");
+
+                if (response.reports) {
+                    $.each(response.reports, function(k, v) {
+                        let reportLine = reportsTable.find("#report" + v.id);
+                        reportLine.find(".last-report").html(v.last_report);
+                        reportLine.find(".last-page a").html(v.last_page_name).attr("href", v.last_page);
+                    });
+                }
+            }, "json");
+        }
+    </script>
 </body>
 
 </html>

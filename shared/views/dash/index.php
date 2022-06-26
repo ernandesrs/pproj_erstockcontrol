@@ -66,9 +66,7 @@
             ?>
 
             <div class="section-content">
-                <canvas id="myChart">
-
-                </canvas>
+                <canvas id="myChart"></canvas>
             </div>
         </div>
     </div>
@@ -80,7 +78,7 @@
                 <?php
 
                 $pageTitle = "Últimas atividades";
-                $pageSubtitle = null;
+                $pageSubtitle = "Últimas atividades registradas no dashboard";
                 $headerButtons = null;
 
                 include __DIR__ . "/includes/page-secondary-header.php";
@@ -89,25 +87,25 @@
 
                 <div class="section-content">
                     <div class="table-responsive">
-                        <table class="table table-sm table-borderless table-hover">
+                        <table class="table table-sm table-borderless table-hover jsReportsTable">
                             <thead>
                                 <tr>
                                     <th>Usuário</th>
-                                    <th>Último reporte</th>
+                                    <th>Última atividade</th>
                                     <th>Página</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach ($reports ?? [] as $report) :
                                     $last = $report->lastActivityReport(); ?>
-                                    <tr>
-                                        <td class="align-middle">
+                                    <tr id="report<?= $last->id ?>">
+                                        <td class="align-middle username">
                                             <?= $report->username ?>
                                         </td>
-                                        <td class="align-middle">
+                                        <td class="align-middle last-report">
                                             <?= ($last->last_report ?? null) ? App\Helpers\Date::hoursElapsedSoFar($last->last_report) : "Nunca ativo" ?>
                                         </td>
-                                        <td class="align-middle text-nowrap d-inline-block text-truncate" style="width: 100%; max-width: 150px;">
+                                        <td class="align-middle text-nowrap d-inline-block text-truncate last-page" style="width: 100%; max-width: 150px;">
                                             <a href="<?= url($last->last_page) ?>" target="_blank">
                                                 <?= ($last->last_page ?? null) ? $last->last_page : "" ?>
                                             </a>
