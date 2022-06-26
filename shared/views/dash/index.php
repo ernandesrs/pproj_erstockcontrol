@@ -6,6 +6,8 @@
     <!-- page header -->
     <?php
 
+    use App\Models\Auth;
+
     $pageTitle = "Visão geral";
 
     include __DIR__ . "/includes/page-header.php";
@@ -72,42 +74,44 @@
     </div>
 
     <div class="col-12 col-md-6 col-lg-5">
-        <div class="section section-overview">
-            <!-- page header -->
-            <?php
+        <?php if ((new Auth())->logged()->level == 5) : ?>
+            <div class="section section-overview">
+                <!-- page header -->
+                <?php
 
-            $pageTitle = "Últimas atividades";
-            $pageSubtitle = null;
-            $headerButtons = null;
+                $pageTitle = "Últimas atividades";
+                $pageSubtitle = null;
+                $headerButtons = null;
 
-            include __DIR__ . "/includes/page-secondary-header.php";
+                include __DIR__ . "/includes/page-secondary-header.php";
 
-            ?>
+                ?>
 
-            <div class="section-content">
-                <div class="table-responsive">
-                    <table class="table table-sm table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>Usuário</th>
-                                <th>Status</th>
-                                <th>Página</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($reports ?? [] as $report) :
-                                $last = $report->lastActivityReport(); ?>
+                <div class="section-content">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-borderless table-hover">
+                            <thead>
                                 <tr>
-                                    <td><?= $report->username ?></td>
-                                    <td><?= ($last->last_report ?? null) ? App\Helpers\Date::hoursElapsedSoFar($last->last_report) : "Nunca ativo" ?></td>
-                                    <td><?= ($last->last_page ?? null) ? $last->last_page : "" ?></td>
+                                    <th>Usuário</th>
+                                    <th>Último reporte</th>
+                                    <th>Página</th>
                                 </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($reports ?? [] as $report) :
+                                    $last = $report->lastActivityReport(); ?>
+                                    <tr>
+                                        <td><?= $report->username ?></td>
+                                        <td><?= ($last->last_report ?? null) ? App\Helpers\Date::hoursElapsedSoFar($last->last_report) : "Nunca ativo" ?></td>
+                                        <td><?= ($last->last_page ?? null) ? $last->last_page : "" ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php endif; ?>
     </div>
 </div>
 
