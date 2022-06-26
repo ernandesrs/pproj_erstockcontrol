@@ -74,7 +74,7 @@
     </div>
 
     <div class="col-12 col-md-6 col-lg-5">
-        <?php if ((new Auth())->logged()->level == 5) : ?>
+        <?php if ($reports ?? null) : ?>
             <div class="section section-overview">
                 <!-- page header -->
                 <?php

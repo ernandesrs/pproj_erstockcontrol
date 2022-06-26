@@ -74,10 +74,9 @@ class UserController extends DashController
      */
     public function store(): void
     {
-        $logged = (new Auth())->logged();
         $user = new User();
 
-        if ($logged->level != User::LEVEL_OWNER) {
+        if ($this->logged->level != User::LEVEL_OWNER) {
             message()->warning("Você não possui permissão para realizar este tipo de ação")->float()->flash();
             echo json_encode([
                 "success" => false,
@@ -137,9 +136,6 @@ class UserController extends DashController
     {
         $data = $_POST;
 
-        /** @var User $logged */
-        $logged = (new Auth())->logged();
-
         /** @var User $user */
         $user = (new User())->find("id=:id", "id=" . (filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 0))->get();
 
@@ -152,7 +148,7 @@ class UserController extends DashController
             return;
         }
 
-        if ($logged->level != User::LEVEL_OWNER) {
+        if ($this->logged->level != User::LEVEL_OWNER) {
             message()->warning("Você não possui permissão para realizar este tipo de ação")->float()->flash();
             echo json_encode([
                 "success" => false,
@@ -162,8 +158,8 @@ class UserController extends DashController
         }
 
         // IMPEDE O PROPRIETÁRIO DE ALTERAR O PRÓPRIO NÍVEL
-        if ($logged->id == $user->id)
-            $data["level"] = $logged->level;
+        if ($this->logged->id == $user->id)
+            $data["level"] = $this->logged->level;
 
         // PHOTO UPLOAD
         $storage = null;
@@ -223,9 +219,6 @@ class UserController extends DashController
      */
     public function delete(): void
     {
-        /** @var User $logged */
-        $logged = (new Auth())->logged();
-
         /** @var User $user */
         $user = (new User())->find("id=:id", "id=" . (filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 0))->get();
 
@@ -238,7 +231,7 @@ class UserController extends DashController
             return;
         }
 
-        if ($logged->level != User::LEVEL_OWNER) {
+        if ($this->logged->level != User::LEVEL_OWNER) {
             message()->warning("Você não possui permissão para realizar este tipo de ação")->float()->flash();
             echo json_encode([
                 "success" => false,
@@ -248,7 +241,7 @@ class UserController extends DashController
         }
 
         // IMPEDE O PROPRIETÁRIO DE EXCLUIR O PRÓPRIO PERFIL
-        if ($logged->id == $user->id) {
+        if ($this->logged->id == $user->id) {
             echo json_encode([
                 "success" => false,
                 "message" => message()->warning("Você não pode excluir seu próprio perfil")->float()->render()

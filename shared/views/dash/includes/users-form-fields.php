@@ -26,9 +26,6 @@
     </div>
 </div>
 
-<?php
-$logged = (new \App\Models\Auth())->logged();
-?>
 <div class="<?= $logged->level == 5 ? "col-6 col-xl-2" : "col-12" ?>">
     <div class="form-group">
         <label for="gender">Gênero:</label>

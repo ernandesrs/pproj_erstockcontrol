@@ -12,6 +12,10 @@ class DashController extends Controller
 {
     /** @var stdClass */
     protected $settings;
+
+    /** @var User */
+    protected $logged;
+
     /**
      * @param Router $router
      */
@@ -22,10 +26,9 @@ class DashController extends Controller
             return;
         }
 
-        /** @var User $logged */
-        $logged = (new Auth())->logged();
-        $loggedLevel = $logged->level;
-        if (!in_array($loggedLevel, [User::LEVEL_ADMIN, User::LEVEL_OWNER])) {
+        $this->logged = (new Auth())->logged();
+
+        if (!in_array($this->logged->level, [User::LEVEL_ADMIN, User::LEVEL_OWNER])) {
             $router->redirect("auth.logout");
             return;
         }
@@ -33,9 +36,12 @@ class DashController extends Controller
         parent::__contruct($router);
 
         $this->settings = $this->getSettings();
-        $this->view->addData(["dash_settings" => $this->settings]);
+        $this->view->addData([
+            "dash_settings" => $this->settings,
+            "logged" => $this->logged
+        ]);
 
-        $logged->activityReport(["last_page" => $this->router->currentRoutePath()]);
+        $this->logged->activityReport(["last_page" => $this->router->currentRoutePath()]);
     }
 
     /**
@@ -43,17 +49,16 @@ class DashController extends Controller
      */
     protected function getSettings(): stdClass
     {
-        $loggedId = (new Auth())->logged()->id;
         $dashSettingsPath = CONF_BASE_DIR . "/storage/dash_settings.json";
         if (!file_exists($dashSettingsPath))
             file_put_contents($dashSettingsPath, json_encode([]));
 
         $dashSettings = (array) json_decode(file_get_contents($dashSettingsPath));
 
-        if ($dashSettings[$loggedId] ?? null)
-            return (object) $dashSettings[$loggedId];
+        if ($dashSettings[$this->logged->id] ?? null)
+            return (object) $dashSettings[$this->logged->id];
 
-        $defaultSettings[$loggedId] = [
+        $defaultSettings[$this->logged->id] = [
             "theme" => (object) [
                 "dark_mode" => false
             ],
@@ -65,6 +70,6 @@ class DashController extends Controller
 
         file_put_contents($dashSettingsPath, json_encode($defaultSettings + $dashSettings));
 
-        return (object) $defaultSettings[$loggedId];
+        return (object) $defaultSettings[$this->logged->id];
     }
 }

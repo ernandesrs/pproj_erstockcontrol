@@ -31,12 +31,6 @@
 <body>
     <aside class="d-none d-lg-block sidebar jsDashboardSidebar">
         <div class="container-fluid">
-            <?php
-            $logged = (new \App\Models\Auth())->logged();
-            if (!$logged) {
-                exit;
-            }
-            ?>
             <div class="profile d-flex align-items-center">
                 <div class="photo <?= $logged->photo ? "" : "no-photo" ?>">
                     <?= $logged->photo ? "" : "<span>" . $logged->first_name[0] . "</span>" ?>

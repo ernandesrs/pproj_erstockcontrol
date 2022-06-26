@@ -58,9 +58,12 @@ class IndexController extends DashController
             ],
         ];
 
+        if ($this->logged->level == User::LEVEL_OWNER)
+            $reports = (new User())->find("level>:level", "level=1")->get(true);
+
         $this->view("dash/index", [
             "overviewBoxes" => $overviewBoxes,
-            "reports" => (new User())->find("level>:level", "level=1")->get(true)
+            "reports" => $reports ?? null
         ])->seo("Resumo geral do sistema")->render();
     }
 
@@ -72,8 +75,7 @@ class IndexController extends DashController
         $apply = filter_input(INPUT_GET, "apply", FILTER_VALIDATE_BOOLEAN) ?? null;
 
         if ($apply) {
-            $logged = (new Auth())->logged();
-            $id = $logged->id;
+            $id = $this->logged->id;
 
             $darkMode = filter_input(INPUT_POST, "dark_mode");
             $limitItems = filter_input(INPUT_POST, "limit_items", FILTER_VALIDATE_INT);
@@ -107,9 +109,7 @@ class IndexController extends DashController
      */
     public function profile()
     {
-        $this->view("dash/profile", [
-            "logged" => (new Auth())->logged()
-        ])->seo("Meu perfil")->render();
+        $this->view("dash/profile")->seo("Meu perfil")->render();
     }
 
     /**
