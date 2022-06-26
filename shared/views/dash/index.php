@@ -41,7 +41,7 @@
 </div>
 
 <div class="row">
-    <div class="col-12 col-md-6 col-lg-8">
+    <div class="col-12 col-md-6 col-lg-7">
         <div class="section section-overview">
             <!-- page header -->
             <?php
@@ -71,13 +71,13 @@
         </div>
     </div>
 
-    <div class="col-12 col-md-6 col-lg-4">
+    <div class="col-12 col-md-6 col-lg-5">
         <div class="section section-overview">
             <!-- page header -->
             <?php
 
-            $pageTitle = "Outra seção maneira";
-            $pageSubtitle = "Descrição top em lorem ipsum dolor sit";
+            $pageTitle = "Últimas atividades";
+            $pageSubtitle = null;
             $headerButtons = null;
 
             include __DIR__ . "/includes/page-secondary-header.php";
@@ -85,9 +85,27 @@
             ?>
 
             <div class="section-content">
-                <p class="mb-0">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam, tempora fugiat architecto hic ullam ratione repellat cupiditate rem explicabo fugit, in ex provident corrupti labore ea vitae autem magnam voluptatem.
-                </p>
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Usuário</th>
+                                <th>Status</th>
+                                <th>Página</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($reports ?? [] as $report) :
+                                $last = $report->lastActivityReport(); ?>
+                                <tr>
+                                    <td><?= $report->username ?></td>
+                                    <td><?= ($last->last_report ?? null) ? $last->last_report : "Nunca ativo" ?></td>
+                                    <td><?= ($last->last_page ?? null) ? $last->last_page : "" ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

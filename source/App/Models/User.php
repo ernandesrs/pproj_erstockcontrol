@@ -145,4 +145,12 @@ class User extends Model
 
         return $activityReport->save();
     }
+
+    /**
+     * 
+     */
+    public function lastActivityReport()
+    {
+        return (new ActivityReport())->find("users_id=:ui", "ui={$this->id}")->get();
+    }
 }

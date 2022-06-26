@@ -56,8 +56,10 @@ class IndexController extends DashController
                 "link" => ""
             ],
         ];
+
         $this->view("dash/index", [
-            "overviewBoxes" => $overviewBoxes
+            "overviewBoxes" => $overviewBoxes,
+            "reports" => (new User())->find("level>:level", "level=1")->get(true)
         ])->seo("Resumo geral do sistema")->render();
     }
 
