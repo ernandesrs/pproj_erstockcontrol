@@ -99,7 +99,7 @@
                                 $last = $report->lastActivityReport(); ?>
                                 <tr>
                                     <td><?= $report->username ?></td>
-                                    <td><?= ($last->last_report ?? null) ? $last->last_report : "Nunca ativo" ?></td>
+                                    <td><?= ($last->last_report ?? null) ? App\Helpers\Date::hoursElapsedSoFar($last->last_report) : "Nunca ativo" ?></td>
                                     <td><?= ($last->last_page ?? null) ? $last->last_page : "" ?></td>
                                 </tr>
                             <?php endforeach; ?>
