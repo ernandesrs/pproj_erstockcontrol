@@ -23,8 +23,14 @@ trait RouteTrait
     /**
      * @return string
      */
-    public function currentRoutePath(): string
+    public function currentRoutePath(bool $wparams = false): string
     {
-        return $this->currentRoute["url"];
+        $params = [];
+        if ($wparams) {
+            $params = $_GET ?? [];
+            unset($params["route"]);
+        }
+
+        return $this->currentRoute["url"] . (empty($params) ? null : ("?" . http_build_query($params)));
     }
 }
