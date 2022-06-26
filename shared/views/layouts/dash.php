@@ -38,13 +38,10 @@
             }
             ?>
             <div class="profile d-flex align-items-center">
-                <?php if ($logged->photo) : ?>
-                    <img class="photo img-thumbnail rounded-circle" src="<?= thumb_sm(storage_path($logged->photo)) ?>" alt="">
-                <?php else : ?>
-                    <div class="photo no-image img-thumbnail rounded-circle">
-                        <?= strtoupper($logged->username[0]) ?>
-                    </div>
-                <?php endif; ?>
+                <div class="photo <?= $logged->photo ? "" : "no-photo" ?>">
+                    <?= $logged->photo ? "" : "<span>" . $logged->first_name[0] . "</span>" ?>
+                    <img class="rounded-circle img-thumbnail" src="<?= thumb_nm(storage_path($logged->photo)) ?>" alt="<?= $logged->username ?>">
+                </div>
                 <div class="info pl-2 w-100">
                     <div class="mb-0 username"><?= $logged->username ?></div>
                     <div class="mb-0 d-flex">

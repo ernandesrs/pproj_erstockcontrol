@@ -14,62 +14,65 @@ class Thumb
     private const LG = 750;
 
     /**
-     * @param string $path
+     * @param null|string $path
      * @param integer $width
      * @param integer|null $height
      * @return string|null
      */
-    public static function thumb(string $path, int $width, ?int $height = null): ?string
+    public static function thumb(?string $path, int $width, ?int $height = null): ?string
     {
+        if (!is_file($path))
+            $path = shared_path("/images/no-image.jpg");
+
         return (new ThumbThumb(self::thumbsDirectory))->make($path, $width, $height);
     }
 
     /**
-     * @param string $path
+     * @param null|string $path
      * @param boolean $square
      * @return string|null
      */
-    public static function thumbExtraSmall(string $path, bool $square = true): ?string
+    public static function thumbExtraSmall(?string $path, bool $square = true): ?string
     {
         return self::thumb($path, self::XS, ($square ? self::XS : null));
     }
 
     /**
-     * @param string $path
+     * @param null|string $path
      * @param boolean $square
      * @return string|null
      */
-    public static function thumbSmall(string $path, bool $square = true): ?string
+    public static function thumbSmall(?string $path, bool $square = true): ?string
     {
         return self::thumb($path, self::SM, ($square ? self::SM : null));
     }
 
     /**
-     * @param string $path
+     * @param null|string $path
      * @param boolean $square
      * @return string|null
      */
-    public static function thumbNormal(string $path, bool $square = true): ?string
+    public static function thumbNormal(?string $path, bool $square = true): ?string
     {
         return self::thumb($path, self::DEFAULT, ($square ? self::DEFAULT : null));
     }
 
     /**
-     * @param string $path
+     * @param null|string $path
      * @param boolean $square
      * @return string|null
      */
-    public static function thumbMedium(string $path, bool $square = true): ?string
+    public static function thumbMedium(?string $path, bool $square = true): ?string
     {
         return self::thumb($path, self::MD, ($square ? self::MD : null));
     }
 
     /**
-     * @param string $path
+     * @param null|string $path
      * @param boolean $square
      * @return string|null
      */
-    public static function thumbLarge(string $path, bool $square = true): ?string
+    public static function thumbLarge(?string $path, bool $square = true): ?string
     {
         return self::thumb($path, self::LG, ($square ? self::LG : null));
     }

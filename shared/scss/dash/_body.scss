@@ -28,6 +28,30 @@ body {
         }
     }
 
+    .photo {
+        background-color: transparent!important;
+        
+        img {
+            background-color: rgb($light-dark, 0.75);
+            border: 0;
+        }
+
+        &.no-photo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+
+            span {
+                position: absolute;
+                font-size: 2.5rem;
+                font-weight: 600;
+                color: rgb($dark-light, 0.35);
+            }
+        }
+
+    }
+
     .icon {
         &.loading {
             &::before {
@@ -68,19 +92,14 @@ body {
             cursor: default;
 
             .photo {
-                background-color: rgb($white, 0.60);
-                width: 100%;
                 max-width: 45px;
                 height: 45px;
-                max-height: 100%;
-                border: 0;
 
-                &.no-image {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    font-size: 1.5rem;
-                    font-weight: 600;
+                &.no-photo {
+                    span {
+                        font-size: 1.5rem;
+                        font-weight: 700;
+                    }
                 }
             }
 
@@ -232,17 +251,6 @@ body {
                                 .photo {
                                     width: 125px;
                                     height: 125px;
-                                    border: 0;
-
-                                    &.no-photo {
-                                        display: flex;
-                                        justify-content: center;
-                                        align-items: center;
-                                        font-weight: 600;
-                                        font-size: 2.5rem;
-                                        cursor: default;
-                                        color: rgb($dark-light, 0.5);
-                                    }
                                 }
 
                                 .username,
@@ -283,12 +291,9 @@ body {
                     height: 275px;
 
                     &.no-photo {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        font-weight: 600;
-                        font-size: 5rem;
-                        color: rgb($dark-light, 0.5);
+                        span {
+                            font-size: 5rem;
+                        }
                     }
                 }
             }

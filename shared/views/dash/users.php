@@ -30,11 +30,10 @@
                 foreach ($users as $user) : ?>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="card card-body border-0 d-flex flex-column justify-content-center align-items-center list-item user">
-                            <?php if ($user->photo) : ?>
-                                <img class="photo rounded-circle img-thumbnail" src="<?= thumb_nm(storage_path($user->photo)) ?>" alt="<?= $user->username ?>">
-                            <?php else : ?>
-                                <div class="photo no-photo rounded-circle img-thumbnail"><?= $user->username[0] ?></div>
-                            <?php endif; ?>
+                            <div class="photo <?= $user->photo ? "" : "no-photo" ?>">
+                                <?= $user->photo ? "" : "<span>" . $user->first_name[0] . "</span>" ?>
+                                <img class="rounded-circle img-thumbnail" src="<?= thumb_nm(storage_path($user->photo)) ?>" alt="<?= $user->username ?>">
+                            </div>
                             <div class="text-center pt-2 pb-3">
                                 <p class="mb-0 h2 username"><?= $user->username ?></p>
                                 <p class="mb-0 h5 fullname"><?= $user->first_name . " " . $user->last_name ?></p>

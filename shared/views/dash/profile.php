@@ -15,11 +15,10 @@
                     </p>
                 </div>
                 <div>
-                    <?php if ($logged->photo) : ?>
-                        <img class="photo rounded-circle img-thumbnail" src="<?= thumb_nm(storage_path($logged->photo)) ?>" alt="<?= $logged->username ?>">
-                    <?php else : ?>
-                        <div class="photo no-photo rounded-circle img-thumbnail"><?= $logged->username[0] ?></div>
-                    <?php endif; ?>
+                    <div class="photo <?= $logged->photo ? "" : "no-photo" ?>">
+                        <?= $logged->photo ? "" : "<span>" . $logged->first_name[0] . "</span>" ?>
+                        <img class="rounded-circle img-thumbnail" src="<?= thumb_nm(storage_path($logged->photo)) ?>" alt="<?= $logged->username ?>">
+                    </div>
                 </div>
                 <div class="pt-4">
                     <a class="btn btn-outline-dark-light" href="<?= $router->route("dash.dash") ?>">

@@ -93,6 +93,15 @@ function input_value(string $name, $datas): ?string
 }
 
 /**
+ * @param null|string $path
+ * @return string
+ */
+function shared_path(?string $path): string
+{
+    return CONF_BASE_DIR . "/shared" . ($path ? ($path[0] == "/" ? $path : "/{$path}") : null);
+}
+
+/**
  * @return Storage
  */
 function storage(): Storage
@@ -140,10 +149,10 @@ function storage_url(string $path): string
 }
 
 /**
- * @param string $path
+ * @param null|string $path
  * @return string
  */
-function storage_path(string $path): string
+function storage_path(?string $path): string
 {
     return storage()->path($path);
 }

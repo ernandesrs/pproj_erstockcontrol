@@ -9050,6 +9050,25 @@ body .pagination .page-item.disabled .page-link {
   background-color: rgba(230, 230, 230, 0.75);
   color: rgb(49, 184, 208);
 }
+body .photo {
+  background-color: transparent !important;
+}
+body .photo img {
+  background-color: rgba(210, 210, 210, 0.75);
+  border: 0;
+}
+body .photo.no-photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+body .photo.no-photo span {
+  position: absolute;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: rgba(75, 75, 75, 0.35);
+}
 body .icon.loading::before {
   animation-name: rotateCircle;
   animation-duration: 1s;
@@ -9083,19 +9102,12 @@ body .sidebar .profile {
   cursor: default;
 }
 body .sidebar .profile .photo {
-  background-color: rgba(255, 255, 255, 0.6);
-  width: 100%;
   max-width: 45px;
   height: 45px;
-  max-height: 100%;
-  border: 0;
 }
-body .sidebar .profile .photo.no-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+body .sidebar .profile .photo.no-photo span {
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 body .sidebar .profile .info .username {
   font-weight: 600;
@@ -9199,16 +9211,6 @@ body .main .section.section-users .section-content .list-items .list-item {
 body .main .section.section-users .section-content .list-items .list-item.user .photo {
   width: 125px;
   height: 125px;
-  border: 0;
-}
-body .main .section.section-users .section-content .list-items .list-item.user .photo.no-photo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 600;
-  font-size: 2.5rem;
-  cursor: default;
-  color: rgba(75, 75, 75, 0.5);
 }
 body .main .section.section-users .section-content .list-items .list-item.user .username,
 body .main .section.section-users .section-content .list-items .list-item.user .fullname,
@@ -9236,13 +9238,8 @@ body .main .section.section-user-edit .photo {
   width: 275px;
   height: 275px;
 }
-body .main .section.section-user-edit .photo.no-photo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 600;
+body .main .section.section-user-edit .photo.no-photo span {
   font-size: 5rem;
-  color: rgba(75, 75, 75, 0.5);
 }
 
 @media (min-width: 992px) {

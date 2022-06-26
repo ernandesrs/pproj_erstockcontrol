@@ -25,11 +25,10 @@
     <div class="section-content">
         <div class="row py-3">
             <div class="col-12 col-lg-4">
-                <?php if ($user->photo) : ?>
-                    <img class="photo rounded-circle img-thumbnail" src="<?= thumb_nm(storage_path($user->photo)) ?>" alt="<?= $user->username ?>">
-                <?php else : ?>
-                    <div class="photo no-photo rounded-circle img-thumbnail"><?= $user->username[0] ?></div>
-                <?php endif; ?>
+                <div class="photo <?= $user->photo ? "" : "no-photo" ?>">
+                    <?= $user->photo ? "" : "<span>" . $user->first_name[0] . "</span>" ?>
+                    <img class="rounded-circle img-thumbnail" src="<?= thumb_nm(storage_path($user->photo)) ?>" alt="<?= $user->username ?>">
+                </div>
             </div>
             <div class="col-12 col-lg-8">
                 <form action="<?= $router->route("dash.users.update", ["id" => $user->id]) ?>" method="post" enctype="multipart/form-data">
