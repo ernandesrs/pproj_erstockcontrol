@@ -148,7 +148,8 @@ class UserController extends DashController
             return;
         }
 
-        if ($this->logged->level != User::LEVEL_OWNER) {
+        // IMPEDE QUE USUÁRIOS NÃO PROPRIETÁRIO ALTEREM OUTROS USUÁRIOS
+        if ($this->logged->id != $user->id && $this->logged->level != User::LEVEL_OWNER) {
             message()->warning("Você não possui permissão para realizar este tipo de ação")->float()->flash();
             echo json_encode([
                 "success" => false,
@@ -157,7 +158,7 @@ class UserController extends DashController
             return;
         }
 
-        // IMPEDE O PROPRIETÁRIO DE ALTERAR O PRÓPRIO NÍVEL
+        // IMPEDE O USUÁRIO DE ALTERAR O PRÓPRIO NÍVEL
         if ($this->logged->id == $user->id)
             $data["level"] = $this->logged->level;
 
