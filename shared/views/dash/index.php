@@ -101,9 +101,17 @@
                                 <?php foreach ($reports ?? [] as $report) :
                                     $last = $report->lastActivityReport(); ?>
                                     <tr>
-                                        <td><?= $report->username ?></td>
-                                        <td><?= ($last->last_report ?? null) ? App\Helpers\Date::hoursElapsedSoFar($last->last_report) : "Nunca ativo" ?></td>
-                                        <td><?= ($last->last_page ?? null) ? $last->last_page : "" ?></td>
+                                        <td class="align-middle">
+                                            <?= $report->username ?>
+                                        </td>
+                                        <td class="align-middle">
+                                            <?= ($last->last_report ?? null) ? App\Helpers\Date::hoursElapsedSoFar($last->last_report) : "Nunca ativo" ?>
+                                        </td>
+                                        <td class="align-middle text-nowrap d-inline-block text-truncate" style="width: 100%; max-width: 150px;">
+                                            <a href="<?= url($last->last_page) ?>" target="_blank">
+                                                <?= ($last->last_page ?? null) ? $last->last_page : "" ?>
+                                            </a>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
