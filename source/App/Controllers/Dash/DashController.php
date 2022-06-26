@@ -22,7 +22,9 @@ class DashController extends Controller
             return;
         }
 
-        $loggedLevel = (new Auth())->logged()->level;
+        /** @var User $logged */
+        $logged = (new Auth())->logged();
+        $loggedLevel = $logged->level;
         if (!in_array($loggedLevel, [User::LEVEL_ADMIN, User::LEVEL_OWNER])) {
             $router->redirect("auth.logout");
             return;
@@ -32,6 +34,8 @@ class DashController extends Controller
 
         $this->settings = $this->getSettings();
         $this->view->addData(["dash_settings" => $this->settings]);
+
+        $logged->activityReport(["last_page" => $this->router->currentRoutePath()]);
     }
 
     /**

@@ -174,6 +174,16 @@ abstract class Base extends Connect
     }
 
     /**
+     * @return boolean
+     */
+    public function save(): bool
+    {
+        if (empty($this->id))
+            return $this->add();
+        return $this->update();
+    }
+
+    /**
      * Delete by id 
      * @return boolean
      */

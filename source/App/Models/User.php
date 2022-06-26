@@ -128,4 +128,21 @@ class User extends Model
 
         return $this->hasErrors();
     }
+
+    /**
+     * @param array $data
+     * @return boolean
+     */
+    public function activityReport(array $data): bool
+    {
+        /** @var ActivityReport */
+        $activityReport = (new ActivityReport())->find("users_id=:ui", "ui={$this->id}")->get();
+
+        if (!$activityReport)
+            $activityReport = new ActivityReport();
+
+        $activityReport->set($this, $data);
+
+        return $activityReport->save();
+    }
 }

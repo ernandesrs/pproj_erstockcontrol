@@ -1,6 +1,10 @@
 <?php
 
+session_start();
+
 $env = parse_ini_file(__DIR__ . "/../../.env");
+
+date_default_timezone_set($env["APP_TIMEZONE"] ?? "America/Sao_Paulo");
 
 $iconsPath = __DIR__ . "/../../shared/others/icons.json";
 $icons = json_decode(file_exists($iconsPath) ? file_get_contents($iconsPath) : "");
