@@ -27,6 +27,7 @@ $sources = [
         "node_modules/jquery/dist/jquery.min.js",
         "node_modules/jquery-ui-dist/jquery-ui.min.js",
         "node_modules/bootstrap/dist/js/bootstrap.min.js",
+        "node_modules/chart.js/dist/chart.min.js"
     ],
 
     /**

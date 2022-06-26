@@ -66,9 +66,9 @@
             ?>
 
             <div class="section-content">
-                <p class="mb-0">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam, tempora fugiat architecto hic ullam ratione repellat cupiditate rem explicabo fugit, in ex provident corrupti labore ea vitae autem magnam voluptatem. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem repudiandae accusamus inventore temporibus, molestiae aliquam eius, odio eveniet quia in consectetur deleniti perspiciatis nesciunt et adipisci quasi ad tenetur recusandae.
-                </p>
+                <canvas id="myChart">
+
+                </canvas>
             </div>
         </div>
     </div>
@@ -125,3 +125,45 @@
 
 
 <?= $v->end("content") ?>
+
+<?= $v->start("scripts") ?>
+
+<script src="<?= asset("js/chart.min.js") ?>"></script>
+<script>
+    const labels = [
+        'Janeiro',
+        'Fevereiro',
+        'Março',
+        'Abril',
+        'Maio',
+        'Junho',
+    ];
+
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'Linha 1',
+            backgroundColor: 'rgb(217, 120, 130)',
+            borderColor: 'rgb(217, 120, 130)',
+            data: [5, 10, 15, 30, 30, 40],
+        }, {
+            label: 'Linha 2',
+            backgroundColor: 'rgb(210, 210, 210)',
+            borderColor: 'rgb(210, 210, 210)',
+            data: [15, 15, 20, 25, 25, 30],
+        }]
+    };
+
+    const config = {
+        type: 'line',
+        data: data,
+        options: {}
+    };
+
+    const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    );
+</script>
+
+<?= $v->end("scripts") ?>
