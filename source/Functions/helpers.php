@@ -12,6 +12,22 @@ function in_dev(): bool
 }
 
 /**
+ * @return boolean
+ */
+function is_post_request(): bool
+{
+    return $_SERVER["REQUEST_METHOD"] == "POST";
+}
+
+/**
+ * @return boolean
+ */
+function is_get_request(): bool
+{
+    return $_SERVER["REQUEST_METHOD"] == "GET";
+}
+
+/**
  * @return string|null
  */
 function app_name(): ?string

@@ -34,7 +34,7 @@ class IndexController extends DashController
         if ($this->logged->level == User::LEVEL_OWNER)
             $reports = (new User())->find("level>:level", "level=1")->get(true);
 
-        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+        if (is_post_request()) {
             $data = [
                 "reports" => ($reports ?? null) ? array_map(function ($item) {
                     $activity = $item->lastActivityReport()->data();
