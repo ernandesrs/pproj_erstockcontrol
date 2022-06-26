@@ -6,7 +6,7 @@ Colocar em prática meus conhecimentos adquiridos em PHP e desenvolvimento em es
 de componentes PHP externo, como componentes de rotas, componentes de manipulação de banco de dados, etc.
 
 ## O que construi?
-Toda a parte PHP do sistema foram construídos do zero, sem uso de componentes PHP externos. As classes mais significativas e desafiadoras construídas estão em <b>\source\Components\</b>, neste diretório estão todas as classes que dependem unicamente delas, de suas super classes e de suas traits, ambas agrupadas nos mesmos diretórios. Destas, para mim é interessante destacar a:
+Toda a parte PHP do sistema foram construídos do zero, sem uso de componentes PHP externos. As classes mais significativas e desafiadoras construídas estão em <b>\source\Components</b>, neste diretório estão todas as classes que dependem unicamente delas, de suas super classes e de suas traits, ambas agrupadas nos mesmos diretórios. Destas, para mim é interessante destacar a:
 
 - classe de gerenciamento de rotas (<b><i>\source\Components\Router\Router</i></b>);
 - classe de gerenciamento de banco de dados (<b><i>\source\Components\Base\Base</i></b>);
