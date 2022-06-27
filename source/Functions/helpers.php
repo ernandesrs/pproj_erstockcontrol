@@ -28,6 +28,80 @@ function is_get_request(): bool
 }
 
 /**
+ * @return boolean
+ */
+function is_ajax_request(): bool
+{
+    return (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+}
+
+
+/**
+ * @return string
+ */
+function csrf_input(): string
+{
+    $token = base64_encode(uniqid());
+    session()->add("____csrfToken", $token);
+    return "<input type='hidden' name='__csrfToken' value='{$token}' />";
+}
+
+/**
+ * @param array $form
+ * @return boolean
+ */
+function csrf_token_verify(array $form): bool
+{
+    if (empty($form["__csrfToken"]))
+        return false;
+
+    $token = $form["__csrfToken"];
+    if ($token === session()->get("____csrfToken"))
+        return true;
+
+    return false;
+}
+
+/**
+ * @param string $name
+ * @param integer $limit
+ * @param integer $block_time
+ * @return boolean
+ */
+function attempt_limit(string $name, int $limit = 3, int $block_time = 5): bool
+{
+    $attempts = session()->get($name);
+
+    if (!$attempts) {
+        session()->add($name, (object) [
+            "count" => 1,
+            "limit" => $limit,
+            "block_time" => $block_time,
+            "time" => null
+        ]);
+        return false;
+    }
+
+    if ($attempts->count < $limit) {
+        $attempts->count += 1;
+        session()->update($name, $attempts);
+        return false;
+    }
+
+    if ($attempts->time && strtotime("+{$attempts->block_time}minutes", $attempts->time) <= time()) {
+        $attempts->count = 1;
+        $attempts->time = null;
+        session()->update($name, $attempts);
+        return false;
+    }
+
+    $attempts->time = $attempts->time ?? time();
+    session()->update($name, $attempts);
+
+    return true;
+}
+
+/**
  * @return string|null
  */
 function app_name(): ?string

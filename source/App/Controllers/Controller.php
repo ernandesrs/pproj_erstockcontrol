@@ -49,4 +49,64 @@ class Controller
     {
         return $this->view->addView($name)->addData($data);
     }
+
+    /**
+     * Verifica o CSRF_TOKEN
+     * @param array $form
+     * @return void|boolean em requisições ajax é dado retorno em JSON seguido por um exit na execução.
+     * Em requisições não ajax é retornado true para token válido ou false para token não válido
+     */
+    protected function csrfVerify(array $form)
+    {
+        if (!csrf_token_verify($form)) {
+
+            $message = message()->danger("Falha ao validar token de segurança. Atualize a página e tente de novo.", "TOKEN INVÁLIDO")->float();
+
+            if (is_ajax_request()) {
+                echo json_encode([
+                    "success" => false,
+                    "message" => $message->render()
+                ]);
+                return false;
+                exit;
+            }
+
+            $message->flash();
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Verifica limite de requisições
+     * @param string $name
+     * @param integer $limit
+     * @param integer $block_time
+     * @return void|boolean em requisições ajax é dado retorno em JSON seguido por um exit na execução.
+     * Em requisições não ajax é retornado true para limite atingido ou false caso contrário
+     */
+    protected function attemptLimit(string $name, int $limit = 3, int $block_time = 5)
+    {
+        if (attempt_limit($name, $limit, $block_time)) {
+
+            $message = message()->danger("Limite de tentativas atingido! Tente de novo em alguns minutos.")->float();
+
+            if (is_ajax_request()) {
+                echo json_encode([
+                    "success" => false,
+                    "message" => $message->render()
+                ]);
+                return true;
+                exit;
+            }
+
+            $message->flash();
+
+            return true;
+        }
+
+        return false;
+    }
 }

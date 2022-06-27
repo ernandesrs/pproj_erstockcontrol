@@ -74,6 +74,8 @@ class ProductController extends DashController
      */
     public function store(): void
     {
+        $this->csrfVerify($_POST);
+
         $data = $_POST;
         $product = new Product();
 
@@ -123,6 +125,8 @@ class ProductController extends DashController
      */
     public function update(): void
     {
+        $this->csrfVerify($_POST);
+
         /** @var int */
         $id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 0;
 

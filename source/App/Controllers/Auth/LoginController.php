@@ -34,6 +34,12 @@ class LoginController extends AuthController
         if ((new Auth())->isLogged())
             $this->router->redirect("dash.dash");
 
+        if (!$this->csrfVerify($_POST))
+            $this->router->redirect("auth.login");
+
+        if ($this->attemptLimit("logincontroller.authenticate", 3, 5))
+            $this->router->redirect("auth.login");
+
         $email = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);
         $password = filter_input(INPUT_POST, "password", FILTER_DEFAULT);
 

@@ -74,6 +74,8 @@ class UserController extends DashController
      */
     public function store(): void
     {
+        $this->csrfVerify($_POST);
+
         $user = new User();
 
         if ($this->logged->level != User::LEVEL_OWNER) {
@@ -135,6 +137,8 @@ class UserController extends DashController
     public function update(): void
     {
         $data = $_POST;
+
+        $this->csrfVerify($data);
 
         /** @var User $user */
         $user = (new User())->find("id=:id", "id=" . (filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 0))->get();

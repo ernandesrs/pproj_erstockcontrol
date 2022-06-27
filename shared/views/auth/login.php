@@ -10,6 +10,8 @@
         } ?>
     </div>
     <form action="<?= CONF_URL_BASE ?>/auth/authenticate" method="POST">
+        <?= csrf_input() ?>
+
         <div class="form-group">
             <label for="email">Email:</label>
             <input class="form-control text-center" type="text" name="email" id="email">
