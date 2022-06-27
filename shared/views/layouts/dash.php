@@ -40,7 +40,7 @@
                     <div class="mb-0 username"><?= $logged->username ?></div>
                     <div class="mb-0 d-flex">
                         <span class="level">
-                            <small><?= $logged->level == 1 ? "Comum" : ($logged->level == 2 ? "Administrador" : "Proprietário") ?></small>
+                            <small><?= get_term("user.levels.level_{$logged->level}") ?></small>
                         </span>
                         <a class="profile-link ml-auto" href="<?= $router->route("auth.logout") ?>">
                             <?= icon_elem("authLogout") ?> Sair
