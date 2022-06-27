@@ -53,7 +53,7 @@ class LoginController extends AuthController
             $this->router->redirect("auth.login");
         }
 
-        message()->success("Pronto, agora você está logado.")->flash();
+        message()->success("Pronto, agora você está logado.")->time(7.5)->flash();
         $this->router->redirect("dash.dash");
 
         return;
