@@ -55,10 +55,10 @@
                                     <?= $product->name ?>
                                 </td>
                                 <td class="align-middle">
-                                    <?= $product::PURCHASE_MODES_NAME[$product->purchase_mode] ?>
+                                    <?= get_term("product.purchase_mode.purchase_{$product->purchase_mode}") ?>
                                 </td>
                                 <td class="align-middle">
-                                    <?= $product::SALE_MODES_NAME[$product->sale_mode] ?>
+                                    <?= get_term("product.sale_mode.sale_{$product->sale_mode}") ?>
                                 </td>
                                 <td class="align-middle">
                                     <a class="btn btn-info" href="<?= $router->route("dash.products.edit", ["id" => $product->id]) ?>">

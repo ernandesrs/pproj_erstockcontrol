@@ -28,7 +28,7 @@ class DashController extends Controller
 
         $this->logged = (new Auth())->logged();
 
-        if (!in_array($this->logged->level, [User::LEVEL_ADMIN, User::LEVEL_OWNER])) {
+        if (!in_array($this->logged->level, [User::LEVEL_COLLABORATOR, User::LEVEL_ADMIN, User::LEVEL_OWNER])) {
             $router->redirect("auth.logout");
             return;
         }

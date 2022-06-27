@@ -172,6 +172,28 @@ function icon_elem(string $name, ?string $alt = null): string
 
 /**
  * @param string $name
+ * @return string|null
+ */
+function get_term(string $name): ?string
+{
+    $names = explode(".", $name);
+
+    if (count($names) > 5) return "";
+
+    $terms = CONF_TERMS;
+
+    foreach ($names as $name) {
+        $terms = $terms[$name] ?? null;
+
+        if (!$terms || is_string($terms))
+            return $terms;
+    }
+
+    return null;
+}
+
+/**
+ * @param string $name
  * @param null|array|object $datas
  * @return null|string
  */

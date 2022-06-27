@@ -104,3 +104,36 @@ define("CONF_DASHBOARD_SIDEBAR", [
         ],
     ]
 ]);
+
+
+define("CONF_TERMS", [
+    "user" => [
+        "levels" => [
+            "level_1" => "Comum",
+            "level_2" => "",
+            "level_3" => "",
+            "level_4" => "",
+            "level_5" => "",
+            "level_7" => "Colaborador",
+            "level_8" => "Administrador",
+            "level_9" => "Proprietário",
+        ],
+        "genders" => [
+            "gender_m" => "Masculino",
+            "gender_f" => "Feminino",
+        ],
+    ],
+
+    "product" => [
+        "purchase_mode" => [
+            "purchase_1" => "Unidade",
+            "purchase_2" => "Pacote",
+            "purchase_3" => "Grupo de pacotes",
+        ],
+        "sale_mode" => [
+            "sale_1" => "Unidade",
+            "sale_2" => "Pacote",
+            "sale_3" => "Grupo de pacotes",
+        ],
+    ]
+]);

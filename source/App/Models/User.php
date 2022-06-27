@@ -12,10 +12,12 @@ class User extends Model
     ];
 
     public const LEVEL_COMMON = 1;
-    public const LEVEL_ADMIN = 2;
-    public const LEVEL_OWNER = 5;
+    public const LEVEL_COLLABORATOR = 7;
+    public const LEVEL_ADMIN = 8;
+    public const LEVEL_OWNER = 9;
     public const ALLOWED_LEVELS = [
         self::LEVEL_COMMON,
+        self::LEVEL_COLLABORATOR,
         self::LEVEL_ADMIN,
         self::LEVEL_OWNER,
     ];

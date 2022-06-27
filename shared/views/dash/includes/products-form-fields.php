@@ -7,11 +7,10 @@
     </div>
 
     <?php
-    $purchaseModes = \App\Models\Product::PURCHASE_MODES;
-    $purchaseModesNames = \App\Models\Product::PURCHASE_MODES_NAME;
 
+    $purchaseModes = \App\Models\Product::PURCHASE_MODES;
     $saleModes = \App\Models\Product::SALE_MODES;
-    $saleModesNames = \App\Models\Product::SALE_MODES_NAME;
+
     ?>
     <div class="col-12 col-sm-6">
         <div class="form-group">
@@ -20,7 +19,7 @@
                 <option>Selecione</option>
                 <?php foreach ($purchaseModes as $pm) : ?>
                     <option value="<?= $pm ?>" <?= input_value("purchase_mode", $product ?? null) == $pm ? "selected" : null ?>>
-                        <?= $purchaseModesNames[$pm] ?>
+                        <?= get_term("product.purchase_mode.purchase_{$pm}") ?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -34,7 +33,7 @@
                 <option>Selecione</option>
                 <?php foreach ($saleModes as $sm) : ?>
                     <option value="<?= $sm ?>" <?= input_value("sale_mode", $product ?? null) == $sm ? "selected" : null ?>>
-                        <?= $saleModesNames[$sm] ?>
+                        <?= get_term("product.sale_mode.sale_{$sm}") ?>
                     </option>
                 <?php endforeach; ?>
             </select>

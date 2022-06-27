@@ -28,25 +28,30 @@
     </div>
 </div>
 
-<div class="<?= $logged->level == 5 ? "col-6 col-xl-2" : "col-12" ?>">
+<div class="<?= $logged->level == \App\Models\User::LEVEL_OWNER ? "col-6 col-xl-2" : "col-12" ?>">
     <div class="form-group">
         <label for="gender">Gênero:</label>
         <select class="form-control" name="gender" id="gender">
             <option value="n">Escolha</option>
-            <option value="m" <?= input_value("gender", $user ?? null) == "m" ? "selected" : null ?>>Masculino</option>
-            <option value="f" <?= input_value("gender", $user ?? null) == "f" ? "selected" : null ?>>Feminino</option>
+            <?php foreach (\App\Models\User::ALLOWED_GENDERS as $gender) : ?>
+                <option value="<?= $gender ?>" <?= input_value("gender", $user ?? null) == $gender ? "selected" : null ?>>
+                    <?= get_term("user.genders.gender_{$gender}") ?>
+                </option>
+            <?php endforeach; ?>
         </select>
     </div>
 </div>
 
-<?php if ($logged->level == 5) : ?>
-    <div class="<?= $logged->level == 5 ? "col-6 col-xl-2" : "col-12" ?> col-xl-2">
+<?php if ($logged->level == \App\Models\User::LEVEL_OWNER) : ?>
+    <div class="<?= $logged->level == \App\Models\User::LEVEL_OWNER ? "col-6 col-xl-2" : "col-12" ?> col-xl-2">
         <div class="form-group">
             <label for="level">Nível:</label>
             <select class="form-control" name="level" id="level">
-                <option value="1" <?= input_value("level", $user ?? null) == 1 ? "selected" : null ?>>Comum</option>
-                <option value="2" <?= input_value("level", $user ?? null) == 2 ? "selected" : null ?>>Administrador</option>
-                <option value="5" <?= input_value("level", $user ?? null) == 5 ? "selected" : null ?>>Proprietário</option>
+                <?php foreach (\App\Models\User::ALLOWED_LEVELS as $level) : ?>
+                    <option value="<?= $level ?>" <?= input_value("level", $user ?? null) == $level ? "selected" : null ?>>
+                        <?= get_term("user.levels.level_{$level}") ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
         </div>
     </div>
