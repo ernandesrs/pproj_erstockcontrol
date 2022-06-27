@@ -56,13 +56,23 @@
                         <h5 class="title"><?= $key ?></h5>
                         <ul class="nav flex-column">
                             <?php foreach ($element as $k => $el) :
-                                $el = (object) $el; ?>
-                                <li class="nav-item">
-                                    <a class="nav-link <?= in_array($router->currentRouteName(), $el->activeIn) ? "active" : null ?>" href="<?= $router->route($el->routeName) ?>" target="<?= $el->target ?>">
-                                        <?= icon_elem($el->iconName) ?> <span><?= $el->text ?></span>
-                                    </a>
-                                </li>
-                            <?php endforeach; ?>
+                                $el = (object) $el;
+                                $item = "
+                                    <li class='nav-item'>
+                                        <a class='nav-link " . (in_array($router->currentRouteName(), $el->activeIn) ? 'active' : null) . "' href='" . $router->route($el->routeName) . "' target='{$el->target}'>
+                                            " . icon_elem($el->iconName) . " <span>{$el->text}</span>
+                                        </a>
+                                    </li>
+                                "; ?>
+
+                                <?php if (!($el->visible_to ?? null)) : ?>
+                                    <?= $item ?>
+                                <?php elseif (in_array($logged->level, $el->visible_to)) : ?>
+                                    <?= $item ?>
+                                <?php endif; ?>
+
+                            <?php
+                            endforeach; ?>
                         </ul>
                     </div>
                 <?php endforeach; ?>

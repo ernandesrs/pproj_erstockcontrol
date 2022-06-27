@@ -6,8 +6,6 @@
     <!-- page header -->
     <?php
 
-    use App\Models\Auth;
-
     $pageTitle = "Visão geral";
 
     include __DIR__ . "/includes/page-header.php";
@@ -17,33 +15,40 @@
     <div class="section-content border-0 bg-transparent">
         <div class="row justify-content-center overview-boxes-list">
             <?php if (($overviewBoxes ?? null)) :
-                foreach ($overviewBoxes as $boxe) : ?>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                        <div class="card card-body px-3 py-3 border-0 shadow d-flex flex-row align-items-center overview-boxes-item">
-                            <i class="<?= $boxe->icon ?>"></i>
-                            <div class="w-100">
-                                <h5 class="mb-0 title">
-                                    <?= $boxe->text ?>
+                $totalBoxes = count($overviewBoxes);
+                foreach ($overviewBoxes as $boxe) :
+                    $boxeItem = "
+                    <div class='col-12 col-sm-6 col-md-4 col-lg-3 mb-4'>
+                        <div class='card card-body px-3 py-3 border-0 shadow d-flex flex-row align-items-center overview-boxes-item'>
+                            <i class='{$boxe->icon}'></i>
+                            <div class='w-100'>
+                                <h5 class='mb-0 title'>
+                                    {$boxe->text}
                                 </h5>
-                                <div class="d-flex align-items-center">
-                                    <p class="mb-0 total">
-                                        <span>Total:</span> <span class="value"><?= $boxe->total ?></span>
+                                <div class='d-flex align-items-center'>
+                                    <p class='mb-0 total'>
+                                        <span>Total:</span> <span class='value'>{$boxe->total}</span>
                                     </p>
-                                    <a class="btn btn-sm btn-link ml-auto" href="<?= $boxe->link ?>">
+                                    <a class='btn btn-sm btn-link ml-auto' href='{$boxe->link}'>
                                         Acessar
                                     </a>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>"; ?>
+                    <?php if (!($boxe->visible_to ?? null)) : ?>
+                        <?= $boxeItem ?>
+                    <?php elseif (in_array($logged->level, $boxe->visible_to)) : ?>
+                        <?= $boxeItem ?>
+                    <?php endif; ?>
             <?php endforeach;
             endif; ?>
         </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-12 col-md-6 col-lg-7">
+<div class="row justify-content-center">
+    <div class="col-12 <?= ($reports ?? null) ? "col-md-6 col-lg-7" : null ?>">
         <div class="section section-overview">
             <!-- page header -->
             <?php
@@ -71,8 +76,8 @@
         </div>
     </div>
 
-    <div class="col-12 col-md-6 col-lg-5">
-        <?php if ($reports ?? null) : ?>
+    <?php if ($reports ?? null) : ?>
+        <div class="col-12 col-md-6 col-lg-5">
             <div class="section section-overview">
                 <!-- page header -->
                 <?php
@@ -117,8 +122,8 @@
                     </div>
                 </div>
             </div>
-        <?php endif; ?>
-    </div>
+        </div>
+    <?php endif; ?>
 </div>
 
 

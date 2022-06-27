@@ -34,7 +34,6 @@ $router->post("/dash/usuarios/filtrar", "UserController@filter", "dash.users.fil
 $router->get("/dash/configuracao", "IndexController@settings", "dash.settings");
 $router->post("/dash/configuracao", "IndexController@settings", "dash.settings");
 $router->get("/dash/perfil", "IndexController@profile", "dash.profile");
-$router->post("/dash/online-report", "IndexController@onlineReport", "dash.onlineReport");
 
 $router->get("/error", "IndexController@error", "dash.error");
 

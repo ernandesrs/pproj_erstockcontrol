@@ -49,7 +49,7 @@ define("CONF_DASHBOARD_SIDEBAR", [
             "target" => "_self",
             "activeIn" => [
                 "dash.dash"
-            ]
+            ],
         ],
         [
             "text" => "Produtos",
@@ -71,6 +71,12 @@ define("CONF_DASHBOARD_SIDEBAR", [
                 "dash.users",
                 "dash.users.create",
                 "dash.users.edit",
+            ],
+
+            // Níveis dos usuários para os quais este item será visível
+            "visible_to" => [
+                App\Models\User::LEVEL_OWNER,
+                App\Models\User::LEVEL_ADMIN
             ]
         ],
     ],

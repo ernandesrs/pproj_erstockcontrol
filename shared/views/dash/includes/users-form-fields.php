@@ -28,7 +28,7 @@
     </div>
 </div>
 
-<div class="<?= $logged->level == \App\Models\User::LEVEL_OWNER ? "col-6 col-xl-2" : "col-12" ?>">
+<div class="col-12 col-xl-2">
     <div class="form-group">
         <label for="gender">Gênero:</label>
         <select class="form-control" name="gender" id="gender">
@@ -42,20 +42,18 @@
     </div>
 </div>
 
-<?php if ($logged->level == \App\Models\User::LEVEL_OWNER) : ?>
-    <div class="<?= $logged->level == \App\Models\User::LEVEL_OWNER ? "col-6 col-xl-2" : "col-12" ?> col-xl-2">
-        <div class="form-group">
-            <label for="level">Nível:</label>
-            <select class="form-control" name="level" id="level">
-                <?php foreach (\App\Models\User::ALLOWED_LEVELS as $level) : ?>
-                    <option value="<?= $level ?>" <?= input_value("level", $user ?? null) == $level ? "selected" : null ?>>
-                        <?= get_term("user.levels.level_{$level}") ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
+<div class="col-12 col-xl-2">
+    <div class="form-group">
+        <label for="level">Nível:</label>
+        <select class="form-control" name="level" id="level">
+            <?php foreach (\App\Models\User::ALLOWED_LEVELS as $level) : ?>
+                <option value="<?= $level ?>" <?= input_value("level", $user ?? null) == $level ? "selected" : null ?>>
+                    <?= get_term("user.levels.level_{$level}") ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
     </div>
-<?php endif; ?>
+</div>
 
 <div class="col-12">
     <div class="form-group">

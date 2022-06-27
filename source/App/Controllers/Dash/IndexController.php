@@ -3,7 +3,6 @@
 namespace App\Controllers\Dash;
 
 use App\Helpers\Date;
-use App\Models\Auth;
 use App\Models\Product;
 use App\Models\User;
 
@@ -31,8 +30,7 @@ class IndexController extends DashController
      */
     public function dash(): void
     {
-        if ($this->logged->level == User::LEVEL_OWNER)
-            $reports = (new User())->find("level>:level", "level=1")->get(true);
+        $reports = (new User())->find("level>:level", "level=1")->get(true);
 
         if (is_post_request()) {
             $data = [
@@ -59,7 +57,7 @@ class IndexController extends DashController
                 "total" => (new User())->find()->count(),
                 "text" => "Usuários",
                 "icon" => icon_class("userGroup"),
-                "link" => $this->route("dash.users")
+                "link" => $this->route("dash.users"),
             ],
             "products" => (object) [
                 "total" => (new Product())->find()->count(),
@@ -139,15 +137,5 @@ class IndexController extends DashController
     {
         $this->view("error", ["errorCode" => filter_input(INPUT_GET, "err", FILTER_VALIDATE_INT) ?? 404])
             ->render();
-    }
-
-    /**
-     * @return void
-     */
-    public function onlineReport(): void
-    {
-        if (!$this->logged) return;
-        $this->logged->activityReport(["last_page" => $this->router->currentRoutePath(true)]);
-        return;
     }
 }

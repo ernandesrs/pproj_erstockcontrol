@@ -74,24 +74,29 @@ class UserController extends DashController
      */
     public function store(): void
     {
-        $this->csrfVerify($_POST);
+        $data = $_POST;
+
+        $this->csrfVerify($data);
 
         $user = new User();
 
-        if ($this->logged->level != User::LEVEL_OWNER) {
-            message()->warning("Você não possui permissão para realizar este tipo de ação")->float()->flash();
-            echo json_encode([
-                "success" => false,
-                "redirect" => $this->route("dash.users"),
-            ]);
-            return;
-        }
-
-        if (!$user->set($_POST)) {
+        if (!$user->set($data)) {
             echo json_encode([
                 "success" => false,
                 "message" => message()->warning("Erro ao validar os dados informados")->float()->render(),
                 "errors" => $user->errors()
+            ]);
+            return;
+        }
+
+        // VERIFICA SE LOGGED NÃO ESTÁ CRIANDO UM USUÁRIO DE NÍVEL IGUAL OU SUPERIOR AO DE SI PRÓPRIO
+        if ($this->logged->level <= $user->level) {
+            echo json_encode([
+                "success" => false,
+                "message" => message()->warning("O nível do novo usuário não pode ser igual ou superior ao seu.")->float()->render(),
+                "errors" => [
+                    "level" => "Escolha um nível menor"
+                ]
             ]);
             return;
         }
@@ -152,8 +157,8 @@ class UserController extends DashController
             return;
         }
 
-        // IMPEDE QUE USUÁRIOS NÃO PROPRIETÁRIO ALTEREM OUTROS USUÁRIOS
-        if ($this->logged->id != $user->id && $this->logged->level != User::LEVEL_OWNER) {
+        // IMPEDE QUE USUÁRIO LOGADO ALTERE USUÁRIOS DE NÍVEL IGUAL OU SUPERIOR
+        if ($this->logged->id != $user->id && $this->logged->level <= $user->level) {
             message()->warning("Você não possui permissão para realizar este tipo de ação")->float()->flash();
             echo json_encode([
                 "success" => false,
@@ -165,6 +170,18 @@ class UserController extends DashController
         // IMPEDE O USUÁRIO DE ALTERAR O PRÓPRIO NÍVEL
         if ($this->logged->id == $user->id)
             $data["level"] = $this->logged->level;
+
+        // IMPEDE O USUÁRIO DE SETAR UM NÍVEL SUPERIOR AO PRÓPRIO NÍVEL
+        if ($data["level"] >= $this->logged->level) {
+            echo json_encode([
+                "success" => false,
+                "message" => message()->warning("O nível do usuário não pode ser igual ou superior ao seu.")->float()->render(),
+                "errors" => [
+                    "level" => "Escolha um nível menor"
+                ]
+            ]);
+            return;
+        }
 
         // PHOTO UPLOAD
         $storage = null;
@@ -236,7 +253,7 @@ class UserController extends DashController
             return;
         }
 
-        if ($this->logged->level != User::LEVEL_OWNER) {
+        if ($this->logged->level <= $user->level) {
             message()->warning("Você não possui permissão para realizar este tipo de ação")->float()->flash();
             echo json_encode([
                 "success" => false,
