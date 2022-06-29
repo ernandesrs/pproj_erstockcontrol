@@ -2,6 +2,7 @@
 
 namespace Components\Base;
 
+use Exception;
 use PDO;
 use PDOException;
 
@@ -10,10 +11,10 @@ abstract class Connect
     /** @var PDOException */
     protected $exception;
 
-    /**
-     * @return PDO|null
-     */
-    protected function getConnection(): ?PDO
+    /** @var PDO */
+    protected $connection;
+
+    public function __construct()
     {
         $dsn = "mysql:dbname=" . CONF_DBASE_NAME . ";host=" . CONF_DBASE_HOST . (empty(CONF_DBASE_PORT) ? null : ";port=" . CONF_DBASE_PORT);
         $user = CONF_DBASE_USER;
@@ -21,10 +22,18 @@ abstract class Connect
         $opt = CONF_DBASE_OPTIONS;
 
         try {
-            return new PDO($dsn, $user, $pass, $opt);
+            $this->connection = new PDO($dsn, $user, $pass, $opt);
         } catch (PDOException $e) {
-            $this->exception = $e;
-            return null;
+            throw new Exception($e->getMessage());
+            $this->connection = null;
         }
+    }
+
+    /**
+     * @return PDO|null
+     */
+    protected function getConnection(): ?PDO
+    {
+        return $this->connection;
     }
 }

@@ -51,30 +51,48 @@ abstract class Base extends Connect
      */
     public function __construct(string $table, array $required = [], bool $timestamps = true)
     {
+        parent::__construct();
+
         $this->table = $table;
         $this->required = $required;
         $this->timestamps = $timestamps;
         $this->fail = [];
     }
 
+    /**
+     * @param integer $limit
+     * @return Base
+     */
     public function limit(int $limit): Base
     {
         $this->limit = $limit;
         return $this;
     }
 
+    /**
+     * @param integer $offset
+     * @return Base
+     */
     public function offset(int $offset): Base
     {
         $this->offset = $offset;
         return $this;
     }
 
+    /**
+     * @param string $orderBy
+     * @return Base
+     */
     public function orderBy(string $orderBy): Base
     {
         $this->orderBy = $orderBy;
         return $this;
     }
 
+    /**
+     * @param string $groupBy
+     * @return Base
+     */
     public function groupBy(string $groupBy): Base
     {
         $this->groupBy = $groupBy;
@@ -104,15 +122,14 @@ abstract class Base extends Connect
             return ":" . $i;
         }, explode(",", $this->columns()))) . ")";
 
-        $con = $this->getConnection();
-        $stmt = $this->bind($con);
+        $stmt = $this->bind($this->connection);
         if (!$stmt)
             return false;
 
         if (!$stmt->execute())
             return false;
 
-        $this->id = $con->lastInsertId();
+        $this->id = $this->connection->lastInsertId();
 
         return true;
     }
@@ -137,7 +154,7 @@ abstract class Base extends Connect
             $this->query .= " OFFSET " . ($this->offset * $this->limit - $this->limit);
         }
 
-        $stmt = $this->bind($this->getConnection(), $this->rulesValuesArr);
+        $stmt = $this->bind($this->connection, $this->rulesValuesArr);
 
         if (!$stmt)
             return null;
@@ -165,7 +182,7 @@ abstract class Base extends Connect
             return $i . "=:" . $i;
         }, explode(",", $this->columns()))) . " WHERE id=:id";
 
-        $stmt = $this->bind($this->getConnection());
+        $stmt = $this->bind($this->connection);
 
         if (!$stmt)
             return false;
@@ -193,7 +210,8 @@ abstract class Base extends Connect
             return false;
 
         $this->query = "DELETE FROM {$this->table} WHERE id=:id";
-        $stmt = $this->getConnection()->prepare($this->query);
+
+        $stmt = $this->connection->prepare($this->query);
         if (!$stmt->bindValue(":id", $this->id, PDO::PARAM_INT))
             return false;
 
@@ -205,7 +223,8 @@ abstract class Base extends Connect
      */
     public function count(): int
     {
-        $stmt = $this->bind($this->getConnection(), $this->rulesValuesArr);
+        $stmt = $this->bind($this->connection, $this->rulesValuesArr);
+
         if (!$stmt || !$stmt->execute())
             return null;
         return $stmt->rowCount();
@@ -218,6 +237,7 @@ abstract class Base extends Connect
     private function bind(PDO $con, ?array $arr = null)
     {
         $stmt = $con->prepare($this->query);
+
         if (!$stmt)
             return null;
 
