@@ -112,6 +112,7 @@
         "jquery.min.js",
         "jquery-ui.min.js",
         "bootstrap.min.js",
+        "global-scripts.js",
         "dash/scripts.js",
     ];
 

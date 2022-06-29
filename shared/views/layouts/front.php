@@ -55,6 +55,7 @@
         "jquery.min.js",
         "jquery-ui.min.js",
         "bootstrap.min.js",
+        "global-scripts.js",
         "front/scripts.js",
     ];
 
