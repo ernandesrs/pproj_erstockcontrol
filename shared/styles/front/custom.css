@@ -9028,10 +9028,8 @@ h3 {
 }
 
 body {
-  display: grid;
-  grid-template-areas: "content";
-  grid-template-columns: auto;
   background-color: rgb(250, 250, 250);
+  width: 100%;
   min-height: 100vh;
   color: rgb(61, 61, 61);
 }
@@ -9050,25 +9048,6 @@ body .pagination .page-item.disabled .page-link {
   background-color: rgba(230, 230, 230, 0.75);
   color: rgb(49, 184, 208);
 }
-body .photo {
-  background-color: transparent !important;
-}
-body .photo img {
-  background-color: rgba(210, 210, 210, 0.75);
-  border: 0;
-}
-body .photo.no-photo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-body .photo.no-photo span {
-  position: absolute;
-  font-size: 2.5rem;
-  font-weight: 600;
-  color: rgba(75, 75, 75, 0.35);
-}
 body .icon.loading::before {
   animation-name: rotateCircle;
   animation-duration: 1s;
@@ -9082,171 +9061,11 @@ body .icon.loading::before {
     transform: rotateZ(360deg);
   }
 }
-body .sidebar {
-  grid-area: "sidebar";
-  background-color: rgb(61, 61, 61);
-  min-width: 225px;
-  height: 100%;
-  max-height: 100vh;
-  overflow-y: auto;
-  color: rgb(210, 210, 210);
-}
-body .sidebar.mobile {
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 999;
-}
-body .sidebar .profile {
-  padding: 0.5rem 0 1rem 0;
-  cursor: default;
-}
-body .sidebar .profile .photo {
-  max-width: 45px;
-  height: 45px;
-}
-body .sidebar .profile .photo.no-photo span {
-  font-size: 1.5rem;
-  font-weight: 700;
-}
-body .sidebar .profile .info .username {
-  font-weight: 600;
-}
-body .sidebar .sidebar-elements {
-  background-color: rgba(255, 255, 255, 0.125);
-  padding-left: 1rem;
-  padding-right: 1rem;
-  border-top: 5px solid rgba(49, 184, 208, 0.5);
-  border-radius: 0.6666666667rem 0.6666666667rem;
-  box-shadow: 0 0 6px 2px rgba(75, 75, 75, 0.125);
-}
-body .sidebar .sidebar-elements .element {
-  padding: 0.5rem 0 1rem 0;
-}
-body .sidebar .sidebar-elements .element .title {
-  font-weight: 600;
-  font-size: 1.2rem;
-  color: rgb(230, 230, 230);
-  text-transform: uppercase;
-}
-body .sidebar .sidebar-elements .element .nav .nav-item .nav-link.active {
-  background-color: rgba(255, 255, 255, 0.06125);
-  color: rgb(210, 210, 210);
-}
 body .main {
-  grid-area: "content";
   background-color: rgb(250, 250, 250);
   height: 100%;
   max-height: 100vh;
   overflow-y: auto;
-}
-body .main .main-bar {
-  background-color: transparent;
-}
-body .main .main-bar .btn-sidebar-toggler {
-  background-color: transparent;
-  font-size: 1.5rem;
-  padding: 0;
-  color: rgb(75, 75, 75);
-  position: relative;
-  z-index: 999;
-}
-body .main .main-bar .btn-sidebar-toggler:hover {
-  color: rgba(75, 75, 75, 0.25);
-}
-body .main .main-bar .btn-sidebar-toggler:focus {
-  box-shadow: none;
-}
-body .main .main-bar .breadcrumb {
-  background-color: transparent;
-  padding-top: 0.4rem;
-  padding-bottom: 0.4rem;
-  margin-bottom: 0;
-}
-body .main .section {
-  margin-bottom: 1rem;
-}
-body .main .section .section-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  padding: 1rem 0;
-}
-body .main .section .section-header .left-side .title {
-  font-size: 1.2rem;
-  margin-bottom: 0;
-  font-weight: 600;
-  color: rgb(75, 75, 75);
-}
-body .main .section .section-header .right-side .filter-bar {
-  background-color: transparent;
-}
-body .main .section .section-content {
-  background-color: #fff;
-  padding: 0.5rem 1rem;
-  border: 1px solid rgb(230, 230, 230);
-}
-body .main .section .section-content .list-items .list-item:hover {
-  box-shadow: 0 0 8px 0 rgba(75, 75, 75, 0);
-}
-body .main .section.section-overview {
-  background-color: transparent;
-}
-body .main .section.section-overview .section-content .overview-boxes-list .overview-boxes-item {
-  background-color: rgba(250, 250, 250, 0.35);
-}
-body .main .section.section-overview .section-content .overview-boxes-list .overview-boxes-item .icon {
-  font-size: 3rem;
-  margin-right: 1rem;
-  color: rgba(75, 75, 75, 0.25);
-}
-body .main .section.section-overview .section-content .overview-boxes-list .overview-boxes-item .title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: rgb(75, 75, 75);
-}
-body .main .section.section-users .section-content .list-items .list-item {
-  background-color: rgba(210, 210, 210, 0);
-}
-body .main .section.section-users .section-content .list-items .list-item.user .photo {
-  width: 125px;
-  height: 125px;
-}
-body .main .section.section-users .section-content .list-items .list-item.user .username,
-body .main .section.section-users .section-content .list-items .list-item.user .fullname,
-body .main .section.section-users .section-content .list-items .list-item.user .email {
-  padding-bottom: 0.1666666667rem;
-  white-space: nowrap;
-  overflow-x: hidden;
-}
-body .main .section.section-users .section-content .list-items .list-item.user .username {
-  font-size: 1.2rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-body .main .section.section-users .section-content .list-items .list-item.user .fullname,
-body .main .section.section-users .section-content .list-items .list-item.user .email {
-  color: rgb(75, 75, 75);
-}
-body .main .section.section-users .section-content .list-items .list-item.user .fullname {
-  font-size: 1rem;
-}
-body .main .section.section-users .section-content .list-items .list-item.user .email {
-  font-size: 0.875rem;
-}
-body .main .section.section-user-edit .photo {
-  width: 275px;
-  height: 275px;
-}
-body .main .section.section-user-edit .photo.no-photo span {
-  font-size: 5rem;
-}
-
-@media (min-width: 992px) {
-  body {
-    grid-template-areas: "sidebar content";
-    grid-template-columns: 225px auto;
-  }
 }
 
 /*# sourceMappingURL=custom.css.map */

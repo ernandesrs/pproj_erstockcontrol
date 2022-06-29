@@ -7,11 +7,16 @@ require_once __DIR__ . "/vendor/autoload.php";
 $router = new Router(CONF_URL_BASE);
 
 /**
+ * front
+ */
+$router->namespace("App\\Controllers\\Front");
+$router->get("/", "IndexController@index", "front.front");
+$router->get("/error", "IndexController@error", "front.error");
+
+/**
  * dashboard
  */
-
 $router->namespace("App\\Controllers\\Dash");
-$router->get("/", "IndexController@index", "dash.index");
 $router->get("/dash", "IndexController@dash", "dash.dash");
 $router->post("/dash", "IndexController@dash", "dash.dash");
 
@@ -35,8 +40,6 @@ $router->get("/dash/configuracao", "IndexController@settings", "dash.settings");
 $router->post("/dash/configuracao", "IndexController@settings", "dash.settings");
 $router->get("/dash/perfil", "IndexController@profile", "dash.profile");
 
-$router->get("/error", "IndexController@error", "dash.error");
-
 /**
  * auth
  */
@@ -58,5 +61,5 @@ $router->post("/testes/uploads", "IndexController@uploadTestStorage", "index.upl
 $router->get("/testes/imagens", "IndexController@images", "index.images");
 
 if (!$router->boot()) {
-    $router->redirect("dash.error", ["err" => $router->error()]);
+    $router->redirect("front.error", ["err" => $router->error()]);
 }

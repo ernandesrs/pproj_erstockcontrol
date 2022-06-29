@@ -31,6 +31,17 @@ $sources = [
     ],
 
     /**
+     * front
+     */
+    "public/assets/css/front" => [
+        "shared/styles/front/custom.css",
+    ],
+
+    "public/assets/js/front" => [
+        "shared/scripts/front/scripts.js",
+    ],
+
+    /**
      * dash
      */
     "public/assets/css/dash" => [

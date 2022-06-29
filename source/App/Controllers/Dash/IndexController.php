@@ -129,13 +129,4 @@ class IndexController extends DashController
     {
         $this->view("dash/profile")->seo("Meu perfil")->render();
     }
-
-    /**
-     * @return void
-     */
-    public function error(): void
-    {
-        $this->view("error", ["errorCode" => filter_input(INPUT_GET, "err", FILTER_VALIDATE_INT) ?? 404])
-            ->render();
-    }
 }
