@@ -1,3 +1,5 @@
+<?= csrf_input() ?>
+
 <div class="form-row py-3">
     <div class="col-12">
         <div class="form-group">
