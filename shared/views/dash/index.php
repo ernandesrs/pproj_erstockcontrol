@@ -103,17 +103,21 @@
                             <tbody>
                                 <?php foreach ($reports ?? [] as $report) :
                                     $last = $report->lastActivityReport(); ?>
-                                    <tr id="report<?= $last->id ?>">
+                                    <tr id="report<?= $last->id ?? null ?>">
                                         <td class="align-middle username">
                                             <?= $report->username ?>
                                         </td>
                                         <td class="align-middle last-report">
-                                            <?= ($last->last_report ?? null) ? App\Helpers\Date::hoursElapsedSoFar($last->last_report) : "Nunca ativo" ?>
+                                            <?= ($last ?? null) ? App\Helpers\Date::hoursElapsedSoFar($last->last_report) : "Nunca ativo" ?>
                                         </td>
                                         <td class="align-middle text-nowrap d-inline-block text-truncate last-page" style="width: 100%; max-width: 150px;">
-                                            <a href="<?= url($last->last_page) ?>" target="_blank">
-                                                <?= ($last->last_page ?? null) ? $last->last_page : "" ?>
-                                            </a>
+                                            <?php if ($last) : ?>
+                                                <a href="<?= url($last->last_page) ?>" target="_blank">
+                                                    <?= $last->last_page ?>
+                                                </a>
+                                            <?php else : ?>
+                                                Nenhuma visita
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
