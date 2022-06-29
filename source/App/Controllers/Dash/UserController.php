@@ -266,7 +266,7 @@ class UserController extends DashController
         if ($this->logged->id == $user->id) {
             echo json_encode([
                 "success" => false,
-                "message" => message()->warning("Você não pode excluir seu próprio perfil")->float()->render()
+                "message" => message()->warning("Você não pode excluir seu próprio perfil")->time()->render()
             ]);
             return;
         }

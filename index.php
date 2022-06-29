@@ -25,7 +25,7 @@ $router->get("/dash/produto/novo", "ProductController@create", "dash.products.cr
 $router->post("/dash/produto/cadastrar", "ProductController@store", "dash.products.store");
 $router->get("/dash/produto/editar", "ProductController@edit", "dash.products.edit");
 $router->post("/dash/produto/atualizar", "ProductController@update", "dash.products.update");
-$router->get("/dash/produto/excluir", "ProductController@delete", "dash.products.delete");
+$router->post("/dash/produto/excluir", "ProductController@delete", "dash.products.delete");
 $router->post("/dash/produtos/filtrar", "ProductController@filter", "dash.products.filter");
 
 $router->get("/dash/usuarios", "UserController@index", "dash.users");
@@ -33,7 +33,7 @@ $router->get("/dash/usuario/novo", "UserController@create", "dash.users.create")
 $router->post("/dash/usuario/cadastrar", "UserController@store", "dash.users.store");
 $router->get("/dash/usuario/editar", "UserController@edit", "dash.users.edit");
 $router->post("/dash/usuario/atualizar", "UserController@update", "dash.users.update");
-$router->get("/dash/usuario/excluir", "UserController@delete", "dash.users.delete");
+$router->post("/dash/usuario/excluir", "UserController@delete", "dash.users.delete");
 $router->post("/dash/usuarios/filtrar", "UserController@filter", "dash.users.filter");
 
 $router->get("/dash/configuracao", "IndexController@settings", "dash.settings");

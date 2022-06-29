@@ -171,14 +171,20 @@ class ProductController extends DashController
 
         if (!$product) {
             message()->warning("O produto que você tentou excluir não existe ou já foi excluído.")->float()->flash();
-            $this->router->redirect("dash.products");
+            echo json_encode([
+                "success" => false,
+                "redirect" => $this->route("dash.products")
+            ]);
             return;
         }
 
         $product->delete();
 
         message()->info("O produto foi excluído com sucesso.")->float()->flash();
-        $this->router->redirect("dash.products");
+        echo json_encode([
+            "success" => false,
+            "redirect" => $this->route("dash.products")
+        ]);
         return;
     }
 
