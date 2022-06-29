@@ -38,7 +38,7 @@ class DashController extends Controller
          * Níveis de usuários com acesso permitido
          * 
          */
-        $this->allowedUsersLevels = [User::LEVEL_OWNER, User::LEVEL_ADMIN];
+        $this->allowedUsersLevels = [User::LEVEL_MASTER, User::LEVEL_ADMIN];
 
         if (!in_array($this->logged->level, $this->allowedUsersLevels)) {
             message()->default("OOPS! Você não possui permissão para acessar esta área!")->time()->flash();

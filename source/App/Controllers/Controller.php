@@ -81,7 +81,6 @@ class Controller
                     "success" => false,
                     "message" => $message->render()
                 ]);
-                return false;
                 exit;
             }
 
@@ -112,7 +111,6 @@ class Controller
                     "success" => false,
                     "message" => $message->render()
                 ]);
-                return true;
                 exit;
             }
 

@@ -11,15 +11,15 @@ class User extends Model
         self::GENDER_FEMALE,
     ];
 
-    public const LEVEL_COMMON = 1;
-    public const LEVEL_COLLABORATOR = 7;
+    public const LEVEL_ONE = 1;
+    public const LEVEL_SEVEN = 7;
     public const LEVEL_ADMIN = 8;
-    public const LEVEL_OWNER = 9;
+    public const LEVEL_MASTER = 9;
     public const ALLOWED_LEVELS = [
-        self::LEVEL_COMMON,
-        self::LEVEL_COLLABORATOR,
+        self::LEVEL_ONE,
+        self::LEVEL_SEVEN,
         self::LEVEL_ADMIN,
-        self::LEVEL_OWNER,
+        self::LEVEL_MASTER,
     ];
 
     public function __construct()
@@ -42,14 +42,14 @@ class User extends Model
             $this->filtered["password"] = password_hash($this->filtered["password"], PASSWORD_DEFAULT);
 
         // EM UM UPDATE, CERTIFICA-SE DE QUE O NÍVEL NÃO SEJA PROPRIETÁRIO
-        if (!empty($this->id) && $this->level != self::LEVEL_OWNER) {
-            if ($this->filtered["level"] >= self::LEVEL_OWNER)
+        if (!empty($this->id) && $this->level != self::LEVEL_MASTER) {
+            if ($this->filtered["level"] >= self::LEVEL_MASTER)
                 $this->filtered["level"] = $this->level;
         }
 
         // EM UM INSERT, IMPEDE QUE NOVO USUÁRIO SEJA DEFINIDO COMO PROPRIETÁRIO
-        if (empty($this->id) && $this->filtered["level"] >= self::LEVEL_OWNER)
-            $this->filtered["level"] = self::LEVEL_COMMON;
+        if (empty($this->id) && $this->filtered["level"] >= self::LEVEL_MASTER)
+            $this->filtered["level"] = self::LEVEL_ONE;
 
         foreach ($this->filtered as $filteredKey => $filteredData) {
             $this->$filteredKey = $filteredData;

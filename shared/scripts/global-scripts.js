@@ -1,5 +1,13 @@
 let timeoutHandler = null;
 
+$(function () {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+});
+
 /**
  * ALERTA/MENSAGENS
  */
@@ -52,7 +60,7 @@ $(function () {
                 }
 
                 if (response.message) {
-                    addAlert($(response.message), localMessageArea ?? $("body").find(".message-area"));
+                    addAlert($(response.message), localMessageArea.length ? localMessageArea : $("body").find(".message-area"));
                 }
 
                 addFormErrors(form, response.errors ?? null);
@@ -223,6 +231,7 @@ function addAlert(alert, container = null) {
  * @param {jQuery} alert 
  */
 function showAlert(alert) {
+    console.log(alert);
     if (alert.hasClass("alert-float")) {
         alert.show("blind", function () {
             $(this).effect("bounce");

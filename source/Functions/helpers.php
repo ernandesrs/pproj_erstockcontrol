@@ -35,15 +35,22 @@ function is_ajax_request(): bool
     return (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
 }
 
+/**
+ * @return string
+ */
+function csrf_token(): string
+{
+    $token = base64_encode(uniqid());
+    session()->add("____csrfToken", $token);
+    return $token;
+}
 
 /**
  * @return string
  */
 function csrf_input(): string
 {
-    $token = base64_encode(uniqid());
-    session()->add("____csrfToken", $token);
-    return "<input type='hidden' name='__csrfToken' value='{$token}' />";
+    return "<input type='hidden' name='__csrfToken' value='" . csrf_token() . "' />";
 }
 
 /**
@@ -52,10 +59,13 @@ function csrf_input(): string
  */
 function csrf_token_verify(array $form): bool
 {
-    if (empty($form["__csrfToken"]))
+    $formToken = $form["__csrfToken"] ?? null;
+    $globalToken = $_SERVER["HTTP_X_CSRF_TOKEN"] ?? null;
+
+    if (!$formToken && !$globalToken)
         return false;
 
-    $token = $form["__csrfToken"];
+    $token = $formToken ?? $globalToken;
     if ($token === session()->get("____csrfToken"))
         return true;
 

@@ -3,7 +3,6 @@
         <div class="modal-content">
             <div class="modal-body">
                 <form action="" method="POST">
-                    <?= csrf_input() ?>
                     <div class="message-area"></div>
                     <div class="mb-3 text-center message"></div>
                     <div class="text-center">

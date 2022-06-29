@@ -75,7 +75,7 @@ define("CONF_DASHBOARD_SIDEBAR", [
 
             // Níveis dos usuários para os quais este item será visível
             "visible_to" => [
-                App\Models\User::LEVEL_OWNER,
+                App\Models\User::LEVEL_MASTER,
                 App\Models\User::LEVEL_ADMIN
             ]
         ],
