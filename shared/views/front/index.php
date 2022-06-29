@@ -9,10 +9,15 @@
             <div class="card card-body">
                 <div class="d-flex justify-content-center">
                     <a href="<?= $router->route("front.front") ?>">Início</a>
-                    <span class="text-light-dark px-3"> | </span>
-                    <a href="<?= $router->route("dash.dash") ?>">Painel</a>
-                    <span class="text-light-dark px-3"> | </span>
-                    <a href="<?= $router->route("auth.login") ?>">Login</a>
+                    <?php if ($logged) : ?>
+                        <span class="text-light-dark px-3"> | </span>
+                        <a href="<?= $router->route("dash.dash") ?>">Painel</a>
+                        <span class="text-light-dark px-3"> | </span>
+                        <a href="<?= $router->route("auth.logout") ?>">Sair</a>
+                    <?php else : ?>
+                        <span class="text-light-dark px-3"> | </span>
+                        <a href="<?= $router->route("auth.login") ?>">Login</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

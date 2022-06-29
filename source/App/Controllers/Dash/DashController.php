@@ -41,7 +41,8 @@ class DashController extends Controller
         $this->allowedUsersLevels = [User::LEVEL_OWNER, User::LEVEL_ADMIN];
 
         if (!in_array($this->logged->level, $this->allowedUsersLevels)) {
-            $router->redirect("auth.logout");
+            message()->default("OOPS! Você não possui permissão para acessar esta área!")->time()->flash();
+            $router->redirect("front.front");
             return;
         }
 
