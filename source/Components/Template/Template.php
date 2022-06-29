@@ -2,6 +2,8 @@
 
 namespace Components\Template;
 
+use Exception;
+
 /**
  * Baseada em Plates
  */
@@ -80,7 +82,10 @@ class Template
         }
 
         $viewPath = $v->dir . "/" . $v->viewName . "." . $v->ext;
-        if (!file_exists($viewPath)) return;
+        if (!file_exists($viewPath)) {
+            throw new Exception("View '{$v->viewName}' não encontrada");
+            return;
+        }
 
         ob_start();
         require $viewPath;
