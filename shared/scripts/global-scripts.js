@@ -26,6 +26,7 @@ $(function () {
         let submitButton = $(e.originalEvent.submitter);
         let action = form.attr("action");
         let data = (new FormData(form[0]));
+        let localMessageArea = form.find(".message-area");
 
         $.ajax({
             url: action,
@@ -51,7 +52,7 @@ $(function () {
                 }
 
                 if (response.message) {
-                    addAlert($(response.message), $("body").find(".message-area"));
+                    addAlert($(response.message), localMessageArea ?? $("body").find(".message-area"));
                 }
 
                 addFormErrors(form, response.errors ?? null);
@@ -61,6 +62,38 @@ $(function () {
                 removeLoadingMode(submitButton);
             }
         });
+    });
+
+});
+
+/**
+ * 
+ * CLICKS EM BOTÕES COM CONFIRMAÇÃO DE AÇÃO
+ * 
+ */
+$(function () {
+    let confirmationModal = $(".jsConfirmationModal");
+
+    $(".jsConfirmationModalButton").on("click", function (e) {
+        e.preventDefault();
+        let action = $(this).attr("data-action");
+        let style = $(this).attr("data-style");
+        let message = $(this).attr("data-message");
+
+        confirmationModal.addClass("modal-" + (style ?? "default"))
+            .find("form").attr("action", action)
+            .find(".message").html(message)
+            .parent().find("button[type=submit]").addClass("btn-" + style);
+
+        confirmationModal.modal();
+
+    });
+
+    confirmationModal.on("hidden.bs.modal", function () {
+        confirmationModal.removeClass("modal-default modal-success modal-danger modal-info modal-warning")
+            .find("form").attr("action", "")
+            .find(".message").html("")
+            .parent().find("button[type=submit]").removeClass("btn-default btn-success btn-danger btn-info btn-warning");
     });
 
 });

@@ -9027,6 +9027,32 @@ h3 {
   box-shadow: 0 0 24px -6px rgba(75, 75, 75, 0.25);
 }
 
+.modal .modal-content {
+  background-color: rgba(250, 250, 250, 0.9);
+  border-width: 1px;
+  border-style: solid;
+}
+.modal.modal-danger .modal-content {
+  border-color: #d87a83;
+  color: #d87a83;
+}
+.modal.modal-warning .modal-content {
+  border-color: #e2c262;
+  color: #e2c262;
+}
+.modal.modal-success .modal-content {
+  border-color: #77c189;
+  color: #77c189;
+}
+.modal.modal-info .modal-content {
+  border-color: #6abcc8;
+  color: #6abcc8;
+}
+.modal.modal-default .modal-content {
+  border-color: rgb(61, 61, 61);
+  color: rgb(61, 61, 61);
+}
+
 body {
   display: grid;
   grid-template-areas: "content";

@@ -64,9 +64,9 @@
                                     <a class="btn btn-info" href="<?= $router->route("dash.products.edit", ["id" => $product->id]) ?>">
                                         <?= icon_elem("pencilSquare") ?>
                                     </a>
-                                    <a class="btn btn-outline-danger jsDeleteButtonAlert" href="<?= $router->route("dash.products.delete", ["id" => $product->id]) ?>">
+                                    <button class="btn btn-outline-danger jsConfirmationModalButton" data-action="<?= $router->route("dash.products.delete", ["id" => $product->id]) ?>" data-style="danger" data-message="Você está excluindo um produto e isso não pode ser desfeito, confirme para continuar.">
                                         <?= icon_elem("trash") ?>
-                                    </a>
+                                    </button>
                                 </td>
                             </tr>
                         <?php
@@ -87,3 +87,9 @@
 
 
 <?= $v->end("content") ?>
+
+<?= $v->start("modals") ?>
+
+<?php include __DIR__ . "/../includes/modal-confirmation.php" ?>
+
+<?= $v->end("modals") ?>

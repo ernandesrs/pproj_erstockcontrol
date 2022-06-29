@@ -122,6 +122,8 @@
 
     ?>
 
+    <?= $v->section("modals") ?>
+
     <?= $v->section("scripts") ?>
     <script>
         let urlDash = "<?= $router->route("dash.dash") ?>";
