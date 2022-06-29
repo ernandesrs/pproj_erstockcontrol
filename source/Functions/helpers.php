@@ -87,10 +87,17 @@ function attempt_limit(string $name, int $limit = 3, int $block_time = 5): bool
             "count" => 1,
             "limit" => $limit,
             "block_time" => $block_time,
-            "time" => null
+            "time" => null,
+            "last_update" => time()
         ]);
         return false;
     }
+
+    // COUNT RESET
+    if (strtotime("+{$attempts->block_time}minutes", $attempts->last_update) <= time())
+        $attempts->count = 0;
+
+    $attempts->last_update = time();
 
     if ($attempts->count < $limit) {
         $attempts->count += 1;
