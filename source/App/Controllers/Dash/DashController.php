@@ -13,9 +13,6 @@ class DashController extends Controller
     /** @var stdClass */
     protected $settings;
 
-    /** @var User */
-    protected $logged;
-
     /** @var array */
     protected $allowedUsersLevels;
 
@@ -24,7 +21,14 @@ class DashController extends Controller
      */
     public function __construct($router)
     {
-        if (!(new Auth())->isLogged()) {
+        parent::__contruct($router);
+
+        /**
+         * 
+         * Usuário logado
+         * 
+         */
+        if (!$this->logged) {
             $router->redirect("auth.login");
             return;
         }
@@ -36,7 +40,10 @@ class DashController extends Controller
          */
         $this->allowedUsersLevels = [User::LEVEL_OWNER, User::LEVEL_ADMIN];
 
-        $this->logged = (new Auth())->logged();
+        if (!in_array($this->logged->level, $this->allowedUsersLevels)) {
+            $router->redirect("auth.logout");
+            return;
+        }
 
         /**
          * 
@@ -45,21 +52,13 @@ class DashController extends Controller
          */
         $this->settings = $this->getSettings();
 
-        parent::__contruct($router);
-
-        if (!in_array($this->logged->level, $this->allowedUsersLevels)) {
-            $router->redirect("auth.logout");
-            return;
-        }
-
         /**
          * 
          * Torna dados disponíveis para as views
          * 
          */
         $this->view->addData([
-            "dash_settings" => $this->settings,
-            "logged" => $this->logged
+            "dash_settings" => $this->settings
         ]);
 
         if (is_get_request())

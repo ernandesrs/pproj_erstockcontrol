@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Auth;
 use Components\Router\Router;
 use Components\Template\Template;
 use Components\Uploader\Uploader;
@@ -17,6 +18,9 @@ class Controller
     /** @var Uploader */
     protected $uploader;
 
+    /** @var User */
+    protected $logged;
+
     /**
      * @param Router $router
      * @return void
@@ -27,7 +31,17 @@ class Controller
         $this->view = new Template(CONF_BASE_DIR . CONF_VIEWS_DIR);
         $this->uploader = new Uploader(CONF_BASE_DIR . CONF_UPLOAD_BASE_DIR);
 
-        $this->view->addData(["router" => $this->router]);
+        /**
+         * 
+         * usuário logado
+         * 
+         */
+        $this->logged = (new Auth())->logged();
+
+        $this->view->addData([
+            "router" => $this->router,
+            "logged" => $this->logged
+        ]);
     }
 
     /**
