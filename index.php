@@ -49,6 +49,13 @@ $router->post("/auth/authenticate", "LoginController@authenticate", "auth.authen
 $router->get("/auth/logout", "LoginController@logout", "auth.logout");
 
 /**
+ * api
+ */
+$router->namespace("App\\Controllers\\Api");
+$router->get("/api", "IndexController@index", "api.index");
+$router->post("/api/saymyname", "IndexController@sayMyName", "api.sayMyName");
+
+/**
  * testes
  */
 
