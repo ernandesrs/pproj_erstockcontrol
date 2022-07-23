@@ -12,6 +12,7 @@ $router = new Router(CONF_URL_BASE);
 $router->namespace("App\\Controllers\\Front");
 $router->get("/", "IndexController@index", "front.front");
 $router->get("/error", "IndexController@error", "front.error");
+$router->get("/starter", "IndexController@starter", "front.starter");
 
 /**
  * dashboard
