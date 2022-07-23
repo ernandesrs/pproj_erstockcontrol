@@ -12,7 +12,7 @@ abstract class Validator
      * @var array $data
      *
      */
-    private $data;
+    protected $data;
 
     /**
      * Dados validados

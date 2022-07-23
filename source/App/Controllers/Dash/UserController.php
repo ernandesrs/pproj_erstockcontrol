@@ -4,6 +4,7 @@ namespace App\Controllers\Dash;
 
 use App\Models\User;
 use App\Validators\Admin\UserCreateValidator;
+use App\Validators\Admin\UserUpdateValidator;
 
 class UserController extends DashController
 {
@@ -139,54 +140,35 @@ class UserController extends DashController
      */
     public function update(): void
     {
-        $data = $_POST;
-
-        $this->csrfVerify($data);
+        $this->csrfVerify($_POST);
 
         /** @var User $user */
-        $user = (new User())->find("id=:id", "id=" . (filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 0))->get();
+        $user = (new User())->find(
+            "id=:id",
+            "id=" . (filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 0)
+        )->get();
 
-        if (!$user) {
-            message()->warning("O usuário que você tentou atualizar não existe ou já foi excluído")->float()->flash();
+        $update = (new UserUpdateValidator($user))->boot();
+
+        if ($update->fail()) {
             echo json_encode([
                 "success" => false,
-                "redirect" => $this->route("dash.users")
+                "message" => message()->warning("Erro ao validar os dados informados")->float()->render(),
+                "errors" => $update->errors()
             ]);
             return;
         }
 
-        // IMPEDE QUE USUÁRIO LOGADO ALTERE USUÁRIOS DE NÍVEL IGUAL OU SUPERIOR
-        if ($this->logged->id != $user->id && $this->logged->level <= $user->level) {
-            message()->warning("Você não possui permissão para realizar este tipo de ação")->float()->flash();
-            echo json_encode([
-                "success" => false,
-                "redirect" => $this->route("dash.users"),
-            ]);
-            return;
-        }
-
-        // IMPEDE O USUÁRIO DE ALTERAR O PRÓPRIO NÍVEL
-        if ($this->logged->id == $user->id)
-            $data["level"] = $this->logged->level;
-
-        // IMPEDE O USUÁRIO DE SETAR UM NÍVEL SUPERIOR AO PRÓPRIO NÍVEL
-        if ($this->logged->id != $user->id && $data["level"] >= $this->logged->level) {
-            echo json_encode([
-                "success" => false,
-                "message" => message()->warning("O nível do usuário não pode ser igual ou superior ao seu.")->float()->render(),
-                "errors" => [
-                    "level" => "Escolha um nível menor"
-                ]
-            ]);
-            return;
-        }
+        $validated = (object) $update->validated();
 
         // PHOTO UPLOAD
         $storage = null;
         $newPhotoPath = null;
         if (!empty($_FILES["photo"]["name"])) {
+
             $storage = storage_image($_FILES["photo"], "images/photo");
             $newPhotoPath = $storage->store();
+
             if (!$newPhotoPath) {
                 echo json_encode([
                     "success" => false,
@@ -204,18 +186,16 @@ class UserController extends DashController
             $user->photo = $newPhotoPath;
         }
 
-        if (!$user->set($data)) {
-            if ($storage)
-                $storage->unlink($newPhotoPath);
-            echo json_encode([
-                "success" => false,
-                "message" => message()->warning("Erro ao validar os dados informados")->float()->render(),
-                "errors" => $user->errors()
-            ]);
-            return;
-        }
+        $user->first_name = $validated->first_name;
+        $user->last_name = $validated->last_name;
+        $user->username = $validated->username;
+        $user->email = $validated->email;
+        $user->gender = $validated->gender;
 
-        if (!$user->update()) {
+        if ($validated->password ?? null)
+            $user->password = password_hash($validated->password, PASSWORD_DEFAULT);
+
+        if (!$user->save()) {
             if ($storage)
                 $storage->unlink($newPhotoPath);
             echo json_encode([
