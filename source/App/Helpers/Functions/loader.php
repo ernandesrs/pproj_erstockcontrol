@@ -12,7 +12,7 @@ $functions = [
 ];
 
 foreach ($functions as $func) {
-    $funcPath = __DIR__ . "/../Functions/{$func}.php";
+    $funcPath = __DIR__ . "/{$func}.php";
 
     if (file_exists($funcPath)) {
         require $funcPath;

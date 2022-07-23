@@ -8,7 +8,7 @@ use App\Helpers\Thumb as HelpersThumb;
  */
 function in_dev(): bool
 {
-    return CONF_APP_LOCAL === "dev" ? true : false;
+    return CONF_APP_LOCAL;
 }
 
 /**
