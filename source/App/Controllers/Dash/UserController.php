@@ -2,8 +2,8 @@
 
 namespace App\Controllers\Dash;
 
-use App\Models\Auth;
 use App\Models\User;
+use App\Validators\Admin\UserCreateValidator;
 
 class UserController extends DashController
 {
@@ -74,34 +74,32 @@ class UserController extends DashController
      */
     public function store(): void
     {
-        $data = $_POST;
+        $this->csrfVerify($_POST);
 
-        $this->csrfVerify($data);
+        $create = (new UserCreateValidator())->boot();
 
-        $user = new User();
-
-        if (!$user->set($data)) {
+        if ($create->fail()) {
             echo json_encode([
                 "success" => false,
                 "message" => message()->warning("Erro ao validar os dados informados")->float()->render(),
-                "errors" => $user->errors()
+                "errors" => $create->errors()
             ]);
             return;
         }
 
-        // VERIFICA SE LOGGED NÃO ESTÁ CRIANDO UM USUÁRIO DE NÍVEL IGUAL OU SUPERIOR AO DE SI PRÓPRIO
-        if ($this->logged->level <= $user->level) {
-            echo json_encode([
-                "success" => false,
-                "message" => message()->warning("O nível do novo usuário não pode ser igual ou superior ao seu.")->float()->render(),
-                "errors" => [
-                    "level" => "Escolha um nível menor"
-                ]
-            ]);
-            return;
-        }
+        $validated = (object) $create->validated();
 
-        if (!$user->add()) {
+        $user = new User();
+        $user->first_name = $validated->first_name;
+        $user->last_name = $validated->last_name;
+        $user->username = $validated->username;
+        $user->email = $validated->email;
+        $user->gender = $validated->gender;
+        $user->email = $validated->email;
+        $user->level = $validated->level;
+        $user->password = password_hash($validated->password, PASSWORD_DEFAULT);
+
+        if (!$user->save()) {
             echo json_encode([
                 "success" => false,
                 "message" => message()->warning("Houve um erro interno ao tentar salvar os dados")->float()->render(),
@@ -172,7 +170,7 @@ class UserController extends DashController
             $data["level"] = $this->logged->level;
 
         // IMPEDE O USUÁRIO DE SETAR UM NÍVEL SUPERIOR AO PRÓPRIO NÍVEL
-        if ($data["level"] >= $this->logged->level) {
+        if ($this->logged->id != $user->id && $data["level"] >= $this->logged->level) {
             echo json_encode([
                 "success" => false,
                 "message" => message()->warning("O nível do usuário não pode ser igual ou superior ao seu.")->float()->render(),
