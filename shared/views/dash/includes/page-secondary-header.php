@@ -8,13 +8,13 @@
 
     <div class="left-right ml-auto">
         <?php $i = 0;
-        foreach ($headerButtons ?? [] as $kHeaderButton => $headerButton) : ?>
+        foreach ($headerButtons ?? [] as $headerButton) : ?>
             <?php if ($headerButton["type"] == "link") : ?>
-                <a class="btn btn-<?= $headerButton["style"] ?> <?= $i == 0 ? "ml-auto" : "ml-2" ?> ml-lg-2 <?= $kHeaderButton ?>" href="<?= $headerButton["link"] ?>" id="<?= $kHeaderButton ?>">
+                <a class="btn btn-<?= $headerButton["style"] ?> <?= $i == 0 ? "ml-auto" : "ml-2" ?> ml-lg-2 <?= $headerButton["id"] ?>" href="<?= $headerButton["link"] ?>" id="<?= $headerButton["id"] ?>">
                     <i class="icon <?= $headerButton["activeIcon"] ?>"></i> <?= $headerButton["text"] ?>
                 </a>
             <?php else : ?>
-                <button class="btn btn-<?= $headerButton["style"] ?> <?= $i == 0 ? "ml-auto" : "ml-2" ?> ml-lg-2 <?= $kHeaderButton ?> <?= $headerButton["activeIcon"] ?>" data-active-icon="<?= $headerButton["activeIcon"] ?>" data-alt-icon="<?= $headerButton["altIcon"] ?>" data-action="<?= $headerButton["link"] ?>" id="<?= $kHeaderButton ?>">
+                <button class="btn btn-<?= $headerButton["style"] ?> <?= $i == 0 ? "ml-auto" : "ml-2" ?> ml-lg-2 <?= $headerButton["id"] ?> <?= $headerButton["activeIcon"] ?>" data-active-icon="<?= $headerButton["activeIcon"] ?>" data-alt-icon="<?= $headerButton["altIcon"] ?>" data-action="<?= $headerButton["link"] ?>" id="<?= $headerButton["id"] ?>">
                     <?= $headerButton["text"] ?>
                 </button>
             <?php endif; ?>

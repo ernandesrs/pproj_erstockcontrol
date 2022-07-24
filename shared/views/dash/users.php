@@ -6,14 +6,7 @@
     <?php
 
     $headerButtons = [
-        "phButtonOne" => [
-            "type" => "link",
-            "text" => "Novo usuário",
-            "style" => "success",
-            "link" => route("dash.users.create"),
-            "activeIcon" => icon_class("plusLg"),
-            "altIcon" => icon_class("loading"),
-        ]
+        t_button_link_elem("Novo usuário", "success", icon_class("plusLg"), route("dash.users.create"), icon_class("loading"), "phpButtonOne"),
     ];
 
     $filterFormActionLink = route("dash.users.filter");

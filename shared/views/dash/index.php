@@ -56,14 +56,7 @@
             $pageTitle = "Um gráfico cairia bem aqui";
             $pageSubtitle = "Poderia ter um gráfico maneiro aqui embaixo";
             $headerButtons = [
-                "phButtonOne" => [
-                    "type" => "link",
-                    "text" => "Mais detalhes",
-                    "style" => "info btn-link",
-                    "link" => route("dash.products"),
-                    "activeIcon" => "",
-                    "altIcon" => "",
-                ]
+                t_button_link_elem("Mais detalhes", "info btn-link", "", route("dash.products"), "", "phpButtonOne"),
             ];
 
             include __DIR__ . "/includes/page-secondary-header.php";

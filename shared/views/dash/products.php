@@ -6,22 +6,8 @@
     <?php
 
     $headerButtons = [
-        "phButtonOne" => [
-            "type" => "link",
-            "text" => "Novo produto",
-            "style" => "success",
-            "link" => route("dash.products.create"),
-            "activeIcon" => icon_class("plusLg"),
-            "altIcon" => icon_class("loading"),
-        ],
-        "phButtonTwo" => [
-            "type" => "button",
-            "text" => "Exemplo",
-            "style" => "secondary",
-            "link" => "#link",
-            "activeIcon" => icon_class("pieChart"),
-            "altIcon" => icon_class("loading"),
-        ]
+        t_button_link_elem("Novo produto", "success", icon_class("plusLg"), route("dash.products.create"), icon_class("loading"), "phpButtonOne"),
+        t_button_elem("Exemplo", "secondary", icon_class("pieChart"), "#link", icon_class("loading"), "phpButtonTwo")
     ];
 
     $filterFormActionLink = route("dash.products.filter");
