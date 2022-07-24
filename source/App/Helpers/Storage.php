@@ -9,7 +9,7 @@ use Components\Uploader\Uploader;
  * Extende Uploader e adicionar utilitários:
  * 
  * * Métodos do Storage
- * * store() - armazena
+ * * store() - armazena o arquivo definido
  * * unlink() - remove(e limpa cache/thumbnails se for imagem)
  * * unlinkLast() - remove o último arquivo enviado
  * * url() - url para o arquivo
@@ -41,7 +41,7 @@ class Storage extends Uploader
     }
 
     /**
-     * Armazena o arquivo
+     * Armazena o arquivo definido
      * 
      * @param string|null $rename
      * @return string|null
