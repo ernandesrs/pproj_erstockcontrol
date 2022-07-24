@@ -71,3 +71,10 @@ $router->get("/testes/imagens", "IndexController@images", "index.images");
 if (!$router->boot()) {
     $router->redirect("front.error", ["err" => $router->error()]);
 }
+
+/**
+ * 
+ * rota disponível globalmente
+ * 
+ */
+$GLOBALS["router"] = $router;
