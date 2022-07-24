@@ -24,10 +24,55 @@
 
     <div class="section-content">
         <div class="row py-3">
-            <div class="col-12 col-lg-4">
+            <div class="col-12 col-lg-4 d-flex flex-column align-items-center">
                 <div class="photo <?= $user->photo ? "" : "no-photo" ?>">
                     <?= $user->photo ? "" : "<span>" . $user->first_name[0] . "</span>" ?>
                     <img class="rounded-circle img-thumbnail" src="<?= thumb_nm(storage_path($user->photo)) ?>" alt="<?= $user->username ?>">
+                </div>
+                <div class="w-100">
+                    <div class="bg-light border rounded py-2 px-3">
+                        <small>
+                            <p class="mb-0">
+                                <strong>Nível:</strong><span> <?= get_term("user.levels.level_{$user->level}") ?></span>
+                            </p>
+                            <p class="mb-0">
+                                <strong>Registro:</strong> <?= date("d/m/Y H:i:s", strtotime($user->created_at)) ?>
+                            </p>
+                        </small>
+                    </div>
+                    <?php
+
+                    $logged = (new \App\Models\Auth())->logged();
+
+                    if ($user->id != $logged->id && $user->level < $logged->level) : ?>
+                        <div class="rounded py-2 mt-2 text-center">
+                            <!-- demote button -->
+                            <?php
+                            if ($user->level > \App\Models\User::LEVEL_ONE) {
+                                $btnStyle = "danger";
+                                $btnIconClass = icon_class("");
+                                $btnUrlAction = route("dash.users.demote", ["user_id" => $user->id]);
+                                $btnMessage = "Você está retirando um nível deste usuário.";
+                                $btnText = "Rebaixar";
+
+                                include __DIR__ . "/../includes/button-confirmation.php";
+                            }
+                            ?>
+
+                            <!-- promote button -->
+                            <?php
+                            if ($user->level < \App\Models\User::LEVEL_ADMIN) {
+                                $btnStyle = "success";
+                                $btnIconClass = icon_class("");
+                                $btnUrlAction = route("dash.users.promote", ["user_id" => $user->id]);
+                                $btnMessage = "Você está promovendo este usuário.";
+                                $btnText = "Promover";
+
+                                include __DIR__ . "/../includes/button-confirmation.php";
+                            }
+                            ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="col-12 col-lg-8">
@@ -37,9 +82,16 @@
                         include __DIR__ . "/includes/users-form-fields.php";
                         ?>
                         <div class="col-12 form-group text-right mb-0">
-                            <button class="btn btn-outline-danger <?= icon_class("userX") ?> jsConfirmationModalButton" data-action="<?= route("dash.users.delete", ["id" => $user->id]) ?>" data-style="danger" data-message="Você está excluindo um usuário definitivamente e isso não pode ser desfeito, confirme para continuar.">
-                                Excluir
-                            </button>
+                            <!-- button delete confirmation -->
+                            <?php
+                            $btnStyle = "danger";
+                            $btnIconClass = icon_class("userX");
+                            $btnUrlAction = route("dash.users.delete", ["id" => $user->id]);
+                            $btnMessage = "Você está excluindo um usuário definitivamente e isso não pode ser desfeito.";
+                            $btnText = "Excluir";
+                            include __DIR__ . "/../includes/button-confirmation.php";
+                            ?>
+
                             <button class="btn btn-info <?= icon_class("userCheck") ?>" data-active-icon="<?= icon_class("userCheck") ?>" data-alt-icon="<?= icon_class("loading") ?>" type="submit">
                                 Atualizar
                             </button>

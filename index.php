@@ -34,6 +34,8 @@ $router->get("/dash/usuario/novo", "UserController@create", "dash.users.create")
 $router->post("/dash/usuario/cadastrar", "UserController@store", "dash.users.store");
 $router->get("/dash/usuario/editar", "UserController@edit", "dash.users.edit");
 $router->post("/dash/usuario/atualizar", "UserController@update", "dash.users.update");
+$router->post("/dash/usuarios/promover/{user_id}", "UserController@promote", "dash.users.promote");
+$router->post("/dash/usuarios/rebaixar/{user_id}", "UserController@demote", "dash.users.demote");
 $router->post("/dash/usuario/excluir", "UserController@delete", "dash.users.delete");
 $router->post("/dash/usuarios/filtrar", "UserController@filter", "dash.users.filter");
 
