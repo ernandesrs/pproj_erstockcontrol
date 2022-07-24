@@ -38,14 +38,16 @@ class UserUpdateValidator extends Validator
                 "success" => false,
                 "redirect" => route("dash.users")
             ]);
+            exit;
             return;
         }
 
-        if ($logged->level <= $this->user->level) {
+        if ($logged->id !== $this->user->id && $logged->level <= $this->user->level) {
             echo json_encode([
                 "success" => false,
                 "message" => message()->warning("Você não possui esse tipo de permissão")->float()->render(),
             ]);
+            exit;
             return;
         }
 

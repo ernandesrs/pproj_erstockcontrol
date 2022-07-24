@@ -84,9 +84,9 @@ trait Validations
 
             if (!$this->validated[$key])
                 $this->errors[$key][] = "O email informado é inválido";
-
-            return $this->isValid($key);
         }
+
+        return $this->isValid($key);
     }
 
     /**
