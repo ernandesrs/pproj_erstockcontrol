@@ -231,7 +231,6 @@ function addAlert(alert, container = null) {
  * @param {jQuery} alert 
  */
 function showAlert(alert) {
-    console.log(alert);
     if (alert.hasClass("alert-float")) {
         alert.show("blind", function () {
             $(this).effect("bounce");
