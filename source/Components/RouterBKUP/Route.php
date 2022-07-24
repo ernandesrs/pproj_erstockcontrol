@@ -51,14 +51,6 @@ abstract class Route
             return false;
         }
 
-        /**
-         * 
-         * inserindo dados de parâmetros da rota na variável global $_GET
-         * 
-         */
-        if ($params = $this->currentRoute["params"])
-            $_GET = ($_GET ?? []) + $params;
-
         (new $class($this))->$method();
 
         return true;
@@ -71,47 +63,21 @@ abstract class Route
     {
         $requestMethod = $_SERVER["REQUEST_METHOD"];
 
+        $url = $this->getUrl();
         if (!array_key_exists($requestMethod, $this->routes)) {
             $this->errno = self::NOTIMPLEMENTED;
             return false;
         }
 
-        $url = $this->getUrl();
-
-        /**
-         * 
-         * buscando por rotas
-         * 
-         */
-        $data = [];
-        $urlArrayString = "";
-        $urlArray = explode("/", $url);
-        for ($i = count($urlArray) - 1; $i >= 0; $i--) {
-            $urlArrayString = implode("/", $urlArray);
-
-            if (!empty($urlArrayString) && array_key_exists($urlArrayString, $this->routes[$requestMethod])) {
-                $this->currentRoute = $this->routes[$requestMethod][$urlArrayString];
-                break;
-            } else {
-                $data[] = $urlArray[$i];
-                $urlArray[$i] = "{var}";
-            }
-        }
-
-        if (!$this->currentRoute) {
+        if (!array_key_exists($url, $this->routes[$requestMethod])) {
             $this->errno = self::NOTFOUND;
             return false;
         }
 
+        $this->currentRoute = $this->routes[$requestMethod][$url];
         if (empty($this->currentRoute["namespace"])) {
             throw new Exception("Namespace não definido");
             return false;
-        }
-
-        $param = 0;
-        foreach ($this->currentRoute["params"] as $key => $value) {
-            $this->currentRoute["params"][$key] = $data[$param];
-            $param++;
         }
 
         return true;
@@ -127,54 +93,16 @@ abstract class Route
         if (count($this->routes) == 0)
             return null;
 
-        /**
-         * 
-         * obtém possíveis rotas para o $name informado
-         * 
-         */
-        $matcheds = [];
         foreach ($this->routes as $route) {
             if (count($route) == 0)
                 return null;
 
             foreach ($route as $r) {
-                if ($r["name"] === $name)
-                    $matcheds[] = $r;
-            }
-        }
+                if ($r["name"] === $name) {
+                    $url = $r["url"] === "/" ? $this->urlBase : $this->urlBase . $r["url"];
 
-        arsort($matcheds);
-
-        /**
-         * 
-         * procura pela rota correta levando em consideração
-         * os parâmetros para cada rota e os valores de parâmetros passados em $args
-         * 
-         */
-        foreach ($matcheds as $matched) {
-            $has = 0;
-            foreach (array_keys($matched["params"]) as $key) {
-                if (key_exists($key, $args))
-                    $has++;
-            }
-
-            if ($has === count($matched["params"])) {
-
-                $url = explode("/", $matched["url"]);
-                $count = count($url) - 1;
-
-                foreach (array_keys($matched["params"]) as $key) {
-                    $url[$count] = $args[$key];
-                    unset($args[$key]);
-                    $count--;
+                    return count($args) > 0 ? $url .= "?" . http_build_query($args) : $url;
                 }
-
-                $url = implode("/", $url);
-
-                if (count($args))
-                    $url .= "?" . http_build_query($args);
-
-                return $this->urlBase . $url;
             }
         }
 
@@ -222,18 +150,8 @@ abstract class Route
         if ($url == "/")
             return $url;
 
-        /**
-         * 
-         * remoção de parâmetros não amigáveis
-         * 
-         */
         $url = strpos($url, "?") !== false ? substr($url, 0, strpos($url, "?")) : $url;
 
-        /**
-         * 
-         * remoção da última '/' se houver
-         * 
-         */
-        return $url[strlen($url) - 1] == "/" ? substr($url, 0, strlen($url) - 1) : $url;
+        return $url;
     }
 }

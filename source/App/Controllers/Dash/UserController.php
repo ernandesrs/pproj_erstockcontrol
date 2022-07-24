@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Dash;
 
+use App\Models\Auth;
 use App\Models\User;
 use App\Validators\Admin\UserCreateValidator;
 use App\Validators\Admin\UserUpdateValidator;
@@ -210,6 +211,92 @@ class UserController extends DashController
         echo json_encode([
             "success" => true,
             "reload" => true,
+        ]);
+        return;
+    }
+
+    /**
+     * @return void
+     */
+    public function promote(): void
+    {
+        $userId = filter_var($_GET["user_id"] ?? 0, FILTER_VALIDATE_INT) ?? 0;
+
+        $user = (new User())->find("id=:id", "id={$userId}")->get();
+        if (!$user) {
+            message()->danger("O usuário não existe ou foi excluído!")->float()->flash();
+            echo json_encode([
+                "success" => false,
+                "redirect" => route("dash.users")
+            ]);
+            return;
+        }
+
+        $logged = (new Auth())->logged();
+
+        // IMPEDE AUTO PROMOÇÃO E PROMOÇÃO DE USUÁRIO DE NÍVEL IGUAL O SUPERIOR
+        if ($logged->id == $user->id || $logged->level <= $user->level) {
+            echo json_encode([
+                "success" => false,
+                "message" => message()->danger("Você não possui permissão para esse tipo de ação!")->float()->render()
+            ]);
+            return;
+        }
+
+        if ($user->level == User::LEVEL_ONE)
+            $user->level = User::LEVEL_SEVEN;
+        elseif ($user->level == User::LEVEL_SEVEN)
+            $user->level = User::LEVEL_ADMIN;
+
+        $user->save();
+
+        message()->success("O usuário foi promovido com sucesso!")->float()->flash();
+        echo json_encode([
+            "success" => true,
+            "reload" => true
+        ]);
+        return;
+    }
+
+    /**
+     * @return void
+     */
+    public function demote(): void
+    {
+        $userId = filter_var($_GET["user_id"] ?? 0, FILTER_VALIDATE_INT) ?? 0;
+
+        $user = (new User())->find("id=:id", "id={$userId}")->get();
+        if (!$user) {
+            message()->danger("O usuário não existe ou foi excluído!")->float()->flash();
+            echo json_encode([
+                "success" => false,
+                "redirect" => route("dash.users")
+            ]);
+            return;
+        }
+
+        $logged = (new Auth())->logged();
+
+        // IMPEDE AUTO REBAIXAMENTO E REBAIXAMENTO DE USUÁRIO DE NÍVEL IGUAL O SUPERIOR
+        if ($logged->id == $user->id || $logged->level <= $user->level) {
+            echo json_encode([
+                "success" => false,
+                "message" => message()->danger("Você não possui permissão para esse tipo de ação!")->float()->render()
+            ]);
+            return;
+        }
+
+        if ($user->level == User::LEVEL_SEVEN)
+            $user->level = User::LEVEL_ONE;
+        elseif ($user->level == User::LEVEL_ADMIN)
+            $user->level = User::LEVEL_SEVEN;
+
+        $user->save();
+
+        message()->success("O usuário foi rebaixado com sucesso!")->float()->flash();
+        echo json_encode([
+            "success" => true,
+            "reload" => true
         ]);
         return;
     }
