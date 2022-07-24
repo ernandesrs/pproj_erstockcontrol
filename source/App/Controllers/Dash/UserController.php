@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Dash;
 
+use App\Helpers\Storage;
 use App\Models\Auth;
 use App\Models\User;
 use App\Validators\Admin\UserCreateValidator;
@@ -294,6 +295,47 @@ class UserController extends DashController
         $user->save();
 
         message()->success("O usuário foi rebaixado com sucesso!")->float()->flash();
+        echo json_encode([
+            "success" => true,
+            "reload" => true
+        ]);
+        return;
+    }
+
+    /**
+     * @return void
+     */
+    public function photoRemove(): void
+    {
+        $userId = filter_var($_GET["user_id"] ?? 0, FILTER_VALIDATE_INT) ?? 0;
+
+        $user = (new User())->find("id=:id", "id={$userId}")->get();
+        if (!$user) {
+            message()->danger("O usuário não existe ou foi excluído!")->float()->flash();
+            echo json_encode([
+                "success" => false,
+                "redirect" => route("dash.users")
+            ]);
+            return;
+        }
+
+        $logged = (new Auth())->logged();
+
+        // IMPEDE ALTERAÇÃO EM USUÁRIO DE NÍVEL IGUAL OU SUPERIOR EXCETO A SI PRÓPRIO
+        if ($logged->id != $user->id && $logged->level <= $user->level) {
+            echo json_encode([
+                "success" => false,
+                "message" => message()->danger("Você não possui permissão para esse tipo de ação!")->float()->render()
+            ]);
+            return;
+        }
+
+        (new Storage())->unlink($user->photo);
+
+        $user->photo = null;
+        $user->save();
+
+        message()->success("A foto do usuário foi removida com sucesso!")->float()->flash();
         echo json_encode([
             "success" => true,
             "reload" => true

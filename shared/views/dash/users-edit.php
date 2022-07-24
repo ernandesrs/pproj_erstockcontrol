@@ -25,11 +25,28 @@
     <div class="section-content">
         <div class="row py-3">
             <div class="col-12 col-lg-4 d-flex flex-column align-items-center">
-                <div class="photo <?= $user->photo ? "" : "no-photo" ?>">
+                <div class="d-flex justify-content-center align-items-center photo <?= $user->photo ? "" : "no-photo" ?>">
                     <?= $user->photo ? "" : "<span>" . $user->first_name[0] . "</span>" ?>
-                    <img class="rounded-circle img-thumbnail" src="<?= thumb_nm(storage_path($user->photo)) ?>" alt="<?= $user->username ?>">
+                    <img class="img-fluid rounded-circle img-thumbnail" src="<?= thumb_nm(storage_path($user->photo)) ?>" alt="<?= $user->username ?>">
                 </div>
-                <div class="w-100">
+
+                <!-- photo remove confirm -->
+                <?php if ($user->photo) : ?>
+                    <div class="pt-2 pb-1">
+                        <?php
+                        $btnType = "link";
+                        $btnStyle = "danger";
+                        $btnIconClass = icon_class("trash");
+                        $btnUrlAction = route("dash.users.photoRemove", ["user_id" => $user->id]);
+                        $btnMessage = "Você está excluindo a foto deste usuário e não poderá ser recuperada.";
+                        $btnText = "Excluir foto";
+
+                        include __DIR__ . "/../includes/button-confirmation.php";
+                        ?>
+                    </div>
+                <?php endif; ?>
+
+                <div class="w-100 pt-2">
                     <div class="bg-light border rounded py-2 px-3">
                         <small>
                             <p class="mb-0">
@@ -49,6 +66,7 @@
                             <!-- demote button -->
                             <?php
                             if ($user->level > \App\Models\User::LEVEL_ONE) {
+                                $btnType = "button";
                                 $btnStyle = "danger";
                                 $btnIconClass = icon_class("userMinus");
                                 $btnUrlAction = route("dash.users.demote", ["user_id" => $user->id]);
@@ -62,6 +80,7 @@
                             <!-- promote button -->
                             <?php
                             if ($user->level < \App\Models\User::LEVEL_ADMIN) {
+                                $btnType = "button";
                                 $btnStyle = "success";
                                 $btnIconClass = icon_class("userPlus");
                                 $btnUrlAction = route("dash.users.promote", ["user_id" => $user->id]);
