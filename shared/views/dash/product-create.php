@@ -10,20 +10,20 @@
             "type" => "link",
             "text" => "Voltar",
             "style" => "secondary",
-            "link" => $router->route("dash.products"),
+            "link" => route("dash.products"),
             "activeIcon" => icon_class("arrowLeft"),
             "altIcon" => icon_class("arrowLeft"),
         ]
     ];
 
-    $filterFormActionLink = $router->route("dash.products.filter");
+    $filterFormActionLink = route("dash.products.filter");
 
     include __DIR__ . "/includes/page-header.php";
 
     ?>
 
     <div class="section-content">
-        <form id="productForm" action="<?= $router->route("dash.products.store") ?>" method="post" enctype="multipart/form-data">
+        <form id="productForm" action="<?= route("dash.products.store") ?>" method="post" enctype="multipart/form-data">
             <div class="row justify-content-center">
                 <div class="col-12 col-sm-10 col-md-8 col-lg-6">
                     <?php include __DIR__ . "/includes/products-form-fields.php" ?>

@@ -10,20 +10,20 @@
             "type" => "link",
             "text" => "Voltar",
             "style" => "secondary",
-            "link" => $router->route("dash.users"),
+            "link" => route("dash.users"),
             "activeIcon" => icon_class("arrowLeft"),
             "altIcon" => icon_class("arrowLeft"),
         ]
     ];
 
-    $filterFormActionLink = $router->route("dash.users.filter");
+    $filterFormActionLink = route("dash.users.filter");
 
     include __DIR__ . "/includes/page-header.php";
 
     ?>
 
     <div class="section-content">
-        <form action="<?= $router->route("dash.users.store") ?>" method="post" enctype="multipart/form-data">
+        <form action="<?= route("dash.users.store") ?>" method="post" enctype="multipart/form-data">
             <div class="row py-3">
                 <?php
                 include __DIR__ . "/includes/users-form-fields.php";

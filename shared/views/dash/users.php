@@ -10,13 +10,13 @@
             "type" => "link",
             "text" => "Novo usuário",
             "style" => "success",
-            "link" => $router->route("dash.users.create"),
+            "link" => route("dash.users.create"),
             "activeIcon" => icon_class("plusLg"),
             "altIcon" => icon_class("loading"),
         ]
     ];
 
-    $filterFormActionLink = $router->route("dash.users.filter");
+    $filterFormActionLink = route("dash.users.filter");
 
     include __DIR__ . "/includes/page-header.php";
 
@@ -39,7 +39,7 @@
                                 <p class="mb-0 h5 fullname"><?= $user->first_name . " " . $user->last_name ?></p>
                                 <p class="mb-0 h5 email"><?= $user->email ?></p>
                             </div>
-                            <a class="btn btn-info" href="<?= $router->route("dash.users.edit", ["id" => $user->id]) ?>">
+                            <a class="btn btn-info" href="<?= route("dash.users.edit", ["id" => $user->id]) ?>">
                                 <?= icon_elem("pencilSquare") ?> Editar
                             </a>
                         </div>

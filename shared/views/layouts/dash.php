@@ -42,7 +42,7 @@
                         <span class="level">
                             <small><?= get_term("user.levels.level_{$logged->level}") ?></small>
                         </span>
-                        <a class="profile-link ml-auto" href="<?= $router->route("auth.logout") ?>">
+                        <a class="profile-link ml-auto" href="<?= route("auth.logout") ?>">
                             <?= icon_elem("authLogout") ?> Sair
                         </a>
                     </div>
@@ -59,7 +59,7 @@
                                 $el = (object) $el;
                                 $item = "
                                     <li class='nav-item'>
-                                        <a class='nav-link " . (in_array($router->currentRouteName(), $el->activeIn) ? 'active' : null) . "' href='" . $router->route($el->routeName) . "' target='{$el->target}'>
+                                        <a class='nav-link " . (in_array(router()->currentRouteName(), $el->activeIn) ? 'active' : null) . "' href='" . route($el->routeName) . "' target='{$el->target}'>
                                             " . icon_elem($el->iconName) . " <span>{$el->text}</span>
                                         </a>
                                     </li>
@@ -90,7 +90,7 @@
                     </button>
                 </div>
                 <div class="ml-auto">
-                    <a class="btn btn-sm btn-outline-danger" href="<?= $router->route("auth.logout") ?>">
+                    <a class="btn btn-sm btn-outline-danger" href="<?= route("auth.logout") ?>">
                         <?= icon_elem("authLogout") ?> Sair
                     </a>
                 </div>
@@ -126,7 +126,7 @@
 
     <?= $v->section("scripts") ?>
     <script>
-        let urlDash = "<?= $router->route("dash.dash") ?>";
+        let urlDash = "<?= route("dash.dash") ?>";
 
         // dash get updated data
         setInterval(function() {

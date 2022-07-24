@@ -21,13 +21,13 @@
                     </div>
                 </div>
                 <div class="pt-4">
-                    <a class="btn btn-outline-dark-light" href="<?= $router->route("dash.dash") ?>">
+                    <a class="btn btn-outline-dark-light" href="<?= route("dash.dash") ?>">
                         <?= icon_elem("pieChart") ?> Dashboard
                     </a>
-                    <a class="btn btn-outline-dark-light" href="<?= $router->route("dash.users.edit", ["id" => $logged->id]) ?>">
+                    <a class="btn btn-outline-dark-light" href="<?= route("dash.users.edit", ["id" => $logged->id]) ?>">
                         <?= icon_elem("pencilSquare") ?> Editar meus dados
                     </a>
-                    <a class="btn btn-outline-danger" href="<?= $router->route("auth.logout") ?>">
+                    <a class="btn btn-outline-danger" href="<?= route("auth.logout") ?>">
                         <?= icon_elem("authLogout") ?> Sair
                     </a>
                 </div>

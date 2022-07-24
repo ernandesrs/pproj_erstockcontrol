@@ -16,7 +16,7 @@
             <h5>Configurações do dashboard</h5>
             <hr>
             <div>
-                <form action="<?= $router->route("dash.settings", ["apply" => true]) ?>">
+                <form action="<?= route("dash.settings", ["apply" => true]) ?>">
                     <div class="form-row">
 
                         <div class="col-12">

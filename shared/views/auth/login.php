@@ -9,7 +9,7 @@
             echo $flash->render();
         } ?>
     </div>
-    <form action="<?= CONF_URL_BASE ?>/auth/authenticate" method="POST">
+    <form action="<?= route("auth.authenticate") ?>" method="POST">
         <?= csrf_input() ?>
 
         <div class="form-group">

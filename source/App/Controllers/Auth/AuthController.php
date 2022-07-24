@@ -6,11 +6,8 @@ use App\Controllers\Controller;
 
 class AuthController extends Controller
 {
-    /**
-     * @param [type] $router
-     */
-    public function __construct($router)
+    public function __construct()
     {
-        parent::__contruct($router);
+        parent::__contruct();
     }
 }

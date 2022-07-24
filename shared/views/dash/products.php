@@ -10,7 +10,7 @@
             "type" => "link",
             "text" => "Novo produto",
             "style" => "success",
-            "link" => $router->route("dash.products.create"),
+            "link" => route("dash.products.create"),
             "activeIcon" => icon_class("plusLg"),
             "altIcon" => icon_class("loading"),
         ],
@@ -24,7 +24,7 @@
         ]
     ];
 
-    $filterFormActionLink = $router->route("dash.products.filter");
+    $filterFormActionLink = route("dash.products.filter");
 
     include __DIR__ . "/includes/page-header.php";
 
@@ -61,10 +61,10 @@
                                     <?= get_term("product.sale_mode.sale_{$product->sale_mode}") ?>
                                 </td>
                                 <td class="align-middle">
-                                    <a class="btn btn-info" href="<?= $router->route("dash.products.edit", ["id" => $product->id]) ?>">
+                                    <a class="btn btn-info" href="<?= route("dash.products.edit", ["id" => $product->id]) ?>">
                                         <?= icon_elem("pencilSquare") ?>
                                     </a>
-                                    <button class="btn btn-outline-danger jsConfirmationModalButton" data-action="<?= $router->route("dash.products.delete", ["id" => $product->id]) ?>" data-style="danger" data-message="Você está excluindo um produto e isso não pode ser desfeito, confirme para continuar.">
+                                    <button class="btn btn-outline-danger jsConfirmationModalButton" data-action="<?= route("dash.products.delete", ["id" => $product->id]) ?>" data-style="danger" data-message="Você está excluindo um produto e isso não pode ser desfeito, confirme para continuar.">
                                         <?= icon_elem("trash") ?>
                                     </button>
                                 </td>

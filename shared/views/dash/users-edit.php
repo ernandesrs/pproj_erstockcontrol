@@ -10,13 +10,13 @@
             "type" => "link",
             "text" => "Voltar",
             "style" => "secondary",
-            "link" => $router->route("dash.users"),
+            "link" => route("dash.users"),
             "activeIcon" => icon_class("arrowLeft"),
             "altIcon" => icon_class("arrowLeft"),
         ]
     ];
 
-    $filterFormActionLink = $router->route("dash.users.filter");
+    $filterFormActionLink = route("dash.users.filter");
 
     include __DIR__ . "/includes/page-header.php";
 
@@ -31,13 +31,13 @@
                 </div>
             </div>
             <div class="col-12 col-lg-8">
-                <form action="<?= $router->route("dash.users.update", ["id" => $user->id]) ?>" method="post" enctype="multipart/form-data">
+                <form action="<?= route("dash.users.update", ["id" => $user->id]) ?>" method="post" enctype="multipart/form-data">
                     <div class="row">
                         <?php
                         include __DIR__ . "/includes/users-form-fields.php";
                         ?>
                         <div class="col-12 form-group text-right mb-0">
-                            <button class="btn btn-outline-danger <?= icon_class("userX") ?> jsConfirmationModalButton" data-action="<?= $router->route("dash.users.delete", ["id" => $user->id]) ?>" data-style="danger" data-message="Você está excluindo um usuário definitivamente e isso não pode ser desfeito, confirme para continuar.">
+                            <button class="btn btn-outline-danger <?= icon_class("userX") ?> jsConfirmationModalButton" data-action="<?= route("dash.users.delete", ["id" => $user->id]) ?>" data-style="danger" data-message="Você está excluindo um usuário definitivamente e isso não pode ser desfeito, confirme para continuar.">
                                 Excluir
                             </button>
                             <button class="btn btn-info <?= icon_class("userCheck") ?>" data-active-icon="<?= icon_class("userCheck") ?>" data-alt-icon="<?= icon_class("loading") ?>" type="submit">

@@ -9,10 +9,8 @@ use App\Validators\Validator;
 class UserUpdateValidator extends Validator
 {
     /**
-     * @var string
+     * @param User|null $user
      */
-    private $redirectUsersList = "/dash/usuarios";
-
     public function __construct(?User $user)
     {
         $this->user = $user;
@@ -38,7 +36,7 @@ class UserUpdateValidator extends Validator
             message()->warning("O usuário que você tentou atualizar não existe ou já foi excluído")->float()->flash();
             echo json_encode([
                 "success" => false,
-                "redirect" => $this->redirectUsersList
+                "redirect" => route("dash.users")
             ]);
             return;
         }

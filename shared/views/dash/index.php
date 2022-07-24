@@ -60,7 +60,7 @@
                     "type" => "link",
                     "text" => "Mais detalhes",
                     "style" => "info btn-link",
-                    "link" => $router->route("dash.products"),
+                    "link" => route("dash.products"),
                     "activeIcon" => "",
                     "altIcon" => "",
                 ]

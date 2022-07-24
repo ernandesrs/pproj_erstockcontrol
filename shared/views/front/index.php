@@ -8,15 +8,15 @@
             <h1 class="text-center">Front do Site</h1>
             <div class="card card-body">
                 <div class="d-flex justify-content-center">
-                    <a href="<?= $router->route("front.front") ?>">Início</a>
+                    <a href="<?= route("front.front") ?>">Início</a>
                     <?php if ($logged) : ?>
                         <span class="text-light-dark px-3"> | </span>
-                        <a href="<?= $router->route("dash.dash") ?>">Painel</a>
+                        <a href="<?= route("dash.dash") ?>">Painel</a>
                         <span class="text-light-dark px-3"> | </span>
-                        <a href="<?= $router->route("auth.logout") ?>">Sair</a>
+                        <a href="<?= route("auth.logout") ?>">Sair</a>
                     <?php else : ?>
                         <span class="text-light-dark px-3"> | </span>
-                        <a href="<?= $router->route("auth.login") ?>">Login</a>
+                        <a href="<?= route("auth.login") ?>">Login</a>
                     <?php endif; ?>
                 </div>
             </div>
