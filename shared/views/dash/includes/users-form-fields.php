@@ -12,7 +12,7 @@
     </div>
 </div>
 
-<div class="col-12 col-md-6 col-xl-5">
+<div class="col-12 col-md-6 <?= ($user ?? null) ? "col-xl-6" : "col-xl-5" ?>">
     <div class="form-group">
         <label for="email">Email:</label>
         <input class="form-control" type="email" name="email" id="email" value="<?= input_value("email", $user ?? null) ?>">
@@ -26,7 +26,7 @@
     </div>
 </div>
 
-<div class="col-12 col-xl-2">
+<div class="col-12 <?= ($user ?? null) ? "col-xl-3" : "col-xl-2" ?>">
     <div class="form-group">
         <label for="gender">Gênero:</label>
         <select class="form-control" name="gender" id="gender">
@@ -40,18 +40,20 @@
     </div>
 </div>
 
-<div class="col-12 col-xl-2">
-    <div class="form-group">
-        <label for="level">Nível:</label>
-        <select class="form-control" name="level" id="level">
-            <?php foreach (\App\Models\User::ALLOWED_LEVELS as $level) : ?>
-                <option value="<?= $level ?>" <?= input_value("level", $user ?? null) == $level ? "selected" : null ?>>
-                    <?= get_term("user.levels.level_{$level}") ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
+<?php if (($user ?? null) == null) : ?>
+    <div class="col-12 col-xl-2">
+        <div class="form-group">
+            <label for="level">Nível:</label>
+            <select class="form-control" name="level" id="level">
+                <?php foreach (\App\Models\User::ALLOWED_LEVELS as $level) : ?>
+                    <option value="<?= $level ?>" <?= input_value("level", $user ?? null) == $level ? "selected" : null ?>>
+                        <?= get_term("user.levels.level_{$level}") ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
     </div>
-</div>
+<?php endif; ?>
 
 <div class="col-12">
     <div class="form-group">
