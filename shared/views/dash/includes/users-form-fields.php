@@ -55,15 +55,17 @@
     </div>
 <?php endif; ?>
 
-<div class="col-12">
-    <div class="form-group">
-        <label for="photo">Foto:</label>
-        <div class="custom-file">
-            <input type="file" class="custom-file-input" id="photo" name="photo">
-            <label class="custom-file-label" for="photo" name="photo">Escolher arquivo</label>
+<?php if ($user ?? null) : ?>
+    <div class="col-12">
+        <div class="form-group">
+            <label for="photo">Foto:</label>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="photo" name="photo">
+                <label class="custom-file-label" for="photo" name="photo">Escolher arquivo</label>
+            </div>
         </div>
     </div>
-</div>
+<?php endif; ?>
 
 <div class="col-12 col-md-6">
     <div class="form-group">

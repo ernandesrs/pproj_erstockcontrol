@@ -50,7 +50,7 @@
                             <?php
                             if ($user->level > \App\Models\User::LEVEL_ONE) {
                                 $btnStyle = "danger";
-                                $btnIconClass = icon_class("");
+                                $btnIconClass = icon_class("userMinus");
                                 $btnUrlAction = route("dash.users.demote", ["user_id" => $user->id]);
                                 $btnMessage = "Você está retirando um nível deste usuário.";
                                 $btnText = "Rebaixar";
@@ -63,7 +63,7 @@
                             <?php
                             if ($user->level < \App\Models\User::LEVEL_ADMIN) {
                                 $btnStyle = "success";
-                                $btnIconClass = icon_class("");
+                                $btnIconClass = icon_class("userPlus");
                                 $btnUrlAction = route("dash.users.promote", ["user_id" => $user->id]);
                                 $btnMessage = "Você está promovendo este usuário.";
                                 $btnText = "Promover";
