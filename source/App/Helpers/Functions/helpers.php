@@ -165,13 +165,24 @@ function asset(string $asset): ?string
 }
 
 /**
- * @param string $name
+ * @param string $routeName
  * @param array $params
  * @return string|null
  */
-function route(string $name, array $params = []): ?string
+function route(string $routeName, array $params = []): ?string
 {
-    return router()->route($name, $params);
+    return router()->route($routeName, $params);
+}
+
+/**
+ * @param string $routeName
+ * @param array $params
+ * @return void
+ */
+function redirect(string $routeName, array $params = []): void
+{
+    router()->redirect($routeName, $params);
+    return;
 }
 
 /**
