@@ -5,7 +5,8 @@ namespace Components\Uploader;
 trait FileTrait
 {
     /**
-     * Upload de arquivso em geral
+     * Upload de arquivos em geral
+     * 
      * @param array $file
      * @param string $subDir
      * @return Uploader
@@ -20,6 +21,8 @@ trait FileTrait
     }
 
     /**
+     * Define/altera os mime types aceitos
+     * 
      * @param array $allowedMimes
      * @return Uploader
      */

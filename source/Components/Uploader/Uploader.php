@@ -71,6 +71,7 @@ class Uploader
 
     /**
      * Armazena o arquivo
+     * 
      * @param string|null $rename
      * @return string|null
      */
@@ -101,6 +102,7 @@ class Uploader
 
     /**
      * Define se serão criadas pastas baseadas no ano e mês
+     * 
      * @param boolean $make
      * @return Uploader
      */
@@ -112,6 +114,7 @@ class Uploader
 
     /**
      * Verifica e cria diretórios
+     * 
      * @return string
      */
     private function cmDirectory(): string
@@ -144,6 +147,7 @@ class Uploader
 
     /**
      * Validar arquivo
+     * 
      * @return bool
      */
     private function validate(): bool
@@ -161,6 +165,8 @@ class Uploader
     }
 
     /**
+     * Erros ocorridos
+     * 
      * @return stdClass|null
      */
     public function error(): ?stdClass

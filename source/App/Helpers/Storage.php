@@ -6,12 +6,33 @@ use Components\Uploader\Uploader;
 
 /**
  * 
- * Extende Uploader e adicionar utilitários
+ * Extende Uploader e adicionar utilitários:
+ * 
+ * * Métodos do Storage
+ * * store() - armazena
+ * * unlink() - remove(e limpa cache/thumbnails se for imagem)
+ * * unlinkLast() - remove o último arquivo enviado
+ * * url() - url para o arquivo
+ * * path() - caminho para o arquivo
+ * 
+ * * Métodos do Uploader
+ * * dirByDate() - define se será criada uma pasta com a data atual para o arquivo
+ * * errors() - error ocorridos
+ * * file() - upload de arquivos em geral
+ * * fileMimes() - define/altera mime types aceitos para arquivos
+ * * image() - upload de imagens
+ * * imageMimes() - define/altera mime types aceitos para imagens
+ * * media() - upload de mídias
+ * * mediaMimes() - define/altera mime types aceitos para mídias
  * 
  */
 class Storage extends Uploader
 {
-    /** @var string */
+    /**
+     * Caminho para o arquivo enviado
+     *
+     * @var string
+     */
     private $uploadedPath;
 
     public function __construct()
@@ -21,6 +42,7 @@ class Storage extends Uploader
 
     /**
      * Armazena o arquivo
+     * 
      * @param string|null $rename
      * @return string|null
      */
@@ -31,6 +53,8 @@ class Storage extends Uploader
     }
 
     /**
+     * Remove um arquivo e limpa cache caso o arquivo seja uma imagem
+     * 
      * @param string $path caminho para o arquivo a partir da pasta de uploads
      * @return void
      */
@@ -39,7 +63,10 @@ class Storage extends Uploader
         $path = $this->uploadDir . $path;
 
         if (file_exists($path)) {
-            Thumb::thumbClear($path);
+
+            if (in_array(mime_content_type($path), $this->allowedImageMimes))
+                Thumb::thumbClear($path);
+
             unlink($path);
         }
 
@@ -47,6 +74,8 @@ class Storage extends Uploader
     }
 
     /**
+     * Remove o último arquivo enviado
+     * 
      * @return void
      */
     public function unlinkLast(): void
@@ -60,6 +89,8 @@ class Storage extends Uploader
     }
 
     /**
+     * Url para o arquivo
+     * 
      * @param string|null $path
      * @return string
      */
@@ -69,6 +100,8 @@ class Storage extends Uploader
     }
 
     /**
+     * Caminho absoluto para o arquivo
+     * 
      * @param string|null $path
      * @return string
      */

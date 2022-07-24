@@ -6,6 +6,7 @@ trait MediaTrait
 {
     /**
      * Upload de audio e vídeos
+     * 
      * @param array $media
      * @param string $subDir
      * @return Uploader
@@ -20,6 +21,8 @@ trait MediaTrait
     }
 
     /**
+     * Define/altera os mime types aceitos
+     * 
      * @param array $allowedMimes
      * @return Uploader
      */

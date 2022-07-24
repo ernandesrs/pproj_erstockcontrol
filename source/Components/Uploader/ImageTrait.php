@@ -6,6 +6,7 @@ trait ImageTrait
 {
     /**
      * Upload de imagens
+     * 
      * @param array $image
      * @param string $subDir
      * @return Uploader
@@ -20,6 +21,8 @@ trait ImageTrait
     }
 
     /**
+     * Define/altera os mime types aceitos
+     * 
      * @param array $allowedMimes
      * @return Uploader
      */
