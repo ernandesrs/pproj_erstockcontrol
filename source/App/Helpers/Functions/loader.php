@@ -9,6 +9,9 @@
 $functions = [
     "components",
     "helpers",
+    "storage",
+    "thumb",
+    "template",
 ];
 
 foreach ($functions as $func) {
