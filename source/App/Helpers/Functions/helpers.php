@@ -2,6 +2,7 @@
 
 use App\Helpers\Storage;
 use App\Helpers\Thumb as HelpersThumb;
+use Components\Router\Router;
 
 /**
  * @return boolean
@@ -161,6 +162,24 @@ function asset(string $asset): ?string
         $asset = substr($asset, 1, strlen($asset));
 
     return url() . CONF_ASSETS_DIR . "/" . $asset;
+}
+
+/**
+ * @param string $name
+ * @param array $params
+ * @return string|null
+ */
+function route(string $name, array $params = []): ?string
+{
+    return router()->route($name, $params);
+}
+
+/**
+ * @return Router
+ */
+function router(): Router
+{
+    return $GLOBALS["router"];
 }
 
 /**
