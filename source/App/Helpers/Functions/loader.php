@@ -2,7 +2,7 @@
 
 /**
  * 
- * 
+ * carregar os arquivos de funções helper
  * 
  */
 

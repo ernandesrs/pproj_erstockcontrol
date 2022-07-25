@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * 
+ * 
+ * Funções helpers em geral
+ * 
+ * 
+ */
+
 use Components\Router\Router;
 
 /**

@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * 
+ * 
+ * Funções para facilitar o acesso ao componente de thumbnails
+ * 
+ * 
+ */
+
 use \App\Helpers\Thumb as HelpersThumb;
 
 /**

@@ -1,6 +1,14 @@
 <?php
 
 /**
+ * 
+ * 
+ * Funções para auxiliar e facilitar na composição do template
+ * 
+ * 
+ */
+
+/**
  * @param string $text
  * @param string $style
  * @param string $activeIcon

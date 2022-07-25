@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * 
+ * 
+ * Funções para facilitar o acesso à classe helper Storage
+ * 
+ * 
+ */
+
 use App\Helpers\Storage;
 
 /**
