@@ -16,10 +16,11 @@ Toda a parte PHP do sistema foram construídas do zero, sem uso de componentes P
 - as classes mais simples, porém muito úteis <b><i>\source\Components\Message\Message</i></b> e <b><i>\source\Components\Session\Session</i></b>.
 
 ## Como rodar este projeto localmente
-Para rodar ele localmente é simples! Com um servidor local devidamente instalado e configurado, o composer e npm e seguir os seguintes passo:
-1. Obtenha o projeto por meio de alguma forma disponível pelo Github.
+Para rodar ele localmente é simples! Com um servidor local devidamente instalado e configurado, o composer e npm também instalados, basta seguir os seguintes passo:
+1. Obtenha o projeto por meio de alguma forma disponível no Github.
 2. Mova a pasta contendo as pastas do projeto para dentro do seu servidor local.
 3. Na pasta extras abra o arquivo <b>database.mwb</b> no MySQL Workbench e importe o banco de dados.
-4. Copie e renomeie o arquivo '<b>env.env</b>' para '<b>.env</b>' abra-o e configure todos as variáveis. Todas são importantes!
+4. Copie e renomeie o arquivo '<b>env.env</b>' para '<b>.env</b>' abra-o e configure todas as variáveis. Todas são importantes!
 5. Executes os comandos: npm install e composer install para instalar as dependências principais.
-6. Basta acessar o link do seu servidor local no navegador.
+6. Com o banco de dados criado e devidamente configurado no '.env', acesse: <SUA_URL_LOCAL>/starter; esta ação irá criar um usuário 'master' para o sistema.
+7. Basta acessar o link do seu servidor local no navegador.
