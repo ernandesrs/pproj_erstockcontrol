@@ -50,9 +50,15 @@
                                     <a class="btn btn-info" href="<?= route("dash.products.edit", ["id" => $product->id]) ?>">
                                         <?= icon_elem("pencilSquare") ?>
                                     </a>
-                                    <button class="btn btn-outline-danger jsConfirmationModalButton" data-action="<?= route("dash.products.delete", ["id" => $product->id]) ?>" data-style="danger" data-message="Você está excluindo um produto e isso não pode ser desfeito, confirme para continuar.">
-                                        <?= icon_elem("trash") ?>
-                                    </button>
+                                    <?=
+                                    t_button_confirmation_elem(
+                                        "danger",
+                                        "Você está excluindo um produto e isso não pode ser desfeito.",
+                                        null,
+                                        icon_class("trash"),
+                                        route("dash.products.delete", ["id" => $product->id])
+                                    )
+                                    ?>
                                 </td>
                             </tr>
                         <?php

@@ -26,15 +26,14 @@
                 <!-- photo remove confirm -->
                 <?php if ($user->photo) : ?>
                     <div class="pt-2 pb-1">
-                        <?php
-                        $btnType = "link";
-                        $btnStyle = "danger";
-                        $btnIconClass = icon_class("trash");
-                        $btnUrlAction = route("dash.users.photoRemove", ["user_id" => $user->id]);
-                        $btnMessage = "Você está excluindo a foto deste usuário e não poderá ser recuperada.";
-                        $btnText = "Excluir foto";
-
-                        include __DIR__ . "/../includes/button-confirmation.php";
+                        <?=
+                        t_button_link_confirmation_elem(
+                            "danger",
+                            "Você está excluindo a foto deste usuário e não pode ser recuperada.",
+                            "Excluir foto",
+                            icon_class("trash"),
+                            route("dash.users.photoRemove", ["user_id" => $user->id])
+                        )
                         ?>
                     </div>
                 <?php endif; ?>
@@ -57,32 +56,30 @@
                     if ($user->id != $logged->id && $user->level < $logged->level) : ?>
                         <div class="rounded py-2 mt-2 text-center">
                             <!-- demote button -->
-                            <?php
-                            if ($user->level > \App\Models\User::LEVEL_ONE) {
-                                $btnType = "button";
-                                $btnStyle = "danger";
-                                $btnIconClass = icon_class("userMinus");
-                                $btnUrlAction = route("dash.users.demote", ["user_id" => $user->id]);
-                                $btnMessage = "Você está retirando um nível deste usuário.";
-                                $btnText = "Rebaixar";
-
-                                include __DIR__ . "/../includes/button-confirmation.php";
-                            }
-                            ?>
+                            <?php if ($user->level > \App\Models\User::LEVEL_ONE) : ?>
+                                <?=
+                                t_button_confirmation_elem(
+                                    "danger",
+                                    "Você está retirando um nível deste usuário.",
+                                    "Rebaixar",
+                                    icon_class("userMinus"),
+                                    route("dash.users.demote", ["user_id" => $user->id])
+                                )
+                                ?>
+                            <?php endif; ?>
 
                             <!-- promote button -->
-                            <?php
-                            if ($user->level < \App\Models\User::LEVEL_ADMIN) {
-                                $btnType = "button";
-                                $btnStyle = "success";
-                                $btnIconClass = icon_class("userPlus");
-                                $btnUrlAction = route("dash.users.promote", ["user_id" => $user->id]);
-                                $btnMessage = "Você está promovendo este usuário.";
-                                $btnText = "Promover";
-
-                                include __DIR__ . "/../includes/button-confirmation.php";
-                            }
-                            ?>
+                            <?php if ($user->level < \App\Models\User::LEVEL_ADMIN) : ?>
+                                <?=
+                                t_button_confirmation_elem(
+                                    "success",
+                                    "Você está promovendo este usuário.",
+                                    "Promover",
+                                    icon_class("userPlus"),
+                                    route("dash.users.promote", ["user_id" => $user->id])
+                                )
+                                ?>
+                            <?php endif; ?>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -95,13 +92,14 @@
                         ?>
                         <div class="col-12 form-group text-right mb-0">
                             <!-- button delete confirmation -->
-                            <?php
-                            $btnStyle = "danger";
-                            $btnIconClass = icon_class("userX");
-                            $btnUrlAction = route("dash.users.delete", ["id" => $user->id]);
-                            $btnMessage = "Você está excluindo um usuário definitivamente e isso não pode ser desfeito.";
-                            $btnText = "Excluir";
-                            include __DIR__ . "/../includes/button-confirmation.php";
+                            <?=
+                            t_button_confirmation_elem(
+                                "danger",
+                                "Você está excluindo um usuário definitivamente e isso não pode ser desfeito.",
+                                "Excluir",
+                                icon_class("userX"),
+                                route("dash.users.delete", ["id" => $user->id])
+                            )
                             ?>
 
                             <button class="btn btn-info <?= icon_class("userCheck") ?>" data-active-icon="<?= icon_class("userCheck") ?>" data-alt-icon="<?= icon_class("loading") ?>" type="submit">

@@ -22,9 +22,16 @@
                     <?php include __DIR__ . "/includes/products-form-fields.php" ?>
 
                     <div class="form-group py-2 text-right">
-                        <button class="btn btn-danger jsDeleteButtonAlert" href="<?= route("dash.products.delete", ["id" => $product->id]) ?>">
-                            <?= icon_elem("trash") ?> Excluir
-                        </button>
+                        <?=
+                        t_button_confirmation_elem(
+                            "danger",
+                            "Você está excluindo um produto e isso não pode ser desfeito.",
+                            "Excluir",
+                            icon_class("trash"),
+                            route("dash.products.delete", ["id" => $product->id])
+                        )
+                        ?>
+
                         <button class="btn btn-info <?= icon_class("checkLg") ?>" data-active-icon="<?= icon_class("checkLg") ?>" data-alt-icon="<?= icon_class("loading") ?>">
                             Atualizar agora
                         </button>
@@ -37,3 +44,9 @@
 
 
 <?= $v->end("content") ?>
+
+<?= $v->start("modals") ?>
+
+<?php include __DIR__ . "/../includes/modal-confirmation.php" ?>
+
+<?= $v->end("modals") ?>
